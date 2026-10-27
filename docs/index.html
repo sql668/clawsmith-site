@@ -1,0 +1,1143 @@
+<!doctype html>
+<!-- clawsmith 使用手册：面向使用者的安装、CLI、Web、场景、工作流、恢复和升级指南。 -->
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="clawsmith 使用手册：安装、配置模型、使用 CLI 与 Web 面板、切换场景、管理团队任务与 Workflow、恢复会话以及安全升级。"
+    />
+    <meta name="theme-color" content="#0b1110" />
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="clawsmith 使用手册" />
+    <meta
+      property="og:description"
+      content="从第一条任务到场景、多 Agent 工作流、检查点恢复和远程访问的完整使用指南。"
+    />
+    <meta property="og:url" content="https://sql668.github.io/clawsmith-site/docs/" />
+    <meta property="og:site_name" content="clawsmith" />
+    <meta property="og:image" content="https://sql668.github.io/clawsmith-site/og-image.png" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="clawsmith 使用手册" />
+    <meta
+      name="twitter:description"
+      content="安装、配置模型、使用 CLI 与 Web、运行场景工作流、恢复会话和升级。"
+    />
+    <meta name="twitter:image" content="https://sql668.github.io/clawsmith-site/og-image.png" />
+    <link rel="canonical" href="https://sql668.github.io/clawsmith-site/docs/" />
+    <title>clawsmith 使用手册</title>
+    <link rel="icon" href="../favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="./docs.css?v=20261027-1" />
+  </head>
+  <body>
+    <a class="skip-link" href="#docs-article">跳到正文</a>
+
+    <header class="docs-header">
+      <div class="docs-header-inner">
+        <a class="docs-brand" href="../" aria-label="返回 clawsmith 产品首页">
+          <svg class="docs-brand-mark" viewBox="0 0 44 44" aria-hidden="true">
+            <path d="M6 8h32v28H6z" />
+            <path d="M13 14 20 30M21 12l7 20M29 10l7 22" />
+          </svg>
+          <span class="docs-brand-word">clawsmith</span>
+          <span class="docs-brand-tag">MANUAL</span>
+        </a>
+
+        <nav class="docs-top-nav" aria-label="站点导航">
+          <a href="./" aria-current="page">使用手册</a>
+          <a href="../">产品介绍</a>
+          <a href="https://www.npmjs.com/package/clawsmith" target="_blank" rel="noreferrer">
+            npm
+          </a>
+        </nav>
+
+        <div class="docs-header-tools">
+          <button class="docs-search-trigger" type="button" data-focus-docs-search>
+            <svg viewBox="0 0 20 20" aria-hidden="true">
+              <circle cx="8.5" cy="8.5" r="5.5"></circle>
+              <path d="m13 13 4 4"></path>
+            </svg>
+            <span>搜索手册</span>
+            <kbd>/</kbd>
+          </button>
+          <a
+            class="docs-header-action"
+            href="https://www.npmjs.com/package/clawsmith"
+            target="_blank"
+            rel="noreferrer"
+          >
+            安装 v0.1.5
+          </a>
+        </div>
+
+        <button
+          class="docs-menu-toggle"
+          type="button"
+          aria-expanded="false"
+          aria-controls="docs-sidebar"
+          data-docs-menu-toggle
+        >
+          <span></span>
+          <span></span>
+          <span></span>
+          <span class="sr-only">打开文档导航</span>
+        </button>
+      </div>
+    </header>
+
+    <div class="docs-shell">
+      <aside class="docs-sidebar" id="docs-sidebar" data-docs-sidebar>
+        <div class="docs-sidebar-head">
+          <p class="docs-sidebar-kicker">clawsmith documentation</p>
+          <label class="docs-search-field">
+            <svg viewBox="0 0 20 20" aria-hidden="true">
+              <circle cx="8.5" cy="8.5" r="5.5"></circle>
+              <path d="m13 13 4 4"></path>
+            </svg>
+            <span class="sr-only">搜索手册章节</span>
+            <input
+              type="search"
+              placeholder="搜索章节、命令或设置"
+              autocomplete="off"
+              data-docs-search
+            />
+          </label>
+          <p class="docs-search-empty" hidden data-docs-search-empty>没有匹配的章节。</p>
+        </div>
+
+        <div class="docs-sidebar-scroll">
+          <nav class="docs-nav" aria-label="使用手册目录">
+            <details open data-doc-group>
+              <summary>开始使用</summary>
+              <div class="docs-nav-list">
+                <a
+                  href="#overview"
+                  data-doc-link
+                  data-keywords="介绍 产品 本地优先 agent"
+                >
+                  clawsmith 是什么
+                </a>
+                <a
+                  href="#requirements"
+                  data-doc-link
+                  data-keywords="环境 node npm 版本 系统要求"
+                >
+                  环境要求
+                </a>
+                <a href="#install" data-doc-link data-keywords="安装 npm npx 升级">
+                  安装与升级
+                </a>
+                <a href="#first-run" data-doc-link data-keywords="首次 启动 工作区 第一条任务">
+                  第一条任务
+                </a>
+                <a href="#models" data-doc-link data-keywords="模型 provider api key openai ollama">
+                  配置模型
+                </a>
+              </div>
+            </details>
+
+            <details open data-doc-group>
+              <summary>日常使用</summary>
+              <div class="docs-nav-list">
+                <a href="#cli" data-doc-link data-keywords="cli 终端 repl 命令">
+                  CLI 工作流
+                </a>
+                <a href="#web" data-doc-link data-keywords="web 面板 审批 设置 工作区">
+                  Web 工作台
+                </a>
+                <a href="#permissions" data-doc-link data-keywords="权限 审批 allow all plan">
+                  权限与审批
+                </a>
+                <a href="#scenes" data-doc-link data-keywords="scene coding blog brainstorm 场景">
+                  场景模式
+                </a>
+                <a href="#agents" data-doc-link data-keywords="agent 角色 定义 manifest">
+                  Agent 定义
+                </a>
+                <a href="#goals-plans" data-doc-link data-keywords="goal plan 目标 计划 审批">
+                  Goal 与 Plan
+                </a>
+                <a href="#team-workflow" data-doc-link data-keywords="team workflow dag 团队 工作流">
+                  团队任务与 Workflow
+                </a>
+                <a href="#memory-skills" data-doc-link data-keywords="memory skill 记忆 技能">
+                  记忆与 Skill
+                </a>
+              </div>
+            </details>
+
+            <details open data-doc-group>
+              <summary>长任务与安全</summary>
+              <div class="docs-nav-list">
+                <a href="#long-tasks" data-doc-link data-keywords="后台命令 pty 长任务 日志">
+                  长任务与 PTY
+                </a>
+                <a href="#recovery" data-doc-link data-keywords="恢复 检查点 unknown 回退">
+                  恢复与回退
+                </a>
+                <a href="#remote" data-doc-link data-keywords="远程 token device viewer">
+                  远程访问与设备
+                </a>
+              </div>
+            </details>
+
+            <details open data-doc-group>
+              <summary>参考与排障</summary>
+              <div class="docs-nav-list">
+                <a href="#commands" data-doc-link data-keywords="命令 速查 slash command">
+                  命令速查
+                </a>
+                <a href="#sdk" data-doc-link data-keywords="sdk protocol api sse">
+                  SDK 与协议
+                </a>
+                <a href="#upgrade" data-doc-link data-keywords="更新 版本 升级 npm pnpm">
+                  更新与版本
+                </a>
+                <a href="#troubleshooting" data-doc-link data-keywords="故障 排查 报错 环境">
+                  常见问题排查
+                </a>
+                <a href="#data" data-doc-link data-keywords="数据 目录 sqlite 配置 隐私">
+                  数据目录与边界
+                </a>
+              </div>
+            </details>
+          </nav>
+        </div>
+
+        <div class="docs-sidebar-foot">
+          <span>v0.1.5</span>
+          <a href="../">返回产品首页 →</a>
+        </div>
+      </aside>
+
+      <button
+        class="docs-overlay"
+        type="button"
+        aria-label="关闭文档导航"
+        data-docs-overlay
+      ></button>
+
+      <main class="docs-main">
+        <article class="docs-article" id="docs-article" data-docs-article>
+          <div class="docs-breadcrumb">
+            <a href="../">clawsmith</a>
+            <span>/</span>
+            <span>使用手册</span>
+          </div>
+
+          <h1>把任务交给 Agent，<br />把控制权留在本地。</h1>
+          <p class="docs-lede">
+            这份手册覆盖 clawsmith 的完整日常路径：安装、连接模型、在 CLI 或 Web
+            中发起任务、处理审批、切换场景、启动多 Agent Workflow、恢复失败回合，以及安全升级。
+            命令以 v0.1.5 为准。
+          </p>
+          <ul class="docs-meta" aria-label="手册信息">
+            <li>Node.js 22.13+</li>
+            <li>CLI + Web</li>
+            <li>v0.1.5</li>
+            <li>LAST REVIEW 2026-10-27</li>
+          </ul>
+
+          <details class="docs-mobile-toc">
+            <summary>本页内容</summary>
+            <ol data-mobile-toc></ol>
+          </details>
+
+          <div class="docs-card-grid">
+            <a class="docs-card" href="#first-run">
+              <span class="docs-card-tag">FIRST RUN</span>
+              <h3>5 分钟完成第一条任务</h3>
+              <p>安装、选择工作区、配置 Provider，然后从一个可验证的小任务开始。</p>
+              <span class="docs-card-cta">开始 →</span>
+            </a>
+            <a class="docs-card" href="#scenes">
+              <span class="docs-card-tag">SCENES</span>
+              <h3>选择正确的工作方法</h3>
+              <p>Coding、Blog 和 Brainstorm 会使用不同的阶段、角色和返工规则。</p>
+              <span class="docs-card-cta">比较场景 →</span>
+            </a>
+            <a class="docs-card" href="#team-workflow">
+              <span class="docs-card-tag">MULTI-AGENT</span>
+              <h3>运行可恢复的 Workflow</h3>
+              <p>查看 DAG、负责人、产物和 journal，不用把进度藏在模型回复里。</p>
+              <span class="docs-card-cta">了解调度 →</span>
+            </a>
+            <a class="docs-card" href="#recovery">
+              <span class="docs-card-tag">RECOVERY</span>
+              <h3>失败时先确认副作用</h3>
+              <p>检查点恢复文件或会话，未知副作用必须人工确认，不自动重放。</p>
+              <span class="docs-card-cta">安全恢复 →</span>
+            </a>
+          </div>
+
+          <section class="docs-section" aria-labelledby="overview">
+            <h2 class="docs-section-anchor" id="overview">clawsmith 是什么</h2>
+            <p>
+              clawsmith 是运行在本机的 coding agent。它读取真实项目、搜索代码、修改文件、执行命令，
+              并要求在修改工作区后取得验证证据。CLI 和 Web 不是两套产品：两者共享同一套
+              Agent Core、SQLite 会话、审批、场景、团队任务和 Workflow 状态。
+            </p>
+
+            <div class="docs-table-wrap">
+              <table class="docs-table">
+                <thead>
+                  <tr>
+                    <th>你负责</th>
+                    <th>clawsmith 负责</th>
+                    <th>系统保留的证据</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>描述目标、约束和验收方式</td>
+                    <td>读取项目、选择工具、执行修改和测试</td>
+                    <td>消息、事件、工具结果和 usage</td>
+                  </tr>
+                  <tr>
+                    <td>审批风险动作</td>
+                    <td>检查参数、路径、权限和沙箱</td>
+                    <td>审批审计、命令输出和检查点</td>
+                  </tr>
+                  <tr>
+                    <td>审阅最终结果</td>
+                    <td>运行验证、汇总 blocker 和产物</td>
+                    <td>changed files、artifact 和 journal</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <aside class="docs-callout" data-tone="warning">
+              <span class="docs-callout-mark">LOCAL ≠ OFFLINE</span>
+              <p>
+                会话、记忆、Skill 和权限默认保存在本机，但真实模型请求会发送到你配置的
+                Provider。选择 Provider 前先确认其数据处理与保留策略。
+              </p>
+            </aside>
+          </section>
+
+          <section class="docs-section" aria-labelledby="requirements">
+            <h2 class="docs-section-anchor" id="requirements">环境要求</h2>
+            <div class="docs-table-wrap">
+              <table class="docs-table">
+                <thead>
+                  <tr>
+                    <th>项目</th>
+                    <th>要求</th>
+                    <th>说明</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Node.js</td>
+                    <td>22.13 或更高</td>
+                    <td>CLI 和 Server 会在加载主程序前检查版本。</td>
+                  </tr>
+                  <tr>
+                    <td>系统</td>
+                    <td>macOS / Linux / Windows</td>
+                    <td>其他平台会得到明确错误，不静默尝试。</td>
+                  </tr>
+                  <tr>
+                    <td>包管理器</td>
+                    <td>npm 或 pnpm</td>
+                    <td>安装后的命令名始终是 <code>clawsmith</code>。</td>
+                  </tr>
+                  <tr>
+                    <td>模型服务</td>
+                    <td>OpenAI-compatible API</td>
+                    <td>未配置时可使用离线 Demo，但不能完成真实代码任务。</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
+
+          <section class="docs-section" aria-labelledby="install">
+            <h2 class="docs-section-anchor" id="install">安装与升级</h2>
+            <ol class="docs-steps">
+              <li>
+                <strong>安装 npm 包</strong>
+                <div class="docs-code" data-language="shell">
+                  <pre><code>npm install -g clawsmith
+clawsmith --version</code></pre>
+                </div>
+                <p>
+                  从旧的 <code>@shiql/mx-claw</code> 迁移时，新命令是
+                  <code>clawsmith</code>。若 <code>~/.clawsmith</code> 尚不存在，启动会继续复用
+                  旧 <code>~/.mx-claw</code> 中的 Provider、密钥、会话和检查点。
+                </p>
+              </li>
+              <li>
+                <strong>或者临时运行，不写入全局包目录</strong>
+                <div class="docs-code" data-language="shell">
+                  <pre><code>npx clawsmith@latest --version</code></pre>
+                </div>
+              </li>
+              <li>
+                <strong>需要升级时直接覆盖安装</strong>
+                <div class="docs-code" data-language="shell">
+                  <pre><code>npm install -g clawsmith@latest
+clawsmith --version</code></pre>
+                </div>
+                <p>
+                  覆盖安装不会删除 <code>~/.clawsmith</code> 中的 Provider、密钥、会话、检查点或
+                  Agent 定义。
+                </p>
+              </li>
+            </ol>
+            <aside class="docs-callout">
+              <span class="docs-callout-mark">UPDATE CHECK</span>
+              <p>
+                交互式 CLI 和 <code>clawsmith web</code> 会在启动时检查 npm latest，最多等待
+                1.5 秒。你可以只跳过一个版本；更高版本发布后仍会再次提示。
+              </p>
+            </aside>
+          </section>
+
+          <section class="docs-section" aria-labelledby="first-run">
+            <h2 class="docs-section-anchor" id="first-run">第一条任务</h2>
+            <p>
+              第一次使用建议先打开 Web 面板。可视化工作区选择、模型配置和审批更容易确认。
+            </p>
+            <div class="docs-code" data-language="shell">
+              <pre><code>clawsmith web
+# http://127.0.0.1:3210</code></pre>
+            </div>
+            <ol class="docs-steps">
+              <li>
+                <strong>添加工作区</strong>
+                <p>点击左侧工作区旁的“+”，选择本地项目。工作区决定文件访问和项目记忆边界。</p>
+              </li>
+              <li>
+                <strong>配置模型</strong>
+                <p>
+                  打开“设置 → 模型”，填写 Provider、Base URL、模型列表和 API Key，保存后将可用
+                  Provider 设为默认。
+                </p>
+              </li>
+              <li>
+                <strong>提交一个容易验证的小任务</strong>
+                <p>
+                  例如：“阅读项目入口和测试脚本，告诉我应用如何启动。不要修改文件，并列出你检查过的路径。”
+                </p>
+              </li>
+              <li>
+                <strong>核对回答和证据</strong>
+                <p>
+                  展开工具按钮查看真实读取结果；确认回答中的路径、命令和项目一致后，再让 Agent
+                  执行写任务。
+                </p>
+              </li>
+            </ol>
+            <div class="docs-terminal-note">
+              <i></i>
+              <span>成功标准：模型返回结果，工具输出可展开，会话刷新后仍然存在。</span>
+            </div>
+          </section>
+
+          <section class="docs-section" aria-labelledby="models">
+            <h2 class="docs-section-anchor" id="models">配置模型</h2>
+            <p>
+              Provider 是连接信息，模型是当前会话的推理选择。切换模型不会扩大工具或权限边界。
+            </p>
+            <div class="docs-code" data-language="cli">
+              <pre><code>/model status
+/model list
+/model configure openai
+/model default openai/gpt-4o-mini
+/model use openai/gpt-4o-mini
+/model refresh</code></pre>
+            </div>
+            <div class="docs-table-wrap">
+              <table class="docs-table">
+                <thead>
+                  <tr>
+                    <th>入口</th>
+                    <th>用途</th>
+                    <th>作用范围</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><code>clawsmith</code> → <code>/model</code></td>
+                    <td>配置 Provider、保存 API Key、刷新模型目录</td>
+                    <td>全局 Provider 配置</td>
+                  </tr>
+                  <tr>
+                    <td><code>/model use provider/model</code></td>
+                    <td>切换当前会话模型</td>
+                    <td>当前 session</td>
+                  </tr>
+                  <tr>
+                    <td>Web“设置 → 模型”</td>
+                    <td>管理 Provider、默认模型和健康状态</td>
+                    <td>所有 CLI/Web 进程共享配置</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <aside class="docs-callout" data-tone="warning">
+              <span class="docs-callout-mark">SECRET</span>
+              <p>
+                API Key 不会回显到 Web 页面、会话或日志。它优先进入系统 Keychain / Secret
+                Service，无法使用时才进入加密文件；普通 <code>config.json</code> 不保存明文。
+              </p>
+            </aside>
+          </section>
+
+          <section class="docs-section" aria-labelledby="cli">
+            <h2 class="docs-section-anchor" id="cli">CLI 工作流</h2>
+            <p>在项目根目录运行 <code>clawsmith</code>。当前目录会成为默认工作区。</p>
+            <div class="docs-code" data-language="shell">
+              <pre><code>cd ~/projects/my-app
+clawsmith
+
+# 也可以不进入 REPL，直接提交一次任务
+clawsmith --permission-mode plan \
+  --prompt "分析测试失败，给出最小修复方案"</code></pre>
+            </div>
+            <h3>推荐的任务表达</h3>
+            <div class="docs-callout" data-tone="success">
+              <span class="docs-callout-mark">GOOD PROMPT</span>
+              <p>
+                “先读取 <code>src/auth</code> 和现有测试，定位登录超时原因。只修改认证模块，
+                补一个回归测试，最后运行 <code>pnpm test</code>。如果测试失败，保留完整错误并停止。”
+              </p>
+            </div>
+            <p>
+              同时给出范围、禁止项和验证命令。不要只说“优化一下”或“把项目修好”，否则你很难判断
+              Agent 是否扩大了修改范围。
+            </p>
+
+            <h3>会话与审批</h3>
+            <ul>
+              <li>只读工具通常直接执行；写文件和有副作用命令按权限模式请求审批。</li>
+              <li>输入允许或拒绝后，结果进入同一持久 transcript 和审批审计。</li>
+              <li>关闭终端不会删除会话；重新打开 CLI 后可用 <code>/resume</code> 选择旧会话。</li>
+              <li>输入 <code>/help</code> 查看当前命令；输入 <code>/exit</code> 退出。</li>
+            </ul>
+          </section>
+
+          <section class="docs-section" aria-labelledby="web">
+            <h2 class="docs-section-anchor" id="web">Web 工作台</h2>
+            <div class="docs-code" data-language="shell">
+              <pre><code>clawsmith web
+# 默认 http://127.0.0.1:3210
+
+PORT=3220 HOST=127.0.0.1 clawsmith web</code></pre>
+            </div>
+            <div class="docs-table-wrap">
+              <table class="docs-table">
+                <thead>
+                  <tr>
+                    <th>区域</th>
+                    <th>适合做什么</th>
+                    <th>注意事项</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>左侧工作区与会话</td>
+                    <td>创建项目、切换会话、查看运行状态</td>
+                    <td>工作区是文件与项目记忆的 ACL 边界。</td>
+                  </tr>
+                  <tr>
+                    <td>中间对话与审批</td>
+                    <td>阅读回答、展开工具结果、批准或拒绝动作</td>
+                    <td>工具结果使用小按钮，点击后查看完整输出。</td>
+                  </tr>
+                  <tr>
+                    <td>会话用量与检查点</td>
+                    <td>查看 token、上下文占用和可恢复回合</td>
+                    <td>检查点按钮打开弹窗，不再占用消息流。</td>
+                  </tr>
+                  <tr>
+                    <td>设置</td>
+                    <td>模型、Agents、团队、Workflow、记忆、技能、设备和安全</td>
+                    <td>所有配置最终仍由本地 Server 和 SQLite 校验。</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <h3>Web 常用操作</h3>
+            <ul>
+              <li>输入 <code>/providers</code> 打开模型管理。</li>
+              <li>输入 <code>/permissions</code> 打开权限管理，或在输入框旁切换会话权限。</li>
+              <li>输入 <code>/scene coding</code> 切换场景；输入 <code>/new</code> 开始新会话。</li>
+              <li>回答中的代码块默认展开，可收起后复制；思考过程和工具详情按需展开。</li>
+              <li>右上角“导出会话”生成脱敏后的会话包，默认不包含密钥和 artifact 正文。</li>
+            </ul>
+          </section>
+
+          <section class="docs-section" aria-labelledby="permissions">
+            <h2 class="docs-section-anchor" id="permissions">权限与审批</h2>
+            <div class="docs-table-wrap">
+              <table class="docs-table">
+                <thead>
+                  <tr>
+                    <th>模式</th>
+                    <th>适合场景</th>
+                    <th>变更动作</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><code>plan</code></td>
+                    <td>先理解仓库、做只读方案</td>
+                    <td>只读，拒绝写入和变更命令</td>
+                  </tr>
+                  <tr>
+                    <td><code>default</code></td>
+                    <td>日常人工监督</td>
+                    <td>写文件和不确定命令逐次审批</td>
+                  </tr>
+                  <tr>
+                    <td><code>accept-edits</code></td>
+                    <td>信任当前工作区编辑</td>
+                    <td>自动接受文件写入，命令仍需审批</td>
+                  </tr>
+                  <tr>
+                    <td><code>unattended</code></td>
+                    <td>无人值守，但只允许确定安全动作</td>
+                    <td>无法确认的动作直接拒绝</td>
+                  </tr>
+                  <tr>
+                    <td><code>allow-all</code></td>
+                    <td>受信任隔离环境</td>
+                    <td>二次确认后跳过常规审批，硬边界仍生效</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <aside class="docs-callout" data-tone="warning">
+              <span class="docs-callout-mark">ALLOW-ALL ≠ UNRESTRICTED</span>
+              <p>
+                显式 deny、灾难命令拦截、工作区路径、Hook、输出限制和平台沙箱不会因为
+                <code>allow-all</code> 自动关闭。
+              </p>
+            </aside>
+          </section>
+
+          <section class="docs-section" aria-labelledby="scenes">
+            <h2 class="docs-section-anchor" id="scenes">场景模式</h2>
+            <p>
+              场景决定角色、阶段、输出契约和返工上限，不授予额外工具或权限。新会话默认使用
+              <code>general</code>。
+            </p>
+            <div class="docs-code" data-language="cli">
+              <pre><code>/scene
+/scene coding
+/scene blog
+/scene brainstorm
+/scene coding run 为解析器补错误分支和测试
+/scene blog run 写一篇项目架构说明
+/scene brainstorm run 设计离线同步方案</code></pre>
+            </div>
+            <div class="docs-table-wrap">
+              <table class="docs-table">
+                <thead>
+                  <tr>
+                    <th>场景</th>
+                    <th>执行路径</th>
+                    <th>适合任务</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><code>general</code></td>
+                    <td>原有直接 Agent 循环</td>
+                    <td>不需要固定多角色流程的任务</td>
+                  </tr>
+                  <tr>
+                    <td><code>coding</code></td>
+                    <td>fast / complex / repair</td>
+                    <td>小修、复杂重构、修复 blocker</td>
+                  </tr>
+                  <tr>
+                    <td><code>blog</code></td>
+                    <td>standard / research / repair</td>
+                    <td>大纲、可选调研、正文和审稿</td>
+                  </tr>
+                  <tr>
+                    <td><code>brainstorm</code></td>
+                    <td>三方向发散、挑战、收敛、repair</td>
+                    <td>产品方向、架构方案、取舍分析</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <p>
+              切换场景会保存在当前会话中，CLI 和 Web 刷新后读取同一个值。活跃 turn 或跨进程
+              租约存在时不能切换。
+            </p>
+          </section>
+
+          <section class="docs-section" aria-labelledby="agents">
+            <h2 class="docs-section-anchor" id="agents">Agent 定义</h2>
+            <p>
+              Agent 定义保存在 <code>~/.clawsmith/agents/active/&lt;id&gt;/AGENT.md</code>。首次启动会安装
+              Coding、Blog 和 Brainstorm 内置角色，但不会覆盖你修改过的文件。
+            </p>
+            <div class="docs-code" data-language="cli">
+              <pre><code>/agents
+/agents list
+/agents show coding-tester
+/agents disable coding-tester
+/agents enable coding-tester</code></pre>
+            </div>
+            <div class="docs-card-grid">
+              <div class="docs-card">
+                <span class="docs-card-tag">ROLE</span>
+                <h3>职责写在正文</h3>
+                <p>AGENT.md 的正文成为角色 system prompt，说明允许目标和禁止行为。</p>
+              </div>
+              <div class="docs-card">
+                <span class="docs-card-tag">BOUNDARY</span>
+                <h3>能力只能收窄</h3>
+                <p>工具、Skill、Hook、写路径、命令前缀和权限不能超过父 Agent 或运行时上限。</p>
+              </div>
+            </div>
+            <aside class="docs-callout">
+              <span class="docs-callout-mark">WEB</span>
+              <p>
+                Web“设置 → Agents”展示角色、版本、工具、权限和启停状态。禁用角色后，新的
+                delegate 或 Workflow step 不能继续使用它。
+              </p>
+            </aside>
+          </section>
+
+          <section class="docs-section" aria-labelledby="goals-plans">
+            <h2 class="docs-section-anchor" id="goals-plans">Goal 与 Plan</h2>
+            <p>
+              长任务先固定目标，再提交计划。只要存在待审批 plan，写文件和变更命令会在权限判断前
+              被拒绝。
+            </p>
+            <div class="docs-code" data-language="cli">
+              <pre><code>/plan set 在不改变公开 API 的前提下收敛认证实现
+/plan submit {"scope":"认证模块","steps":[{"title":"盘点重复实现","description":"读取调用链和测试","expectedChanges":["src/auth/"],"risks":["遗漏外部调用"],"verification":"pnpm test"}],"expectedChanges":["src/auth/"],"risks":[],"verification":["pnpm test"],"openQuestions":[]}
+/plan approve &lt;plan-id&gt;
+/plan complete pnpm check 通过，changed files 已审阅</code></pre>
+            </div>
+            <ul>
+              <li>变更 goal 递增 revision，并把旧 pending/approved plan 标为 superseded。</li>
+              <li>批准 plan 只表示允许开始执行，不创建永久 allow 规则。</li>
+              <li>完成 goal 必须提交非空证据，模型自然语言不能直接关闭目标。</li>
+            </ul>
+          </section>
+
+          <section class="docs-section" aria-labelledby="team-workflow">
+            <h2 class="docs-section-anchor" id="team-workflow">团队任务与 Workflow</h2>
+            <p>
+              <code>/team</code> 管理任务图；<code>/workflow</code> 运行声明式 DAG。正常情况下，
+              场景会自动生成 Workflow，你只在需要手动编排或排查时直接操作它们。
+            </p>
+            <div class="docs-code" data-language="cli">
+              <pre><code>/team
+/team add 实现缓存层 --after design --write src/cache/
+/team claim &lt;task-id&gt; coding-implementer 300000
+/team complete &lt;task-id&gt; coding-implementer &lt;version&gt; 实现并验证完成
+
+/workflow
+/workflow start ./workflow.json --input "补齐回归测试"
+/workflow run &lt;run-id&gt;
+/workflow journal &lt;run-id&gt;
+/workflow pause &lt;run-id&gt;
+/workflow resume &lt;run-id&gt;
+/workflow cancel &lt;run-id&gt; "需求变更"</code></pre>
+            </div>
+            <div class="docs-table-wrap">
+              <table class="docs-table">
+                <thead>
+                  <tr>
+                    <th>对象</th>
+                    <th>回答的问题</th>
+                    <th>持久事实</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Todo</td>
+                    <td>模型认为做到哪一步</td>
+                    <td><code>session_todos</code></td>
+                  </tr>
+                  <tr>
+                    <td>TeamTask</td>
+                    <td>谁在何时能安全执行这个节点</td>
+                    <td>owner、blockedBy、writeSet、claim、version</td>
+                  </tr>
+                  <tr>
+                    <td>WorkflowRun</td>
+                    <td>整个多阶段流程进行到哪</td>
+                    <td>nodeStates、预算、终态和 Run lease</td>
+                  </tr>
+                  <tr>
+                    <td>Journal</td>
+                    <td>状态为什么变化</td>
+                    <td>append-only step/run 事件</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <aside class="docs-callout" data-tone="warning">
+              <span class="docs-callout-mark">UNKNOWN</span>
+              <p>
+                有副作用的步骤开始后进程退出，会停在 <code>unknown</code>。先检查工作区、命令和
+                外部服务，再决定修复；系统不会自动重放。
+              </p>
+            </aside>
+          </section>
+
+          <section class="docs-section" aria-labelledby="memory-skills">
+            <h2 class="docs-section-anchor" id="memory-skills">记忆与 Skill</h2>
+            <p>
+              只有明确说“记住”的请求才生成长期记忆候选。候选经过审核后才进入后续会话；当前会话
+              已冻结的记忆快照不会自动刷新。
+            </p>
+            <div class="docs-code" data-language="cli">
+              <pre><code>/memory remember 项目约定 :: 提交前必须运行 pnpm check
+/memory search 发布流程
+/memory forget &lt;id&gt;
+/skills pending
+/skills approve &lt;id&gt;
+/skills archive &lt;id&gt;</code></pre>
+            </div>
+            <p>
+              Web“设置 → 记忆”支持筛选、编辑、来源查看、归档和恢复；“设置 → 技能”支持批准、
+              拒绝、归档与恢复。记忆和 Skill 仍然是普通上下文，不能修改权限、Hook 或沙箱。
+            </p>
+          </section>
+
+          <section class="docs-section" aria-labelledby="long-tasks">
+            <h2 class="docs-section-anchor" id="long-tasks">长任务与 PTY</h2>
+            <p>
+              开发服务器、watch、长构建和需要交互的终端任务使用后台命令，不占用当前回答。
+            </p>
+            <div class="docs-code" data-language="cli">
+              <pre><code>/commands
+/commands capabilities
+/commands status &lt;task-id&gt;
+/commands log &lt;task-id&gt;
+/commands input &lt;task-id&gt;
+/commands resize &lt;task-id&gt; 120 40
+/commands cancel &lt;task-id&gt;</code></pre>
+            </div>
+            <ul>
+              <li>普通命令与 PTY 使用同一个 task ID 和增量日志模型。</li>
+              <li>POSIX PTY 需要 Python 3；Windows PTY 依赖可选 node-pty/OpenConsole。</li>
+              <li>Windows sandboxed PTY 当前 fail closed；普通后台命令仍可用。</li>
+              <li>Web“设置 → 长任务”可查看输出、输入、尺寸和取消。</li>
+            </ul>
+          </section>
+
+          <section class="docs-section" aria-labelledby="recovery">
+            <h2 class="docs-section-anchor" id="recovery">恢复与回退</h2>
+            <p>
+              先区分“模型/审批失败”和“副作用未知”。前者可以从持久检查点继续；后者必须先检查现场。
+            </p>
+            <div class="docs-code" data-language="cli">
+              <pre><code>/status
+/requests &lt;turn-id&gt;
+/resume-turn
+/resume-turn confirm
+/undo list
+/undo diff &lt;turn-id&gt; src/auth/session.ts
+/undo session &lt;turn-id&gt;
+/undo all &lt;turn-id&gt;
+/diagnostics</code></pre>
+            </div>
+            <div class="docs-table-wrap">
+              <table class="docs-table">
+                <thead>
+                  <tr>
+                    <th>恢复范围</th>
+                    <th>会改变什么</th>
+                    <th>不会做什么</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>仅文件</td>
+                    <td>按 checkpoint 恢复文件 before 状态</td>
+                    <td>不会回退对话</td>
+                  </tr>
+                  <tr>
+                    <td>仅会话</td>
+                    <td>回退消息、事件、todo 和待审批边界</td>
+                    <td>不会修改工作区文件</td>
+                  </tr>
+                  <tr>
+                    <td>全部</td>
+                    <td>先预检冲突，再恢复文件与会话</td>
+                    <td>外部修改冲突时整批停止</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <p>
+              Web 的会话累计行提供“检查点 · N”按钮。弹窗中可查看关联请求、文件 diff、
+              时间、turn ID 和恢复动作；输入框上方行宽按内容收缩。
+            </p>
+          </section>
+
+          <section class="docs-section" aria-labelledby="remote">
+            <h2 class="docs-section-anchor" id="remote">远程访问与设备</h2>
+            <p>
+              默认只监听 loopback。需要从另一台设备访问时，至少设置 32 字符 owner token，并让
+              应用继续位于 TLS 终止代理之后。
+            </p>
+            <div class="docs-code" data-language="shell">
+              <pre><code>export CLAWSMITH_API_TOKEN="$(openssl rand -hex 32)"
+HOST=0.0.0.0 CLAWSMITH_ALLOW_REMOTE=1 clawsmith web</code></pre>
+            </div>
+            <p>
+              登录后可在“设置 → 设备”配对 operator 或 viewer。viewer 只能读取授权 workspace，
+              撤销设备后它的 Cookie 和 Bearer 立即失效。
+            </p>
+            <aside class="docs-callout" data-tone="warning">
+              <span class="docs-callout-mark">NETWORK</span>
+              <p>
+                不要把明文 HTTP 端口直接暴露到不可信网络。远程访问仍建议使用 TLS 代理、
+                最小 workspace 授权和可撤销设备 token。
+              </p>
+            </aside>
+          </section>
+
+          <section class="docs-section" aria-labelledby="commands">
+            <h2 class="docs-section-anchor" id="commands">命令速查</h2>
+            <div class="docs-table-wrap">
+              <table class="docs-table">
+                <thead>
+                  <tr>
+                    <th>命令</th>
+                    <th>用途</th>
+                    <th>入口</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><code>/model</code></td>
+                    <td>配置 Provider、模型和 API Key</td>
+                    <td>CLI</td>
+                  </tr>
+                  <tr>
+                    <td><code>/providers</code></td>
+                    <td>打开模型配置</td>
+                    <td>Web</td>
+                  </tr>
+                  <tr>
+                    <td><code>/scene</code></td>
+                    <td>查看或切换场景，运行场景 Workflow</td>
+                    <td>CLI / Web</td>
+                  </tr>
+                  <tr>
+                    <td><code>/agents</code></td>
+                    <td>查看和管理 Agent 定义</td>
+                    <td>CLI</td>
+                  </tr>
+                  <tr>
+                    <td><code>/plan</code></td>
+                    <td>设置 goal、提交或审批 plan</td>
+                    <td>CLI</td>
+                  </tr>
+                  <tr>
+                    <td><code>/team</code></td>
+                    <td>管理任务依赖、claim 和 mailbox</td>
+                    <td>CLI</td>
+                  </tr>
+                  <tr>
+                    <td><code>/workflow</code></td>
+                    <td>运行、暂停、恢复和查看 journal</td>
+                    <td>CLI</td>
+                  </tr>
+                  <tr>
+                    <td><code>/commands</code></td>
+                    <td>查看后台长任务</td>
+                    <td>CLI</td>
+                  </tr>
+                  <tr>
+                    <td><code>/memory</code></td>
+                    <td>写入、搜索、编辑和归档记忆</td>
+                    <td>CLI</td>
+                  </tr>
+                  <tr>
+                    <td><code>/skills</code></td>
+                    <td>审核、归档和恢复 Skill</td>
+                    <td>CLI</td>
+                  </tr>
+                  <tr>
+                    <td><code>/security</code></td>
+                    <td>查看安全处置与恢复动作</td>
+                    <td>CLI</td>
+                  </tr>
+                  <tr>
+                    <td><code>/undo</code></td>
+                    <td>查看检查点、diff 和恢复范围</td>
+                    <td>CLI</td>
+                  </tr>
+                  <tr>
+                    <td><code>/resume-turn</code></td>
+                    <td>从持久失败检查点继续</td>
+                    <td>CLI</td>
+                  </tr>
+                  <tr>
+                    <td><code>/diagnostics</code></td>
+                    <td>生成不含正文和路径的诊断包</td>
+                    <td>CLI</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
+
+          <section class="docs-section" aria-labelledby="sdk">
+            <h2 class="docs-section-anchor" id="sdk">SDK 与协议</h2>
+            <p>
+              TypeScript SDK 封装协议协商、SSE、sequence 去重、审批、取消和 artifact 读取。
+              协议 v21 保持最低客户端 v20 的兼容窗口。
+            </p>
+            <div class="docs-code" data-language="typescript">
+              <pre><code>import { ClawsmithClient } from 'clawsmith/sdk'
+
+const client = new ClawsmithClient({
+  baseUrl: 'http://127.0.0.1:3210',
+})
+const session = await client.createSession({ title: 'SDK task' })
+
+let lastSequence = 0
+for await (const event of client.submitTurn(session.sessionId, task)) {
+  lastSequence = event.sequence
+}</code></pre>
+            </div>
+            <p>
+              客户端不应自行推导“任务完成”。终态以 <code>turn.completed</code>、
+              <code>turn.failed</code> 或 <code>turn.cancelled</code> 为准；终态事件始终是最终事实。
+            </p>
+          </section>
+
+          <section class="docs-section" aria-labelledby="upgrade">
+            <h2 class="docs-section-anchor" id="upgrade">更新与版本</h2>
+            <p>
+              启动检查只读取 npm 的 latest dist-tag。网络失败、CI 和非交互终端会静默跳过，
+              不会阻止 Agent 启动。
+            </p>
+            <div class="docs-code" data-language="shell">
+              <pre><code># 查看当前版本
+clawsmith --version
+
+# 覆盖升级
+npm install -g clawsmith@latest
+
+# 暂时关闭启动检查
+CLAWSMITH_DISABLE_UPDATE_CHECK=1 clawsmith
+
+# 确认实际命中的全局安装
+command -v clawsmith
+Get-Command clawsmith   # Windows PowerShell</code></pre>
+            </div>
+            <ul>
+              <li>“跳过该版本”只屏蔽当前检测到的 latest；更高版本仍会提醒。</li>
+              <li>覆盖安装不会删除 <code>CLAWSMITH_HOME</code> 中的配置和会话。</li>
+              <li>安装后仍是旧版时，通常是 PATH 中命中了另一套全局安装。</li>
+            </ul>
+          </section>
+
+          <section class="docs-section" aria-labelledby="troubleshooting">
+            <h2 class="docs-section-anchor" id="troubleshooting">常见问题排查</h2>
+            <div class="docs-table-wrap">
+              <table class="docs-table">
+                <thead>
+                  <tr>
+                    <th>现象</th>
+                    <th>先检查</th>
+                    <th>处理</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>启动提示 Node 版本不足</td>
+                    <td><code>node --version</code></td>
+                    <td>升级到 22.13+，再重新运行。</td>
+                  </tr>
+                  <tr>
+                    <td>升级后仍显示旧版本</td>
+                    <td><code>command -v clawsmith</code></td>
+                    <td>清理实际命中的重复全局安装并覆盖安装。</td>
+                  </tr>
+                  <tr>
+                    <td>Web 只显示 Demo</td>
+                    <td>“设置 → 模型”的 Provider 状态</td>
+                    <td>配置 Base URL、模型和 Key，并把 Provider 设为默认。</td>
+                  </tr>
+                  <tr>
+                    <td>写操作一直等待</td>
+                    <td>审批卡和当前权限模式</td>
+                    <td>核对路径或命令后允许一次；必要时切换权限模式。</td>
+                  </tr>
+                  <tr>
+                    <td>回答中断或工具结果未知</td>
+                    <td><code>/status</code>、<code>/requests</code></td>
+                    <td>先检查工作区与外部副作用，再恢复或回退。</td>
+                  </tr>
+                  <tr>
+                    <td>Workflow 停在 unknown</td>
+                    <td><code>/workflow journal &lt;run-id&gt;</code></td>
+                    <td>检查 side-effect step；不要直接重放。</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="docs-code" data-language="cli">
+              <pre><code>/doctor
+/status
+/diagnostics
+/requests &lt;turn-id&gt;
+/security</code></pre>
+            </div>
+          </section>
+
+          <section class="docs-section" aria-labelledby="data">
+            <h2 class="docs-section-anchor" id="data">数据目录与边界</h2>
+            <div class="docs-code" data-language="text">
+              <pre><code>~/.clawsmith/
+  config.json          Provider 配置
+  update-state.json    已跳过的更新版本
+  sessions.sqlite      会话、事件、审批、租约、任务和 Workflow
+  memory/              长期记忆与归档
+  skills/              Skill、候选与归档
+  agents/              AGENTS.md 定义与启用状态
+  snapshots/           文件检查点
+  artifacts/           大工具输出
+  commands/            后台任务日志和状态
+  security/            认证与恢复审计
+  diagnostics/         诊断包</code></pre>
+            </div>
+            <p>
+              会话、记忆和 Skill 默认保存在本机；模型请求仍会发送到你配置的 Provider。工作区路径、
+              命令沙箱、Hook 和审批也无法被长期记忆或 Agent manifest 覆盖。
+            </p>
+          </section>
+
+          <footer class="docs-footer">
+            <nav class="docs-footer-nav" aria-label="文档页脚">
+              <a href="../">产品首页</a>
+              <a href="#overview">回到顶部</a>
+              <a href="https://www.npmjs.com/package/clawsmith" target="_blank" rel="noreferrer">
+                npm
+              </a>
+            </nav>
+            <span>clawsmith v0.1.5 · 本地优先，结果可验证。</span>
+          </footer>
+        </article>
+      </main>
+
+      <aside class="docs-toc" aria-label="本页目录">
+        <p class="docs-toc-title">On this page</p>
+        <nav class="docs-toc-nav" data-docs-toc></nav>
+      </aside>
+    </div>
+
+    <script src="./docs.js?v=20261027-1" defer></script>
+  </body>
+</html>

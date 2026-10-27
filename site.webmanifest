@@ -1,0 +1,17 @@
+{
+  "name": "clawsmith",
+  "short_name": "clawsmith",
+  "description": "本地优先的 coding agent，提供 CLI 与 Web 工作台、审批、验证和会话恢复。",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#edf0ea",
+  "theme_color": "#121918",
+  "icons": [
+    {
+      "src": "./favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}

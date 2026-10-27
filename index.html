@@ -1,0 +1,1094 @@
+<!doctype html>
+<!-- clawsmith 产品官网：产品定位、运行机制、CLI/Web 使用指南与安全边界。 -->
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="clawsmith 是本地优先的 coding agent，提供 CLI 与 Web 工作台。它可以读取项目、修改代码、运行命令和验证结果，并保留审批、会话与恢复证据。"
+    />
+    <meta name="theme-color" content="#121918" />
+    <link rel="manifest" href="./site.webmanifest" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="clawsmith — 把任务交给 Agent，把控制权留在本地" />
+    <meta
+      property="og:description"
+      content="用 CLI 或 Web 发起真实代码任务。clawsmith 共享一套本地会话、审批、验证和恢复机制。"
+    />
+    <meta property="og:url" content="https://sql668.github.io/clawsmith-site/" />
+    <meta property="og:site_name" content="clawsmith" />
+    <meta property="og:image" content="https://sql668.github.io/clawsmith-site/og-image.png" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="clawsmith — 把任务交给 Agent，把控制权留在本地" />
+    <meta
+      name="twitter:description"
+      content="用 CLI 或 Web 发起真实代码任务。clawsmith 共享一套本地会话、审批、验证和恢复机制。"
+    />
+    <meta name="twitter:image" content="https://sql668.github.io/clawsmith-site/og-image.png" />
+    <link rel="canonical" href="https://sql668.github.io/clawsmith-site/" />
+    <title>clawsmith — 本地优先的 coding agent</title>
+    <link rel="icon" href="./favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="./styles.css?v=20261027-1" />
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "clawsmith",
+        "applicationCategory": "DeveloperApplication",
+        "operatingSystem": "macOS, Linux, Windows",
+        "description": "本地优先的 coding agent，用 CLI 或 Web 完成代码修改、命令执行、验证与恢复，并保留完整审批轨迹。",
+        "softwareVersion": "0.1.5",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD"
+        }
+      }
+    </script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "我的代码会上传到 clawsmith 的服务器吗？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "会话、记忆、Skill 和权限数据默认保存在本机。模型请求会发送到你配置的模型服务，因此应选择符合团队数据要求的 Provider。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "必须配置 API Key 才能体验吗？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "不需要。没有配置模型服务时，clawsmith 会进入离线 Demo；执行真实代码任务需要配置 OpenAI-compatible Provider。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Agent 可以直接执行任何命令吗？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "不可以。写操作和高风险命令会根据当前权限模式要求审批，灾难命令始终被拒绝，命令还会经过沙箱和资源限制。"
+            }
+          }
+        ]
+      }
+    </script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">跳到主要内容</a>
+
+    <header class="site-header" data-header>
+      <a class="brand" href="#top" aria-label="clawsmith v0.1.5 首页">
+        <svg class="brand-mark" viewBox="0 0 44 44" aria-hidden="true">
+          <path d="M6 8h32v28H6z" />
+          <path d="M13 14 20 30M21 12l7 20M29 10l7 22" />
+        </svg>
+        <span class="brand-word">clawsmith</span>
+        <span class="brand-version">v0.1.5</span>
+      </a>
+
+      <button
+        class="menu-toggle"
+        type="button"
+        aria-expanded="false"
+        aria-controls="primary-navigation"
+        data-menu-toggle
+      >
+        <span></span>
+        <span></span>
+        <span></span>
+        <span class="sr-only">打开导航</span>
+      </button>
+
+      <nav class="site-nav" id="primary-navigation" aria-label="主要导航" data-navigation>
+        <a href="#capabilities">产品能力</a>
+        <a href="#workflow">工作方式</a>
+        <a href="./docs/">使用手册</a>
+        <a href="#safety">安全边界</a>
+        <a href="#faq">常见问题</a>
+        <a class="nav-cta" href="#start">开始使用</a>
+      </nav>
+    </header>
+
+    <main id="main">
+      <section class="hero" id="top">
+        <div class="hero-grid" aria-hidden="true"></div>
+        <div class="hero-copy" data-reveal>
+          <div class="eyebrow">
+            <span class="eyebrow-dot"></span>
+            Local coding agent · CLI + Web
+          </div>
+          <h1>
+            让 Agent 完成任务，
+            <span>让边界留在本地。</span>
+          </h1>
+          <p class="hero-lede">
+            clawsmith 在你的项目里读取代码、完成修改、运行命令并验证结果。CLI
+            适合快速执行，Web 面板适合审阅与多设备观察；两者共享同一条可回放、可恢复的本地会话。
+          </p>
+          <div class="hero-actions">
+            <a class="button button-primary" href="./docs/">
+              查看使用手册
+              <svg viewBox="0 0 20 20" aria-hidden="true">
+                <path d="M4 10h12M11 5l5 5-5 5" />
+              </svg>
+            </a>
+            <a class="button button-quiet" href="#capabilities">
+              浏览产品能力
+            </a>
+          </div>
+          <ul class="hero-meta" aria-label="运行条件">
+            <li>Node.js 22.13+</li>
+            <li>CLI + Web 同一会话</li>
+            <li>OpenAI-compatible Provider</li>
+          </ul>
+        </div>
+
+        <div class="agent-window" data-reveal>
+          <div class="window-topbar">
+            <div class="window-lights" aria-hidden="true">
+              <i></i><i></i><i></i>
+            </div>
+            <div class="view-switcher" role="tablist" aria-label="界面预览">
+              <button
+                class="view-tab is-active"
+                type="button"
+                role="tab"
+                aria-selected="true"
+                aria-controls="preview-cli"
+                id="tab-cli"
+                data-view-tab="cli"
+              >
+                CLI
+              </button>
+              <button
+                class="view-tab"
+                type="button"
+                role="tab"
+                aria-selected="false"
+                aria-controls="preview-web"
+                id="tab-web"
+                data-view-tab="web"
+              >
+                Web
+              </button>
+            </div>
+            <span class="window-session">session / 07f3</span>
+          </div>
+
+          <div class="window-body">
+            <div
+              class="preview-panel is-active"
+              id="preview-cli"
+              role="tabpanel"
+              aria-labelledby="tab-cli"
+              data-view-panel="cli"
+            >
+              <div class="terminal-heading">
+                <span>~/projects/checkout</span>
+                <span class="terminal-branch">main</span>
+              </div>
+              <div class="terminal-log">
+                <p class="prompt-line">
+                  <span>›</span>
+                  修复登录超时，并补上回归测试
+                </p>
+                <div class="trace-line">
+                  <span class="trace-mark">01</span>
+                  <span class="trace-tool">search_files</span>
+                  <span class="trace-note">定位 auth 调用链</span>
+                </div>
+                <div class="trace-line">
+                  <span class="trace-mark">02</span>
+                  <span class="trace-tool">read_file</span>
+                  <span class="trace-note">4 个相关文件</span>
+                </div>
+                <div class="trace-line trace-wait">
+                  <span class="trace-mark">03</span>
+                  <span class="trace-tool">permission</span>
+                  <span class="trace-note">等待写入审批</span>
+                </div>
+                <div class="trace-line">
+                  <span class="trace-mark">04</span>
+                  <span class="trace-tool">edit_file</span>
+                  <span class="trace-note">唯一匹配后原子替换</span>
+                </div>
+                <div class="trace-line">
+                  <span class="trace-mark">05</span>
+                  <span class="trace-tool">run_command</span>
+                  <span class="trace-note">pnpm check</span>
+                </div>
+                <div class="verified-line">
+                  <span></span>
+                  Verification passed
+                  <b>exit_code: 0</b>
+                </div>
+              </div>
+              <div class="terminal-composer">
+                <span class="prompt-symbol">›</span>
+                <span class="composer-copy">继续补充任务，或 /review 当前变更</span>
+                <span class="typing-cursor" aria-hidden="true"></span>
+              </div>
+            </div>
+
+            <div
+              class="preview-panel web-preview"
+              id="preview-web"
+              role="tabpanel"
+              aria-labelledby="tab-web"
+              data-view-panel="web"
+              hidden
+            >
+              <aside class="web-sidebar">
+                <div class="web-workspace">
+                  <span class="workspace-icon">mx</span>
+                  <span>
+                    checkout
+                    <small>3 sessions</small>
+                  </span>
+                </div>
+                <div class="session-item is-active">
+                  <i></i>
+                  修复登录超时
+                  <small>刚刚</small>
+                </div>
+                <div class="session-item">
+                  <i></i>
+                  补齐支付测试
+                  <small>昨天</small>
+                </div>
+                <div class="session-item">
+                  <i></i>
+                  排查构建警告
+                  <small>周一</small>
+                </div>
+              </aside>
+              <div class="web-content">
+                <div class="web-heading">
+                  <span>修复登录超时</span>
+                  <small>default permission</small>
+                </div>
+                <div class="web-task-card">
+                  <div class="task-card-head">
+                    <span class="task-dot"></span>
+                    当前任务
+                    <small>3 / 4 complete</small>
+                  </div>
+                  <ul class="task-list">
+                    <li class="done">定位超时路径</li>
+                    <li class="done">更新重试策略</li>
+                    <li class="done">补充边界测试</li>
+                    <li class="current">运行验证命令</li>
+                  </ul>
+                </div>
+                <figure class="diff-card" aria-label="修改预览">
+                  <figcaption class="diff-head">
+                    <span>src/auth/retry.ts</span>
+                    <span>+12 −3</span>
+                  </figcaption>
+                  <pre><code><span class="diff-remove">- const timeout = 1200</span>
+<span class="diff-add">+ const timeout = backoff(attempt)</span>
+<span class="diff-add">+ if (attempt &gt; maxAttempts) throw</span></code></pre>
+                </figure>
+              </div>
+            </div>
+          </div>
+
+          <div class="window-footer">
+            <span><i class="status-light"></i> 同一份 SQLite 会话</span>
+            <span>events · approvals · artifacts</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="signal-strip" aria-label="产品概览">
+        <div>
+          <strong>CLI + Web</strong>
+          <span>快执行与可视化审阅共用一套状态</span>
+        </div>
+        <div>
+          <strong>5 档权限</strong>
+          <span>从只读规划到明确确认的受控放行</span>
+        </div>
+        <div>
+          <strong>可验证结果</strong>
+          <span>工具结果、退出码与修改证据可复核</span>
+        </div>
+        <div>
+          <strong>可恢复会话</strong>
+          <span>SQLite、检查点与事件回放留在本机</span>
+        </div>
+      </section>
+
+      <section class="manifesto section">
+        <div class="section-label">A different starting point</div>
+        <div class="manifesto-grid">
+          <h2>不是另一个聊天窗口，<br />而是一条可执行的工作流。</h2>
+          <div class="manifesto-copy">
+            <p>
+              你只需要说清目标。Agent 会决定读取哪些文件、调用什么工具、何时请求许可，
+              再把你配置的验证命令跑完；CLI 与 Web 展示的是同一条真实执行链。
+            </p>
+            <p>
+              任务可以暂停、审阅、回退和恢复。会话不是一次性的回答，而是保存在本机、
+              可以继续追踪的工程记录。
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section class="capabilities section" id="capabilities">
+        <div class="section-intro">
+          <div>
+            <div class="section-label">Capabilities</div>
+            <h2>从一条任务，到可核对的交付。</h2>
+          </div>
+          <p>
+            执行、上下文、模型、恢复和扩展都在同一套 Agent Core
+            内完成。你可以换入口，但不需要重新解释项目，也不会得到两套互相冲突的会话。
+          </p>
+        </div>
+
+        <div class="capability-grid">
+          <article class="capability-card capability-wide">
+            <div class="card-index">01 / EXECUTION</div>
+            <div>
+              <h3>真正的工具循环</h3>
+              <p>
+                搜索、读取、编辑、命令和多模态输入组成连续循环。只读工具可并行，写操作保持顺序和授权。
+              </p>
+            </div>
+            <ul class="code-snippet" aria-label="工具调用示例">
+              <li>read_file</li>
+              <li>edit_file</li>
+              <li>run_command</li>
+            </ul>
+          </article>
+
+          <article class="capability-card">
+            <div class="card-index">02 / CONTEXT</div>
+            <h3>理解项目的运行规则</h3>
+            <p>
+                自动加载工作区规则和项目上下文。修改代码后，可以把
+                <code>pnpm check</code> 一类命令设为完成门槛，没有成功退出码就不能宣称完成。
+            </p>
+            <div class="rule-paper">
+              <span>AGENTS.md</span>
+              <strong>context / frozen</strong>
+            </div>
+          </article>
+
+          <article class="capability-card">
+            <div class="card-index">03 / MEMORY</div>
+            <h3>会积累，但不会擅自决定</h3>
+            <p>
+              长期记忆与可复用 Skill 都从真实轨迹中形成。候选内容经过审核后才影响后续会话。
+            </p>
+            <div class="memory-stack" aria-hidden="true">
+              <span>USER.md</span>
+              <span>MEMORY.md</span>
+              <span>SKILL.md</span>
+            </div>
+          </article>
+
+          <article class="capability-card">
+            <div class="card-index">04 / RECOVERY</div>
+            <h3>会话不在刷新后消失</h3>
+            <p>
+                消息、事件、审批、任务进度和检查点写入 SQLite。刷新页面、换客户端或进程中断后，
+                仍能按事件序号回放并判断哪些动作已经发生。
+            </p>
+            <div class="event-rail" aria-hidden="true">
+              <i></i><i></i><i></i><i></i>
+            </div>
+          </article>
+
+          <article class="capability-card capability-wide capability-dark">
+            <div class="card-index">05 / EXTENSIBILITY</div>
+            <div>
+              <h3>给模型更多工具，不把上下文一次占满。</h3>
+              <p>
+                MCP、LSP、Skill 与后台调查工具按需发现。长命令、独立子 Agent
+                和大工具输出各有持久化边界，父会话只接收必要摘要与可回查引用。
+              </p>
+            </div>
+            <div class="tool-orbit" aria-hidden="true">
+              <span>MCP</span>
+              <span>LSP</span>
+              <span>SKILL</span>
+              <span>SUBAGENT</span>
+              <b>agent</b>
+            </div>
+          </article>
+
+          <article class="capability-card capability-wide">
+            <div class="card-index">06 / SCENES</div>
+            <div>
+              <h3>同一 Agent，按任务切换工作方法。</h3>
+              <p>
+                Coding 区分小修与复杂多角色流程，Blog 可选择调研后撰稿审稿，Brainstorm
+                固定生成多个方向再质疑和收敛。场景只改变工作流，不会扩大工具、网络或权限边界。
+              </p>
+            </div>
+            <ul class="code-snippet" aria-label="场景命令示例">
+              <li>/scene coding run …</li>
+              <li>/team</li>
+              <li>/workflow</li>
+            </ul>
+          </article>
+        </div>
+      </section>
+
+      <section class="workflow section" id="workflow">
+        <div class="workflow-heading">
+          <div class="section-label">The loop</div>
+          <h2>每一步都留下证据。</h2>
+        </div>
+
+        <div class="workflow-steps">
+          <article class="workflow-step">
+            <span class="step-number">01</span>
+            <div class="step-line"></div>
+            <div>
+              <p class="step-kicker">Bind</p>
+              <h3>绑定工作区</h3>
+              <p>
+                选择一个本地项目。文件访问、命令目录和项目记忆都被限制在这个边界内。
+              </p>
+            </div>
+          </article>
+          <article class="workflow-step">
+            <span class="step-number">02</span>
+            <div class="step-line"></div>
+            <div>
+              <p class="step-kicker">Delegate</p>
+              <h3>描述要完成的事</h3>
+              <p>
+                从 CLI 或 Web 发起任务。模型读取真实文件，形成任务进度，并在需要时请求许可。
+              </p>
+            </div>
+          </article>
+          <article class="workflow-step">
+            <span class="step-number">03</span>
+            <div class="step-line"></div>
+            <div>
+              <p class="step-kicker">Prove</p>
+              <h3>审阅结果，而不是猜测</h3>
+              <p>
+                检查工具结果、修改摘要与验证退出码。失败就停在失败处，不把不确定包装成完成。
+              </p>
+            </div>
+          </article>
+        </div>
+
+        <div
+          class="trace-strip"
+          role="img"
+          aria-label="执行轨迹：prompt、context、tools、approval、verified"
+        >
+          <span aria-hidden="true">prompt</span>
+          <i aria-hidden="true"></i>
+          <span aria-hidden="true">context</span>
+          <i aria-hidden="true"></i>
+          <span aria-hidden="true">tools</span>
+          <i aria-hidden="true"></i>
+          <span aria-hidden="true">approval</span>
+          <i aria-hidden="true"></i>
+          <span class="trace-verified" aria-hidden="true">verified</span>
+        </div>
+      </section>
+
+      <!-- 使用指南按真实工作入口拆分；共享会话带说明 CLI 与 Web 不是两套状态。 -->
+      <section class="guide section" id="guide">
+        <div class="guide-heading">
+          <div>
+            <div class="section-label">Usage guide</div>
+            <h2>从第一条任务，<br />走到日常工作流。</h2>
+          </div>
+          <div class="guide-heading-copy">
+            <p>
+              先选择顺手的工作入口。CLI 适合在当前终端连续处理任务，Web
+              适合查看修改、审批和长任务。无论从哪边开始，会话都落在同一个本地
+              SQLite 数据库里。
+            </p>
+            <div class="guide-sequence">
+              <span>安装</span>
+              <i></i>
+              <span>绑定项目</span>
+              <i></i>
+              <span>连接模型</span>
+              <i></i>
+              <span>执行并验证</span>
+            </div>
+          </div>
+        </div>
+
+        <a class="guide-manual-link" href="./docs/">
+          <span>打开完整使用手册</span>
+          <span>安装、CLI、Web、场景、Workflow、恢复与升级 →</span>
+        </a>
+
+        <div class="guide-workbench">
+          <article class="guide-track" id="guide-cli">
+            <header class="guide-track-head">
+              <div>
+                <span class="guide-track-label">CLI / TERMINAL</span>
+                <h3>在项目目录里直接开始</h3>
+              </div>
+              <span class="guide-track-badge">Fast path</span>
+            </header>
+            <p class="guide-track-lede">
+              适合快速定位代码、连续修改、运行测试，以及用脚本发起单次任务。
+            </p>
+
+            <ol class="guide-steps">
+              <li>
+                <span class="guide-step-number">01</span>
+                <div>
+                  <strong>安装并进入项目</strong>
+                  <div class="guide-command">
+                    <button
+                      class="guide-copy"
+                      type="button"
+                      data-copy-target="guide-cli-install"
+                    >
+                      复制
+                    </button>
+                    <pre id="guide-cli-install"><code>npm install -g clawsmith
+cd ~/projects/my-app
+clawsmith</code></pre>
+                  </div>
+                  <p>在项目根目录启动，当前目录会自动成为 Agent 的工作区。</p>
+                </div>
+              </li>
+              <li>
+                <span class="guide-step-number">02</span>
+                <div>
+                  <strong>连接模型服务</strong>
+                  <div class="guide-command">
+                    <button
+                      class="guide-copy"
+                      type="button"
+                      data-copy-target="guide-cli-model"
+                    >
+                      复制
+                    </button>
+                    <pre id="guide-cli-model"><code>/model status
+/model configure openai
+/model default openai/gpt-4o-mini</code></pre>
+                  </div>
+                  <p>
+                    也可以直接启动离线 Demo。真实任务需要 OpenAI-compatible Provider。
+                  </p>
+                </div>
+              </li>
+              <li>
+                <span class="guide-step-number">03</span>
+                <div>
+                  <strong>描述结果，而不是步骤</strong>
+                  <p class="guide-prompt-example">
+                    “先阅读项目，定位登录超时。修复后补充回归测试，并运行 pnpm check。”
+                  </p>
+                  <p>
+                    默认模式下只读分析会直接执行；写文件和变更命令会暂停等待你的审批。
+                    输入 <code>y</code> 允许本次动作，输入其他内容拒绝。
+                  </p>
+                </div>
+              </li>
+              <li>
+                <span class="guide-step-number">04</span>
+                <div>
+                  <strong>审阅结果、回退或退出</strong>
+                  <div class="guide-command guide-command-compact">
+                    <pre><code>/undo list
+/undo &lt;turn-id&gt;
+/exit</code></pre>
+                  </div>
+                  <p>
+                    检查工具结果和验证退出码。文件被外部修改时，整批回退会停止，而不是覆盖你的内容。
+                  </p>
+                </div>
+              </li>
+            </ol>
+          </article>
+
+          <article class="guide-track guide-track-web" id="guide-web">
+            <header class="guide-track-head">
+              <div>
+                <span class="guide-track-label">WEB / WORKBENCH</span>
+                <h3>把执行过程摊开来看</h3>
+              </div>
+              <span class="guide-track-badge guide-track-badge-light">Visual path</span>
+            </header>
+            <p class="guide-track-lede">
+              适合第一次使用、审阅 diff、处理审批、观察长任务，以及从另一台设备只读查看。
+            </p>
+
+            <ol class="guide-steps">
+              <li>
+                <span class="guide-step-number">01</span>
+                <div>
+                  <strong>启动本地 Web 面板</strong>
+                  <div class="guide-command">
+                    <button
+                      class="guide-copy"
+                      type="button"
+                      data-copy-target="guide-web-start"
+                    >
+                      复制
+                    </button>
+                    <pre id="guide-web-start"><code>clawsmith web
+# http://127.0.0.1:3210</code></pre>
+                  </div>
+                  <p>默认只监听 loopback，不向局域网暴露端口。</p>
+                </div>
+              </li>
+              <li>
+                <span class="guide-step-number">02</span>
+                <div>
+                  <strong>添加工作区</strong>
+                  <p>
+                    点击左侧工作区旁的 <code>+</code>，选择本地项目目录。工作区决定文件访问、
+                    命令目录和项目记忆的边界。
+                  </p>
+                </div>
+              </li>
+              <li>
+                <span class="guide-step-number">03</span>
+                <div>
+                  <strong>配置全局模型</strong>
+                  <p>
+                    打开“设置 → 模型”，填写 Provider、Base URL、模型列表和 API
+                    Key。保存后把可用 Provider 设为默认。Key 只会显示“已配置”，不会回显。
+                  </p>
+                </div>
+              </li>
+              <li>
+                <span class="guide-step-number">04</span>
+                <div>
+                  <strong>发起任务并处理审批</strong>
+                  <p>
+                    点击“新建对话”，输入目标并发送。会话标题会在首条消息后生成；
+                    写操作出现时，在审批卡中核对路径和命令，再选择允许一次或拒绝。
+                  </p>
+                </div>
+              </li>
+              <li>
+                <span class="guide-step-number">05</span>
+                <div>
+                  <strong>检查 diff、任务与用量</strong>
+                  <p>
+                    工具卡显示真实执行结果，回答下方显示本轮 token。会话底部可查看检查点、
+                    修改 diff 和待恢复动作；输入 <code>/</code> 打开 Web 命令列表。
+                  </p>
+                </div>
+              </li>
+            </ol>
+          </article>
+        </div>
+
+        <div class="guide-shared">
+          <div class="guide-shared-mark">ONE SESSION</div>
+          <div>
+            <strong>Terminal 里开始，Web 里继续看。</strong>
+            <p>
+              CLI 和 Web 不复制对话。消息、工具事件、审批、命令任务和检查点都落在同一个
+              <code>~/.clawsmith/sessions.sqlite</code>；不同进程通过租约保证同一会话只有一个写入者。
+            </p>
+          </div>
+          <span>events → replay → recover</span>
+        </div>
+
+        <div class="guide-advanced">
+          <div class="guide-advanced-heading">
+            <div>
+              <div class="section-label">Advanced playbook</div>
+              <h3>日常进阶用法。</h3>
+            </div>
+            <p>
+              这些用法建立在基础流程之上。建议先用 <code>plan</code>
+              模式观察 Agent 的判断，再逐步扩大自动化范围。
+            </p>
+          </div>
+
+          <div class="guide-advanced-grid">
+            <article class="guide-advanced-card guide-advanced-wide">
+              <span class="guide-advanced-tag">AUTOMATION</span>
+              <h4>把只读分析接进脚本</h4>
+              <p>
+                一次性执行不打开交互面板。默认没有审批者，需要审批的动作会被拒绝；
+                用 <code>plan</code> 做只读自动化最安全。
+              </p>
+              <div class="guide-command">
+                <button
+                  class="guide-copy"
+                  type="button"
+                  data-copy-target="guide-oneshot"
+                >
+                  复制
+                </button>
+                <pre id="guide-oneshot"><code>clawsmith --permission-mode plan \
+  --prompt "分析测试失败，给出最小修复方案" \
+  --result-json ./agent-result.json</code></pre>
+              </div>
+              <p class="guide-warning">
+                交互式写任务不要直接加 <code>allow-all</code>。确需无人值守写入时，必须在受信任、
+                可恢复的隔离工作区中显式使用 <code>--permission-mode allow-all --yes</code>。
+              </p>
+            </article>
+
+            <article class="guide-advanced-card">
+              <span class="guide-advanced-tag">MODEL + MODE</span>
+              <h4>模型与权限分开控制</h4>
+              <p>
+                模型选择决定“谁来推理”，权限模式决定“动作能走多远”。切换模型不会自动扩大权限。
+                <code>auto</code> 会在输出前按任务复杂度、上下文、工具/图片能力和成本选择候选；
+                健康检查失败或瞬时错误只会切换尚未产生输出的请求。
+              </p>
+              <div class="guide-command guide-command-compact">
+                <pre><code># CLI
+clawsmith --permission-mode plan
+/model switch
+
+# Web 输入框
+/permissions allow-all</code></pre>
+              </div>
+              <p>
+                Web 在输入框权限选择器中切换会话模式；持久 allow/ask/deny
+                规则位于“设置 → 权限”。
+              </p>
+            </article>
+
+            <article class="guide-advanced-card">
+              <span class="guide-advanced-tag">LONG TASKS</span>
+              <h4>让构建和开发服务器继续运行</h4>
+              <p>
+                对 Agent 说“启动开发服务器并等待我继续操作”。长任务会获得独立 task ID，
+                不受当前回答结束影响。
+              </p>
+              <div class="guide-command guide-command-compact">
+                <pre><code>/commands
+/commands log &lt;task-id&gt;
+/commands input &lt;task-id&gt;
+/commands cancel &lt;task-id&gt;</code></pre>
+              </div>
+              <p>
+                Web 在“设置 → 长任务”查看输出、标准输入、PTY 尺寸与停止操作。
+              </p>
+            </article>
+
+            <article class="guide-advanced-card">
+              <span class="guide-advanced-tag">RECOVERY</span>
+              <h4>失败时先确认副作用，再恢复</h4>
+              <p>
+                模型或审批失败可以从持久检查点继续；命令、网络等未知副作用必须先检查现场，
+                再显式确认。
+              </p>
+              <div class="guide-command guide-command-compact">
+                <pre><code>/resume-turn
+/resume-turn confirm
+/requests
+/diagnostics</code></pre>
+              </div>
+              <p>
+                Web 的“停止”只取消当前流。未知副作用仍会保守记录为失败，不会自动重放工具。
+              </p>
+            </article>
+
+            <article class="guide-advanced-card">
+              <span class="guide-advanced-tag">MEMORY + SKILLS</span>
+              <h4>把重复经验变成可审核资产</h4>
+              <p>
+                长期记忆和 Skill 都先形成候选，审核后才进入后续会话。它们不会直接修改权限规则。
+              </p>
+              <div class="guide-command guide-command-compact">
+                <pre><code>/memory remember 项目约定 :: 使用 pnpm 验证
+/memory search 发布流程
+/skills pending
+/skills approve &lt;id&gt;</code></pre>
+              </div>
+              <p>Web 在“设置 → 记忆 / 技能”审核、拒绝或归档。</p>
+            </article>
+
+            <article class="guide-advanced-card guide-advanced-wide">
+              <span class="guide-advanced-tag">SCENES + WORKFLOWS</span>
+              <h4>让多角色流程可恢复、可审计</h4>
+              <p>
+                选择场景后可以直接运行专属 DAG。实现、测试、评审角色分别在隔离 worktree
+                中工作；测试角色只能改测试目录并运行允许的测试命令，前序 patch 以 artifact
+                传给后续角色。
+              </p>
+              <div class="guide-command">
+                <button
+                  class="guide-copy"
+                  type="button"
+                  data-copy-target="guide-scene"
+                >
+                  复制
+                </button>
+                <pre id="guide-scene"><code>/scene coding
+/scene run 为解析器补齐错误分支和测试
+/team
+/workflow show &lt;run-id&gt;
+/workflow journal &lt;run-id&gt;</code></pre>
+              </div>
+              <p>
+                测试失败或评审 BLOCK 会带上 blockers 和 patch 进入有上限的返工。Workflow Run
+                与 journal 原子写入 SQLite；进程中断后已经开始的写步骤标记为 unknown，不会自动重放。
+                Web 在“设置 → 团队任务 / 工作流”查看阶段、负责人、产物和恢复控制。
+              </p>
+            </article>
+
+            <article class="guide-advanced-card guide-advanced-wide">
+              <span class="guide-advanced-tag">PROTOCOL + SDK</span>
+              <h4>从任意 sequence 重连，不复制状态推导</h4>
+              <p>
+                协议 v21 提供版本协商、能力清单、公共事件 Schema 和必须理解 / 可忽略事件分类。
+                TypeScript SDK 统一处理 SSE、去重、审批、取消和 artifact 读取，旧 v20 客户端仍在
+                兼容窗口内。
+              </p>
+              <div class="guide-command">
+                <pre><code class="language-ts">import { ClawsmithClient } from 'clawsmith/sdk'
+
+const client = new ClawsmithClient({ baseUrl: 'http://127.0.0.1:3210' })
+const capabilities = await client.capabilities()
+const session = await client.createSession({ title: 'SDK task' })
+
+for await (const event of client.submitTurn(session.sessionId, task)) {
+  lastSequence = event.sequence
+}</code></pre>
+              </div>
+              <p>
+                服务端对不兼容客户端返回 426，不静默降级。消息、工具、权限、取消、artifact 和错误
+                都有版本化 JSON Schema；同一主版本只允许可选字段和可忽略事件扩展。
+              </p>
+            </article>
+
+            <article class="guide-advanced-card guide-advanced-wide">
+              <span class="guide-advanced-tag">REMOTE + DEVICES</span>
+              <h4>从另一台设备查看，而不是直接暴露本地端口</h4>
+              <p>
+                默认 Web 只在本机可用。需要远程访问时，使用至少 32 字符的 owner
+                token，并在 TLS 终止代理后运行；不要直接把明文 HTTP 端口暴露到公网。
+              </p>
+              <div class="guide-command">
+                <button
+                  class="guide-copy"
+                  type="button"
+                  data-copy-target="guide-remote"
+                >
+                  复制
+                </button>
+                <pre id="guide-remote"><code>export CLAWSMITH_API_TOKEN="$(openssl rand -hex 32)"
+HOST=0.0.0.0 CLAWSMITH_ALLOW_REMOTE=1 clawsmith web</code></pre>
+              </div>
+              <p>
+                登录后进入“设置 → 设备”配对 operator 或 viewer。viewer
+                只能读取被授权的 workspace，撤销设备后它的 Cookie 和 Bearer 立即失效。
+              </p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="safety section" id="safety">
+        <div class="safety-copy">
+          <div class="section-label section-label-light">Permission by design</div>
+          <h2>能力越大，<br />边界越要具体。</h2>
+          <p>
+            审批不是最后一道装饰。路径限制、危险命令拦截、沙箱和审计在批准之后仍然生效。
+          </p>
+          <p class="text-link">系统边界不会被 allow-all 关闭。</p>
+        </div>
+
+        <div class="permission-board">
+          <div class="permission-board-head">
+            <span>permission mode</span>
+            <span>mutation policy</span>
+          </div>
+          <div class="permission-row">
+            <strong>default</strong>
+            <span>变更前逐次询问</span>
+            <i class="tone-ask">ASK</i>
+          </div>
+          <div class="permission-row">
+            <strong>plan</strong>
+            <span>只读分析与规划</span>
+            <i class="tone-read">READ</i>
+          </div>
+          <div class="permission-row">
+            <strong>accept-edits</strong>
+            <span>自动接受工作区编辑</span>
+            <i class="tone-edit">EDIT</i>
+          </div>
+          <div class="permission-row">
+            <strong>unattended</strong>
+            <span>无法确认时直接拒绝</span>
+            <i class="tone-deny">DENY</i>
+          </div>
+          <div class="permission-row">
+            <strong>allow-all</strong>
+            <span>二次确认后放行常规操作</span>
+            <i class="tone-open">OPEN</i>
+          </div>
+          <p class="permission-footnote">
+            allow-all 也不会关闭显式 deny、灾难命令拦截、路径边界和命令沙箱。
+          </p>
+        </div>
+      </section>
+
+      <section class="start section" id="start">
+        <div class="start-copy">
+          <div class="section-label">Quick start</div>
+          <h2>安装一次，两个入口随时用。</h2>
+          <p>
+            先运行 <code>clawsmith web</code> 打开可视化工作台，或在项目目录直接运行
+            <code>clawsmith</code>。第一次写任务前，用“设置 → 模型”或
+            <code>/model</code> 连接 Provider。
+          </p>
+          <div class="start-notes">
+            <span>无需配置也能体验离线 Demo</span>
+            <span>API Key 不回显、不写入会话库</span>
+          </div>
+        </div>
+
+        <div class="install-card">
+          <div class="install-card-head">
+            <span>Terminal</span>
+            <button type="button" class="copy-button" data-copy-target="install-command">
+              复制
+            </button>
+          </div>
+          <pre id="install-command"><code><span class="code-comment"># 安装</span>
+npm install -g clawsmith
+
+<span class="code-comment"># 启动 Web 面板</span>
+clawsmith web
+
+<span class="code-comment"># 或在项目目录启动 CLI</span>
+clawsmith</code></pre>
+          <div class="install-result">
+            <span class="status-light"></span>
+            <span>http://127.0.0.1:3210</span>
+            <small>local only</small>
+          </div>
+        </div>
+      </section>
+
+      <section class="faq section" id="faq">
+        <div class="faq-heading">
+          <div class="section-label">Questions</div>
+          <h2>开始之前，<br />你可能想知道。</h2>
+        </div>
+
+        <div class="faq-list">
+          <details>
+            <summary>
+              <span>我的代码会上传到 clawsmith 的服务器吗？</span>
+              <i></i>
+            </summary>
+            <p>
+              会话、记忆、Skill 和权限数据默认保存在本机。模型请求会发送到你配置的模型服务，
+              因此请选择符合个人或团队数据要求的 Provider。clawsmith 不会额外搭建一个中转云服务。
+            </p>
+          </details>
+          <details>
+            <summary>
+              <span>必须配置 API Key 才能体验吗？</span>
+              <i></i>
+            </summary>
+            <p>
+              不需要。clawsmith 默认使用离线 Demo，不会主动发起模型请求。
+              执行真实任务时再配置 OpenAI-compatible Provider。
+            </p>
+          </details>
+          <details>
+            <summary>
+              <span>Agent 可以直接执行任何命令吗？</span>
+              <i></i>
+            </summary>
+            <p>
+              不可以。写操作和高风险命令会根据权限模式请求审批；灾难命令会被硬拒绝；
+              命令还受超时、CPU、文件大小、输出和平台沙箱限制。
+            </p>
+          </details>
+          <details>
+            <summary>
+              <span>CLI 和 Web 是两套不同的会话吗？</span>
+              <i></i>
+            </summary>
+            <p>
+              不是。它们共享同一套 Agent Core、SQLite 会话、事件、权限和任务状态。
+              两个进程可以观察同一会话；同一时刻只有一个 turn 能取得执行租约。
+            </p>
+          </details>
+          <details>
+            <summary>
+              <span>支持哪些操作系统？</span>
+              <i></i>
+            </summary>
+            <p>
+              macOS、Linux 和 Windows 都支持 CLI、Web 与工作区文件操作。macOS 和
+              Linux 提供原生命令沙箱；Windows 默认使用实验性的 windows-acl
+              写入/删除部分隔离，读取和网络仍未隔离。需要严格边界时应显式配置 Docker。
+            </p>
+          </details>
+          <details>
+            <summary>
+              <span>当前是开源软件吗？</span>
+              <i></i>
+            </summary>
+            <p>
+              当前版本是专有软件。npm 分发包允许按许可证安装和运行；复制、再分发、商业托管或二次开发前，
+              请先阅读仓库中的许可证。
+            </p>
+          </details>
+        </div>
+      </section>
+
+      <section class="final-cta">
+        <div class="final-cta-mark" aria-hidden="true">///</div>
+        <div>
+          <p class="section-label section-label-light">Ready when you are</p>
+          <h2>把下一条任务，<br />交给一个可审计的 Agent。</h2>
+        </div>
+        <div class="final-actions">
+          <a class="button button-light" href="./docs/">查看使用手册</a>
+          <a
+            class="button button-outline-light"
+            href="https://www.npmjs.com/package/clawsmith"
+            target="_blank"
+            rel="noreferrer"
+          >
+            npm
+          </a>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="footer-brand">
+        <svg class="brand-mark" viewBox="0 0 44 44" aria-hidden="true">
+          <path d="M6 8h32v28H6z" />
+          <path d="M13 14 20 30M21 12l7 20M29 10l7 22" />
+        </svg>
+        <span>clawsmith</span>
+      </div>
+      <p>本地优先的 coding agent。</p>
+      <div class="footer-links">
+        <a href="https://www.npmjs.com/package/clawsmith" target="_blank" rel="noreferrer">npm</a>
+        <a href="#capabilities">功能</a>
+        <a href="./docs/">使用手册</a>
+        <a href="#faq">常见问题</a>
+      </div>
+      <span class="footer-year">© <span data-current-year>2026</span> clawsmith</span>
+    </footer>
+
+    <script src="./main.js" defer></script>
+  </body>
+</html>

@@ -1,0 +1,89 @@
+clawsmith Proprietary License
+
+Copyright (c) 2026 sql668. All rights reserved.
+
+This software, including its compiled files, documentation, and any associated
+materials made available by the copyright holder (collectively, the
+"Software"), is proprietary software. The Software is not licensed as open
+source software, and no rights are granted except as expressly stated in this
+License.
+
+1. LIMITED LICENSE
+
+Subject to your compliance with this License, you may install and execute
+unmodified official distributions of the Software for lawful personal use or
+internal business use. This limited license includes access to the Software's
+intended functionality but does not grant any ownership interest in the
+Software.
+
+2. RESTRICTIONS
+
+Except to the extent expressly permitted by applicable law or authorized in
+writing by the copyright holder, you may not:
+
+a. copy the Software other than as reasonably necessary to install, execute,
+   and maintain a backup of an authorized copy;
+
+b. modify, adapt, translate, or create derivative works based on the Software;
+
+c. redistribute, publish, sublicense, sell, rent, lease, lend, or otherwise
+   make the Software available to any third party;
+
+d. provide the Software to third parties as a hosted, managed, or outsourced
+   service;
+
+e. remove, obscure, or alter any copyright, license, or proprietary notice
+   included with the Software; or
+
+f. reverse engineer, decompile, disassemble, or attempt to derive the source
+   code of the Software.
+
+Independently developed plugins, skills, configurations, and project files
+that interoperate with the Software through documented public interfaces are
+not restricted by this section merely because they interact with the
+Software.
+
+3. SOURCE CODE
+
+Access to any source code, development files, or internal materials does not
+grant a license to use, copy, modify, or distribute those materials beyond the
+limited rights expressly granted in Section 1. All rights not expressly
+granted are reserved by the copyright holder.
+
+4. THIRD-PARTY COMPONENTS
+
+The Software may include third-party components governed by separate
+licenses. Those licenses apply to the relevant third-party components and
+prevail over this License to the extent required by their terms. Nothing in
+this License limits rights granted to you under a third-party license for that
+third-party component.
+
+5. NO WARRANTY
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE, TITLE, AND NON-INFRINGEMENT. YOU BEAR THE
+ENTIRE RISK ARISING FROM USE OF THE SOFTWARE.
+
+6. LIMITATION OF LIABILITY
+
+TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, THE COPYRIGHT HOLDER SHALL
+NOT BE LIABLE FOR ANY INDIRECT, INCIDENTAL, SPECIAL, CONSEQUENTIAL, OR
+PUNITIVE DAMAGES, OR FOR ANY LOSS OF DATA, PROFITS, REVENUE, OR BUSINESS
+OPPORTUNITY, ARISING OUT OF OR RELATING TO THE SOFTWARE OR THIS LICENSE, EVEN
+IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
+
+7. TERMINATION
+
+This License terminates automatically if you materially breach its terms. Upon
+termination, you must stop using the Software and delete all copies in your
+possession or control, except where retention is required by applicable law.
+Sections 2 through 7 survive termination.
+
+8. FUTURE VERSIONS
+
+The copyright holder may publish later versions of the Software under
+different terms, including an open-source license. A different license applies
+only to the release with which it is expressly associated and does not
+retroactively change the terms applicable to a copy previously distributed
+under this License.
