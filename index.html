@@ -6,28 +6,28 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta
       name="description"
-      content="clawsmith 是本地优先的 coding agent，提供 CLI 与 Web 工作台。它可以读取项目、修改代码、运行命令和验证结果，并保留审批、会话与恢复证据。"
+      content="clawsmith 是本地优先的 Personal Agent。通过 CLI、Web 和消息平台处理个人任务，结合长期记忆、定时执行与受控工具，并将会话和权限数据留在本机。"
     />
     <meta name="theme-color" content="#121918" />
     <link rel="manifest" href="./site.webmanifest" />
     <meta property="og:type" content="website" />
-    <meta property="og:title" content="clawsmith — 把任务交给 Agent，把控制权留在本地" />
+    <meta property="og:title" content="clawsmith — 本地优先的 Personal Agent" />
     <meta
       property="og:description"
-      content="用 CLI 或 Web 发起真实代码任务。clawsmith 共享一套本地会话、审批、验证和恢复机制。"
+      content="从日常信息整理到代码任务，用 CLI、Web 或消息平台继续同一份个人会话；记忆、审批和恢复都有明确边界。"
     />
     <meta property="og:url" content="https://sql668.github.io/clawsmith-site/" />
     <meta property="og:site_name" content="clawsmith" />
     <meta property="og:image" content="https://sql668.github.io/clawsmith-site/og-image.png" />
     <meta name="twitter:card" content="summary" />
-    <meta name="twitter:title" content="clawsmith — 把任务交给 Agent，把控制权留在本地" />
+    <meta name="twitter:title" content="clawsmith — 本地优先的 Personal Agent" />
     <meta
       name="twitter:description"
-      content="用 CLI 或 Web 发起真实代码任务。clawsmith 共享一套本地会话、审批、验证和恢复机制。"
+      content="从日常信息整理到代码任务，用 CLI、Web 或消息平台继续同一份个人会话；记忆、审批和恢复都有明确边界。"
     />
     <meta name="twitter:image" content="https://sql668.github.io/clawsmith-site/og-image.png" />
     <link rel="canonical" href="https://sql668.github.io/clawsmith-site/" />
-    <title>clawsmith — 本地优先的 coding agent</title>
+    <title>clawsmith — 本地优先的 Personal Agent</title>
     <link rel="icon" href="./favicon.svg" type="image/svg+xml" />
     <link rel="stylesheet" href="./styles.css?v=20261027-1" />
     <script type="application/ld+json">
@@ -35,10 +35,10 @@
         "@context": "https://schema.org",
         "@type": "SoftwareApplication",
         "name": "clawsmith",
-        "applicationCategory": "DeveloperApplication",
+        "applicationCategory": "ProductivityApplication",
         "operatingSystem": "macOS, Linux, Windows",
-        "description": "本地优先的 coding agent，用 CLI 或 Web 完成代码修改、命令执行、验证与恢复，并保留完整审批轨迹。",
-        "softwareVersion": "0.1.7",
+        "description": "本地优先的 Personal Agent，通过 CLI、Web 和消息平台处理个人任务，提供长期记忆、定时执行和受控工具。",
+        "softwareVersion": "0.1.10",
         "offers": {
           "@type": "Offer",
           "price": "0",
@@ -53,10 +53,10 @@
         "mainEntity": [
           {
             "@type": "Question",
-            "name": "我的代码会上传到 clawsmith 的服务器吗？",
+            "name": "我的个人数据会上传到 clawsmith 的服务器吗？",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "会话、记忆、Skill 和权限数据默认保存在本机。模型请求会发送到你配置的模型服务，因此应选择符合团队数据要求的 Provider。"
+              "text": "会话、记忆、Skill 和权限数据默认保存在本机。模型请求会发送到你配置的模型服务，因此应选择符合个人数据要求的 Provider。"
             }
           },
           {
@@ -83,13 +83,13 @@
     <a class="skip-link" href="#main">跳到主要内容</a>
 
     <header class="site-header" data-header>
-      <a class="brand" href="#top" aria-label="clawsmith v0.1.7 首页">
+      <a class="brand" href="#top" aria-label="clawsmith v0.1.10 首页">
         <svg class="brand-mark" viewBox="0 0 44 44" aria-hidden="true">
           <path d="M6 8h32v28H6z" />
           <path d="M13 14 20 30M21 12l7 20M29 10l7 22" />
         </svg>
         <span class="brand-word">clawsmith</span>
-        <span class="brand-version">v0.1.7</span>
+        <span class="brand-version">v0.1.10</span>
       </a>
 
       <button
@@ -121,15 +121,15 @@
         <div class="hero-copy" data-reveal>
           <div class="eyebrow">
             <span class="eyebrow-dot"></span>
-            Local coding agent · CLI + Web
+            Personal Agent · 本地优先
           </div>
           <h1>
-            让 Agent 完成任务，
-            <span>让边界留在本地。</span>
+            clawsmith，
+            <span>你的 Personal Agent。</span>
           </h1>
           <p class="hero-lede">
-            clawsmith 在你的项目里读取代码、完成修改、运行命令并验证结果。CLI
-            适合快速执行，Web 面板适合审阅与多设备观察；两者共享同一条可回放、可恢复的本地会话。
+            从整理信息、处理文档到完成代码任务，clawsmith 在你的授权下使用工具，
+            记住经你审核的经验，并按计划继续工作。CLI、Web 和已配对的消息平台连接同一套本地会话与权限边界。
           </p>
           <div class="hero-actions">
             <a class="button button-primary" href="./docs/">
@@ -144,7 +144,7 @@
           </div>
           <ul class="hero-meta" aria-label="运行条件">
             <li>Node.js 22.13+</li>
-            <li>CLI + Web 同一会话</li>
+            <li>CLI · Web · 消息平台</li>
             <li>OpenAI-compatible Provider</li>
           </ul>
         </div>
@@ -190,43 +190,43 @@
               data-view-panel="cli"
             >
               <div class="terminal-heading">
-                <span>~/projects/checkout</span>
-                <span class="terminal-branch">main</span>
+                <span>~/notes/weekly</span>
+                <span class="terminal-branch">personal</span>
               </div>
               <div class="terminal-log">
                 <p class="prompt-line">
                   <span>›</span>
-                  修复登录超时，并补上回归测试
+                  整理本周阅读资料，更新主题笔记
                 </p>
                 <div class="trace-line">
                   <span class="trace-mark">01</span>
                   <span class="trace-tool">search_files</span>
-                  <span class="trace-note">定位 auth 调用链</span>
+                  <span class="trace-note">找到本周资料</span>
                 </div>
                 <div class="trace-line">
                   <span class="trace-mark">02</span>
                   <span class="trace-tool">read_file</span>
-                  <span class="trace-note">4 个相关文件</span>
+                  <span class="trace-note">阅读 4 份笔记</span>
                 </div>
                 <div class="trace-line trace-wait">
                   <span class="trace-mark">03</span>
                   <span class="trace-tool">permission</span>
-                  <span class="trace-note">等待写入审批</span>
+                  <span class="trace-note">等待笔记写入审批</span>
                 </div>
                 <div class="trace-line">
                   <span class="trace-mark">04</span>
                   <span class="trace-tool">edit_file</span>
-                  <span class="trace-note">唯一匹配后原子替换</span>
+                  <span class="trace-note">更新主题摘要</span>
                 </div>
                 <div class="trace-line">
                   <span class="trace-mark">05</span>
-                  <span class="trace-tool">run_command</span>
-                  <span class="trace-note">pnpm check</span>
+                  <span class="trace-tool">read_file</span>
+                  <span class="trace-note">复核更新内容</span>
                 </div>
                 <div class="verified-line">
                   <span></span>
-                  Verification passed
-                  <b>exit_code: 0</b>
+                  Review complete
+                  <b>1 file updated</b>
                 </div>
               </div>
               <div class="terminal-composer">
@@ -248,29 +248,29 @@
                 <div class="web-workspace">
                   <span class="workspace-icon">mx</span>
                   <span>
-                    checkout
+                    weekly
                     <small>3 sessions</small>
                   </span>
                 </div>
                 <div class="session-item is-active">
                   <i></i>
-                  修复登录超时
+                  整理本周资料
                   <small>刚刚</small>
                 </div>
                 <div class="session-item">
                   <i></i>
-                  补齐支付测试
+                  汇总待读文章
                   <small>昨天</small>
                 </div>
                 <div class="session-item">
                   <i></i>
-                  排查构建警告
+                  规划周末阅读
                   <small>周一</small>
                 </div>
               </aside>
               <div class="web-content">
                 <div class="web-heading">
-                  <span>修复登录超时</span>
+                  <span>整理本周资料</span>
                   <small>default permission</small>
                 </div>
                 <div class="web-task-card">
@@ -280,20 +280,20 @@
                     <small>3 / 4 complete</small>
                   </div>
                   <ul class="task-list">
-                    <li class="done">定位超时路径</li>
-                    <li class="done">更新重试策略</li>
-                    <li class="done">补充边界测试</li>
-                    <li class="current">运行验证命令</li>
+                    <li class="done">查找本周资料</li>
+                    <li class="done">提取主题要点</li>
+                    <li class="done">更新主题笔记</li>
+                    <li class="current">复核引用来源</li>
                   </ul>
                 </div>
                 <figure class="diff-card" aria-label="修改预览">
                   <figcaption class="diff-head">
-                    <span>src/auth/retry.ts</span>
-                    <span>+12 −3</span>
+                    <span>notes/weekly.md</span>
+                    <span>+8 −2</span>
                   </figcaption>
-                  <pre><code><span class="diff-remove">- const timeout = 1200</span>
-<span class="diff-add">+ const timeout = backoff(attempt)</span>
-<span class="diff-add">+ if (attempt &gt; maxAttempts) throw</span></code></pre>
+                  <pre><code><span class="diff-remove">- ## 本周阅读</span>
+<span class="diff-add">+ ## 本周阅读：三个主题</span>
+<span class="diff-add">+ 来源：资料 A、资料 B</span></code></pre>
                 </figure>
               </div>
             </div>
@@ -308,35 +308,35 @@
 
       <section class="signal-strip" aria-label="产品概览">
         <div>
-          <strong>CLI + Web</strong>
-          <span>快执行与可视化审阅共用一套状态</span>
+          <strong>多种入口</strong>
+          <span>CLI、Web 与消息平台共用会话边界</span>
         </div>
         <div>
           <strong>5 档权限</strong>
           <span>从只读规划到明确确认的受控放行</span>
         </div>
         <div>
-          <strong>可验证结果</strong>
-          <span>工具结果、退出码与修改证据可复核</span>
+          <strong>个人记忆</strong>
+          <span>记忆与 Skill 审核后才用于后续任务</span>
         </div>
         <div>
-          <strong>可恢复会话</strong>
-          <span>SQLite、检查点与事件回放留在本机</span>
+          <strong>持续运行</strong>
+          <span>定时任务、检查点与事件回放留在本机</span>
         </div>
       </section>
 
       <section class="manifesto section">
         <div class="section-label">A different starting point</div>
         <div class="manifesto-grid">
-          <h2>不是另一个聊天窗口，<br />而是一条可执行的工作流。</h2>
+          <h2>一个持续协作的个人 Agent。</h2>
           <div class="manifesto-copy">
             <p>
-              你只需要说清目标。Agent 会决定读取哪些文件、调用什么工具、何时请求许可，
-              再把你配置的验证命令跑完；CLI 与 Web 展示的是同一条真实执行链。
+              告诉它要完成什么，再由你决定可访问哪些工作区、何时允许写入，以及哪些经验值得记住。
+              Agent 可以整理资料、跟进定时任务，也可以进入代码工作区完成修改与验证。
             </p>
             <p>
-              任务可以暂停、审阅、回退和恢复。会话不是一次性的回答，而是保存在本机、
-              可以继续追踪的工程记录。
+              任务可以暂停、审阅、回退和恢复。会话与记忆默认保存在本机，
+              从不同入口回来时仍能继续此前的工作。
             </p>
           </div>
         </div>
@@ -346,11 +346,11 @@
         <div class="section-intro">
           <div>
             <div class="section-label">Capabilities</div>
-            <h2>从一条任务，到可核对的交付。</h2>
+            <h2>从一次请求，到长期协作。</h2>
           </div>
           <p>
-            执行、上下文、模型、恢复和扩展都在同一套 Agent Core
-            内完成。你可以换入口，但不需要重新解释项目，也不会得到两套互相冲突的会话。
+            工具、记忆、定时任务和消息入口共享同一套 Agent Core。
+            任务类型可以变化，个人数据范围和审批规则始终清晰。
           </p>
         </div>
 
@@ -385,9 +385,9 @@
 
           <article class="capability-card">
             <div class="card-index">03 / MEMORY</div>
-            <h3>会积累，但不会擅自决定</h3>
+            <h3>记住你的习惯，由你审核</h3>
             <p>
-              长期记忆与可复用 Skill 都从真实轨迹中形成。候选内容经过审核后才影响后续会话。
+              长期记忆与可复用 Skill 可以从真实任务中形成。候选内容经过审核后才影响后续会话。
             </p>
             <div class="memory-stack" aria-hidden="true">
               <span>USER.md</span>
@@ -426,20 +426,29 @@
             </div>
           </article>
 
-          <article class="capability-card capability-wide">
+          <article class="capability-card">
             <div class="card-index">06 / SCENES</div>
             <div>
-              <h3>同一 Agent，按任务切换工作方法。</h3>
+              <h3>按任务切换工作方法。</h3>
               <p>
-                Coding 区分小修与复杂多角色流程，Blog 可选择调研后撰稿审稿，Brainstorm
-                固定生成多个方向再质疑和收敛。场景只改变工作流，不会扩大工具、网络或权限边界。
+                Coding、Blog 和 Brainstorm 场景提供不同的工作流程。
+                场景只改变处理方式，不会扩大工具、网络或权限边界。
               </p>
             </div>
             <ul class="code-snippet" aria-label="场景命令示例">
-              <li>/scene coding run …</li>
-              <li>/team</li>
-              <li>/workflow</li>
+              <li>/scene coding</li>
+              <li>/scene blog</li>
             </ul>
+          </article>
+          <article class="capability-card">
+            <div class="card-index">07 / MESSAGING</div>
+            <h3>在熟悉的消息入口继续</h3>
+            <p>微信、QQ 和 Email 接入同一套会话与审批机制。联系人需要经过配对或访问策略校验，才能发起任务。</p>
+          </article>
+          <article class="capability-card">
+            <div class="card-index">08 / SCHEDULE</div>
+            <h3>把重复任务交给日程</h3>
+            <p>为周期任务设置时区与计划，查看每次运行记录。无人值守时需要审批的动作会被拒绝。</p>
           </article>
         </div>
       </section>
@@ -458,7 +467,7 @@
               <p class="step-kicker">Bind</p>
               <h3>绑定工作区</h3>
               <p>
-                选择一个本地项目。文件访问、命令目录和项目记忆都被限制在这个边界内。
+                选择要授权的本地目录。文件访问、命令目录和项目记忆都被限制在这个边界内。
               </p>
             </div>
           </article>
@@ -469,7 +478,7 @@
               <p class="step-kicker">Delegate</p>
               <h3>描述要完成的事</h3>
               <p>
-                从 CLI 或 Web 发起任务。模型读取真实文件，形成任务进度，并在需要时请求许可。
+                从 CLI、Web 或已配对的消息平台发起任务。Agent 使用可用工具，在需要时请求许可。
               </p>
             </div>
           </article>
@@ -512,9 +521,9 @@
           </div>
           <div class="guide-heading-copy">
             <p>
-              先选择顺手的工作入口。CLI 适合在当前终端连续处理任务，Web
-              适合查看修改、审批和长任务。无论从哪边开始，会话都落在同一个本地
-              SQLite 数据库里。
+              先选择顺手的工作入口。CLI 适合在终端连续处理任务，Web
+              适合查看轨迹、审批和长任务；消息平台适合随时发起或继续对话。
+              它们共用本地会话和权限规则。
             </p>
             <div class="guide-sequence">
               <span>安装</span>
@@ -561,9 +570,10 @@
                     </button>
                     <pre id="guide-cli-install"><code>npm install -g clawsmith
 cd ~/projects/my-app
+clawsmith init
 clawsmith</code></pre>
                   </div>
-                  <p>在项目根目录启动，当前目录会自动成为 Agent 的工作区。</p>
+                  <p>在项目根目录运行 init 会创建 <code>.clawsmith/AGENTS.md</code> 和 <code>project.json</code>；已有文件不会被覆盖。当前目录会成为 Agent 的工作区。</p>
                 </div>
               </li>
               <li>
@@ -989,7 +999,7 @@ clawsmith</code></pre>
         <div class="faq-list">
           <details>
             <summary>
-              <span>我的代码会上传到 clawsmith 的服务器吗？</span>
+              <span>我的个人数据会上传到 clawsmith 的服务器吗？</span>
               <i></i>
             </summary>
             <p>
@@ -1055,7 +1065,7 @@ clawsmith</code></pre>
         <div class="final-cta-mark" aria-hidden="true">///</div>
         <div>
           <p class="section-label section-label-light">Ready when you are</p>
-          <h2>把下一条任务，<br />交给一个可审计的 Agent。</h2>
+          <h2>让下一条任务，<br />从这里继续。</h2>
         </div>
         <div class="final-actions">
           <a class="button button-light" href="./docs/">查看使用手册</a>
@@ -1079,7 +1089,7 @@ clawsmith</code></pre>
         </svg>
         <span>clawsmith</span>
       </div>
-      <p>本地优先的 coding agent。</p>
+      <p>本地优先的 Personal Agent。</p>
       <div class="footer-links">
         <a href="https://www.npmjs.com/package/clawsmith" target="_blank" rel="noreferrer">npm</a>
         <a href="#capabilities">功能</a>

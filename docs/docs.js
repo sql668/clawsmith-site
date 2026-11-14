@@ -1,6 +1,6 @@
 /**
  * clawsmith 使用手册交互。
- * 负责移动端侧栏、文档搜索、页内目录、阅读进度和代码复制，不依赖第三方脚本。
+ * 负责章节导航、移动端侧栏、文档搜索、页内目录、阅读进度和代码复制，不依赖第三方脚本。
  */
 const body = document.body
 const menuToggle = document.querySelector('[data-docs-menu-toggle]')
@@ -10,6 +10,8 @@ const searchInput = document.querySelector('[data-docs-search]')
 const searchEmpty = document.querySelector('[data-docs-search-empty]')
 const searchTriggers = [...document.querySelectorAll('[data-focus-docs-search]')]
 const navItems = [...document.querySelectorAll('[data-doc-link]')]
+const navChapters = [...document.querySelectorAll('[data-doc-chapter]')]
+const breadcrumb = document.querySelector('[data-docs-breadcrumb]')
 const navGroups = [...document.querySelectorAll('[data-doc-group]')]
 const article = document.querySelector('[data-docs-article]')
 const tocNav = document.querySelector('[data-docs-toc]')
@@ -91,50 +93,39 @@ for (const trigger of searchTriggers) {
   })
 }
 
+// 搜索只过滤目录，不改变正文位置或活动章节；清空时恢复搜索前的展开状态。
+let groupStateBeforeSearch = null
 if (searchInput) {
   searchInput.addEventListener('input', () => {
     const query = searchInput.value.trim().toLocaleLowerCase()
+    if (query && !groupStateBeforeSearch) {
+      groupStateBeforeSearch = new Map(navGroups.map((group) => [group, group.open]))
+    }
     let visibleCount = 0
-
     for (const item of navItems) {
-      const haystack = `${item.textContent ?? ''} ${item.getAttribute('data-keywords') ?? ''}`
-        .toLocaleLowerCase()
-        .trim()
-      const matches = query.length === 0 || haystack.includes(query)
-      item.hidden = !matches
-      if (matches) visibleCount += 1
+      const group = item.closest('[data-doc-group]')
+      const section = document.getElementById(item.hash.slice(1))?.closest('.docs-section')
+      const topics = [...(section?.querySelectorAll('h2, h3') ?? [])]
+        .map((heading) => heading.textContent)
+        .join(' ')
+      const haystack =
+        `${item.textContent} ${item.dataset.keywords ?? ''} ${topics} ${group?.querySelector('summary')?.textContent ?? ''} ${group?.dataset.docChapterLabel ?? ''}`.toLocaleLowerCase()
+      item.hidden = query.length > 0 && !haystack.includes(query)
+      if (!item.hidden) visibleCount += 1
     }
-
     for (const group of navGroups) {
-      const visibleLinks = [...group.querySelectorAll('[data-doc-link]')].filter(
-        (link) => !link.hidden,
+      group.hidden = ![...group.querySelectorAll('[data-doc-link]')].some((link) => !link.hidden)
+      if (query && !group.hidden) group.open = true
+      else if (!query && groupStateBeforeSearch)
+        group.open = groupStateBeforeSearch.get(group) ?? false
+    }
+    for (const chapter of navChapters) {
+      chapter.hidden = ![...chapter.querySelectorAll('[data-doc-group]')].some(
+        (group) => !group.hidden,
       )
-      group.hidden = visibleLinks.length === 0
-      if (query && visibleLinks.length > 0) {
-        group.open = true
-      }
     }
-
-    const activeVisibleGroup = docGroups.find(
-      (group) => group.id === activeGroupId && !group.group.hidden,
-    )
-    const firstVisibleGroup = activeVisibleGroup ?? docGroups.find((group) => !group.group.hidden)
-    if (firstVisibleGroup) {
-      const firstVisibleLink =
-        firstVisibleGroup.links.find(
-          (link) => link.id === activeSectionId && !link.source.hidden,
-        ) ?? firstVisibleGroup.links.find((link) => !link.source.hidden)
-      if (firstVisibleLink) setActiveSection(firstVisibleLink.id)
-    } else {
-      tocNav?.replaceChildren()
-      mobileToc?.replaceChildren()
-      if (tocTitle) tocTitle.textContent = '暂无匹配内容'
-      if (tocCaption) tocCaption.textContent = '0 个主题'
-    }
-
-    if (searchEmpty) {
-      searchEmpty.hidden = visibleCount > 0
-    }
+    if (!query) groupStateBeforeSearch = null
+    if (searchEmpty) searchEmpty.hidden = visibleCount > 0
   })
 }
 
@@ -153,6 +144,7 @@ window.addEventListener('resize', () => {
 const docGroups = navGroups.map((group, index) => ({
   group,
   id: group.dataset.docGroupId ?? `group-${index}`,
+  chapter: group.dataset.docChapterLabel ?? '',
   label: group.querySelector(':scope > summary')?.textContent?.trim() ?? `分组 ${index + 1}`,
   links: [...group.querySelectorAll('[data-doc-link]')].map((link) => ({
     id: link.hash.replace(/^#/, ''),
@@ -160,15 +152,28 @@ const docGroups = navGroups.map((group, index) => ({
     source: link,
   })),
 }))
-const observedSections = article ? [...article.querySelectorAll('h2[id]')] : []
-const requestedSectionId = window.location.hash.replace(/^#/, '')
+const observedSections = article ? [...article.querySelectorAll('.docs-section h2[id]')] : []
+// 预先分配子标题锚点，首次打开深链接也能识别所属章节。
+const usedHeadingIds = new Set([...document.querySelectorAll('[id]')].map((element) => element.id))
+for (const heading of observedSections) ensureSubsectionIds(heading.closest('.docs-section'))
+const requestedSectionId = resolveSectionId(window.location.hash.slice(1))
 const requestedGroup = findGroupForSection(requestedSectionId)
 let activeGroupId = requestedGroup?.id ?? docGroups[0]?.id ?? ''
 let activeSectionId = (requestedGroup ? requestedSectionId : docGroups[0]?.links[0]?.id) ?? ''
 let activeSubsectionId = ''
 let pendingNavigationId = ''
 let pendingNavigationDeadline = 0
-const usedHeadingIds = new Set(observedSections.map((heading) => heading.id))
+/** 将正文标题、子标题及兼容锚点统一映射到所属功能文档。 */
+function resolveSectionId(id) {
+  // 浏览器会对中文片段编码；损坏的外部链接仍按原值回退，避免阻断整页交互。
+  try {
+    id = decodeURIComponent(id)
+  } catch {
+    /* 保留原始片段供兼容查找。 */
+  }
+  const target = document.getElementById(id)
+  return target?.closest('.docs-section')?.querySelector('h2[id]')?.id ?? id
+}
 
 function findGroupForSection(id) {
   return docGroups.find((group) => group.links.some((link) => link.id === id))
@@ -261,7 +266,7 @@ function setActiveGroup(id, options = {}) {
     group.group.classList.toggle('is-current', active)
     group.group.querySelector(':scope > summary')?.setAttribute('aria-current', String(active))
     if (active && options.open) group.group.open = true
-    if (!active && options.exclusive) group.group.open = false
+    // 滚动只展开当前模块，保留读者手动展开的其他模块以及全部搜索结果。
   }
 }
 
@@ -283,7 +288,9 @@ function setActiveSection(id) {
   const group = findGroupForSection(id)
   if (group) {
     activeGroupId = group.id
-    setActiveGroup(group.id, { open: true, exclusive: true })
+    setActiveGroup(group.id, { open: true })
+    if (breadcrumb)
+      breadcrumb.textContent = `${group.chapter} / ${group.label} / ${sectionLabel(id)}`
   }
   renderTableOfContents()
   for (const navLink of navItems) {
@@ -298,6 +305,18 @@ function setActiveSection(id) {
 }
 
 setActiveSection(activeSectionId)
+// 动态生成的子标题在浏览器初次锚点定位时可能尚不存在，需要补一次定位。
+if (window.location.hash) {
+  let initialTarget = window.location.hash.slice(1)
+  try {
+    initialTarget = decodeURIComponent(initialTarget)
+  } catch {
+    /* 无效编码沿用原片段。 */
+  }
+  window.requestAnimationFrame(() =>
+    document.getElementById(initialTarget)?.scrollIntoView({ behavior: 'instant' }),
+  )
+}
 
 /**
  * 根据当前滚动位置计算活动二级章节和章节内 h3。
@@ -379,7 +398,7 @@ window.addEventListener(
   { passive: true },
 )
 window.addEventListener('hashchange', () => {
-  const id = window.location.hash.replace(/^#/, '')
+  const id = resolveSectionId(window.location.hash.slice(1))
   if (docGroups.some((group) => group.links.some((link) => link.id === id))) {
     pendingNavigationId = id
     pendingNavigationDeadline = performance.now() + 2_500

@@ -1,19 +1,19 @@
 <!doctype html>
-<!-- clawsmith 开发者文档：从安装、CLI/Web 使用到工具、扩展、协议、部署和排障。 -->
+<!-- clawsmith 开发者文档：按入门、核心功能、扩展能力、进阶与开发参考组织目录和正文。 -->
 <html lang="zh-CN">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta
       name="description"
-      content="clawsmith 开发者文档：快速安装、CLI 与 Web 使用、Provider、工具权限、MCP/LSP、插件、Gateway、Cron、Profile、SDK 和部署参考。"
+      content="clawsmith Personal Agent 使用与开发文档：安装、CLI、Web、消息平台、个人记忆、定时任务、工具权限、插件和 SDK。"
     />
     <meta name="theme-color" content="#0b1110" />
     <meta property="og:type" content="article" />
     <meta property="og:title" content="clawsmith 开发者文档" />
     <meta
       property="og:description"
-      content="从第一条 Agent 任务，到 Provider、插件、Gateway、SDK 和生产部署。"
+      content="从第一条个人任务，到记忆、定时执行、消息入口、Provider、插件和 SDK。"
     />
     <meta property="og:url" content="https://sql668.github.io/clawsmith-site/docs/" />
     <meta property="og:site_name" content="clawsmith" />
@@ -22,13 +22,13 @@
     <meta name="twitter:title" content="clawsmith 开发者文档" />
     <meta
       name="twitter:description"
-      content="快速开始、Agent 工具、扩展开发、自动化、SDK 与运维参考。"
+      content="快速开始、个人记忆、消息平台、Agent 工具、自动化与扩展开发。"
     />
     <meta name="twitter:image" content="https://sql668.github.io/clawsmith-site/og-image.png" />
     <link rel="canonical" href="https://sql668.github.io/clawsmith-site/docs/" />
     <title>clawsmith 开发者文档</title>
     <link rel="icon" href="../favicon.svg" type="image/svg+xml" />
-    <link rel="stylesheet" href="./docs.css?v=20261030-2" />
+    <link rel="stylesheet" href="./docs.css?v=20261114-1" />
   </head>
   <body>
     <a class="skip-link" href="#docs-article">跳到正文</a>
@@ -70,7 +70,7 @@
             target="_blank"
             rel="noreferrer"
           >
-            安装 v0.1.7
+            安装 v0.1.10
           </a>
         </div>
 
@@ -101,274 +101,337 @@
             <span class="sr-only">搜索文档章节</span>
             <input
               type="search"
-              placeholder="搜索命令、工具或 API"
+              placeholder="搜索功能、章节或命令"
               autocomplete="off"
               data-docs-search
             />
           </label>
-          <p class="docs-search-empty" hidden data-docs-search-empty>没有匹配的章节。</p>
+          <p class="docs-search-empty" hidden aria-live="polite" data-docs-search-empty>没有匹配的章节。</p>
         </div>
 
         <div class="docs-sidebar-scroll">
           <nav class="docs-nav" aria-label="开发者文档目录">
-            <details open data-doc-group data-doc-group-id="start">
-              <summary>开始使用</summary>
-              <div class="docs-nav-list">
-                <a href="#overview" data-doc-link data-keywords="overview 概览 架构 agent">
-                  Overview
-                </a>
-                <a href="#quickstart" data-doc-link data-keywords="quickstart 快速开始 安装 npm">
-                  Quickstart
-                </a>
-                <a
+            <section class="docs-nav-chapter" data-doc-chapter aria-labelledby="nav-start">
+              <h2 id="nav-start">入门</h2>
+              <details open data-doc-group data-doc-group-id="getting-started" data-doc-chapter-label="入门">
+                <summary>开始使用</summary>
+                <div class="docs-nav-list">
+<a href="#overview" data-doc-link data-keywords="overview 概览 入门">文档概览</a>
+<a
                   href="#install-upgrade"
                   data-doc-link
                   data-keywords="install upgrade npm pnpm version 升级"
                 >
                   安装与升级
                 </a>
-                <a
+<a href="#quickstart" data-doc-link data-keywords="quickstart 快速开始 安装 npm">快速开始</a>
+<a
                   href="#first-task"
                   data-doc-link
                   data-keywords="first task 第一条任务 prompt 验收"
                 >
                   第一条任务
                 </a>
-                <a href="#architecture" data-doc-link data-keywords="architecture core 架构 生命周期">
-                  运行架构
+                </div>
+              </details>
+              <details data-doc-group data-doc-group-id="models" data-doc-chapter-label="入门">
+                <summary>模型与配置</summary>
+                <div class="docs-nav-list">
+<a href="#providers" data-doc-link data-keywords="provider model openai compatible">
+                  Provider 与模型
                 </a>
-              </div>
-            </details>
-
-            <details data-doc-group data-doc-group-id="agent">
-              <summary>使用 Agent</summary>
-              <div class="docs-nav-list">
-                <a href="#cli" data-doc-link data-keywords="cli repl prompt terminal">
-                  CLI
+<a href="#config-reference" data-doc-link data-keywords="config file data home">
+                  配置与目录
                 </a>
-                <a href="#web" data-doc-link data-keywords="web workspace session panel">
-                  Web 工作台
+<a href="#env-reference" data-doc-link data-keywords="environment variable env reference">
+                  环境变量
                 </a>
-                <a href="#tools" data-doc-link data-keywords="tools 文件 搜索 代码 browser">
-                  Agent 工具
+                </div>
+              </details>
+            </section>
+            <section class="docs-nav-chapter" data-doc-chapter aria-labelledby="nav-core">
+              <h2 id="nav-core">核心功能</h2>
+              <details data-doc-group data-doc-group-id="commands" data-doc-chapter-label="核心功能">
+                <summary>命令</summary>
+                <div class="docs-nav-list">
+<a href="#cli" data-doc-link data-keywords="cli repl prompt terminal 命令 终端">CLI 与斜杠命令</a>
+<a href="#cli-reference" data-doc-link data-keywords="cli reference command flags">
+                  CLI 参考
                 </a>
-                <a
-                  href="#code-tools"
-                  data-doc-link
-                  data-keywords="read file patch search edit notebook image"
-                >
-                  代码与文件工具
-                </a>
-                <a
+<a
                   href="#execution-tools"
                   data-doc-link
                   data-keywords="command cwd pty wait background"
                 >
                   命令与执行工具
                 </a>
-                <a
-                  href="#browser-tools"
-                  data-doc-link
-                  data-keywords="browser console network screenshot wait"
-                >
-                  浏览器诊断工具
-                </a>
-                <a
-                  href="#quality-tools"
-                  data-doc-link
-                  data-keywords="review delivery commit patch ci"
-                >
-                  验证与交付工具
-                </a>
-                <a href="#permissions" data-doc-link data-keywords="permission approval sandbox">
-                  权限与沙箱
-                </a>
-                <a href="#hooks" data-doc-link data-keywords="hook pretooluse posttooluse stop">
-                  Hooks
-                </a>
-                <a href="#sessions" data-doc-link data-keywords="session recovery queue checkpoint">
-                  会话、队列与恢复
-                </a>
-                <a href="#recovery" data-doc-link data-keywords="recovery checkpoint unknown resume">
-                  失败恢复
-                </a>
-                <a href="#context" data-doc-link data-keywords="context attachment artifact 附件">
-                  上下文与附件
-                </a>
-                <a href="#long-tasks" data-doc-link data-keywords="background pty command wait">
+<a href="#long-tasks" data-doc-link data-keywords="background pty command wait">
                   长任务与后台命令
                 </a>
-              </div>
-            </details>
-
-            <details data-doc-group data-doc-group-id="messaging">
-              <summary>消息平台</summary>
-              <div class="docs-nav-list">
-                <a
-                  href="#messaging-platforms"
-                  data-doc-link
-                  data-keywords="messaging platform 微信 QQ Email 消息平台 配置 配对"
-                >
-                  配置总览
+                </div>
+              </details>
+              <details data-doc-group data-doc-group-id="messages" data-doc-chapter-label="核心功能">
+                <summary>消息</summary>
+                <div class="docs-nav-list">
+<a href="#messages" data-doc-link data-keywords="messages 消息 队列 对话 输入">发送与追加消息</a>
+<a href="#context" data-doc-link data-keywords="context attachment artifact 附件">
+                  上下文与附件
                 </a>
-                <a
-                  href="#messaging-wechat"
-                  data-doc-link
-                  data-keywords="wechat 微信 iLink 扫码 登录 二维码 配置"
-                >
-                  微信
+                </div>
+              </details>
+              <details data-doc-group data-doc-group-id="sessions" data-doc-chapter-label="核心功能">
+                <summary>会话管理</summary>
+                <div class="docs-nav-list">
+<a href="#sessions" data-doc-link data-keywords="session recovery queue checkpoint">
+                  会话、队列与恢复
                 </a>
-                <a
-                  href="#messaging-qq"
-                  data-doc-link
-                  data-keywords="qq bot appid secret markdown 机器人 配置"
-                >
-                  QQ Bot
+<a href="#web" data-doc-link data-keywords="web workspace session panel">
+                  Web 工作台
                 </a>
-                <a
-                  href="#messaging-email"
-                  data-doc-link
-                  data-keywords="email imap smtp 邮箱 authserv 配对 配置"
-                >
-                  Email
+<a href="#recovery" data-doc-link data-keywords="recovery checkpoint unknown resume">
+                  失败恢复
                 </a>
-              </div>
-            </details>
-
-            <details data-doc-group data-doc-group-id="coding">
-              <summary>配置与编码能力</summary>
-              <div class="docs-nav-list">
-                <a href="#providers" data-doc-link data-keywords="provider model openai compatible">
-                  Provider 与模型
-                </a>
-                <a href="#mcp" data-doc-link data-keywords="mcp server resources prompts">
-                  MCP
-                </a>
-                <a
-                  href="#mcp-recipes"
-                  data-doc-link
-                  data-keywords="mcp stdio http example 示例 配置"
-                >
-                  MCP 配置示例
-                </a>
-                <a href="#lsp" data-doc-link data-keywords="lsp code action format symbol rename">
-                  LSP
-                </a>
-                <a href="#skills-memory" data-doc-link data-keywords="skill memory 记忆">
-                  Skill 与 Memory
-                </a>
-                <a
-                  href="#project-context"
-                  data-doc-link
-                  data-keywords="agents.md project context 项目规则"
-                >
-                  项目上下文
-                </a>
-                <a href="#agents" data-doc-link data-keywords="agent definition subagent manifest">
-                  Agent 定义与子 Agent
-                </a>
-                <a
-                  href="#agent-delegation"
-                  data-doc-link
-                  data-keywords="subagent delegation send message interrupt"
-                >
-                  子 Agent 协作
-                </a>
-                <a href="#orchestration" data-doc-link data-keywords="goal plan task workflow dag">
-                  Goal、Task 与 Workflow
-                </a>
-                <a href="#worktrees" data-doc-link data-keywords="worktree branch parallel">
-                  Worktree
-                </a>
-              </div>
-            </details>
-
-            <details data-doc-group data-doc-group-id="extension">
-              <summary>扩展与自动化</summary>
-              <div class="docs-nav-list">
-                <a href="#plugins" data-doc-link data-keywords="plugin 插件 api web tools">
-                  插件开发
-                </a>
-                <a
-                  href="#plugin-tool"
-                  data-doc-link
-                  data-keywords="custom tool plugin 自定义工具"
-                >
-                  自定义工具插件
-                </a>
-                <a
-                  href="#plugin-provider"
-                  data-doc-link
-                  data-keywords="provider plugin model 自定义模型"
-                >
-                  自定义 Provider
-                </a>
-                <a
-                  href="#plugin-web"
-                  data-doc-link
-                  data-keywords="web plugin slot settings tool result"
-                >
-                  Web 插件
-                </a>
-                <a href="#gateway" data-doc-link data-keywords="gateway slack im webhook">
-                  Gateway 与 IM
-                </a>
-                <a
-                  href="#gateway-plugin"
-                  data-doc-link
-                  data-keywords="gateway plugin 消息平台插件 微信 QQ Email 自定义"
-                >
-                  自定义消息平台插件
-                </a>
-                <a href="#cron" data-doc-link data-keywords="cron schedule 定时任务">
-                  Cron
-                </a>
-                <a href="#profiles" data-doc-link data-keywords="profile identity isolation">
-                  Profiles
-                </a>
-                <a href="#sdk" data-doc-link data-keywords="sdk protocol http sse">
-                  SDK 与 HTTP
-                </a>
-              </div>
-            </details>
-
-            <details data-doc-group data-doc-group-id="operations">
-              <summary>运维与参考</summary>
-              <div class="docs-nav-list">
-                <a href="#security" data-doc-link data-keywords="security deploy token tls">
-                  安全与部署
-                </a>
-                <a href="#deployment" data-doc-link data-keywords="deploy reverse proxy tls systemd">
-                  部署配置
-                </a>
-                <a
+<a
                   href="#data-lifecycle"
                   data-doc-link
                   data-keywords="data export import cleanup retention"
                 >
                   数据生命周期
                 </a>
-                <a href="#testing" data-doc-link data-keywords="test eval package verify">
+                </div>
+              </details>
+              <details data-doc-group data-doc-group-id="memory" data-doc-chapter-label="核心功能">
+                <summary>记忆与上下文</summary>
+                <div class="docs-nav-list">
+<a href="#memory" data-doc-link data-keywords="memory 记忆 检索 审核 遗忘">长期记忆</a>
+<a
+                  href="#project-context"
+                  data-doc-link
+                  data-keywords="agents.md project context 项目规则"
+                >
+                  项目上下文
+                </a>
+                </div>
+              </details>
+              <details data-doc-group data-doc-group-id="tools" data-doc-chapter-label="核心功能">
+                <summary>工具与权限</summary>
+                <div class="docs-nav-list">
+<a href="#tools" data-doc-link data-keywords="tools 文件 搜索 代码 browser">
+                  Agent 工具
+                </a>
+<a
+                  href="#code-tools"
+                  data-doc-link
+                  data-keywords="read file patch search edit notebook image"
+                >
+                  代码与文件工具
+                </a>
+<a
+                  href="#browser-tools"
+                  data-doc-link
+                  data-keywords="browser console network screenshot wait"
+                >
+                  浏览器诊断工具
+                </a>
+<a
+                  href="#quality-tools"
+                  data-doc-link
+                  data-keywords="review delivery commit patch ci"
+                >
+                  验证与交付工具
+                </a>
+<a href="#permissions" data-doc-link data-keywords="permission approval sandbox">
+                  权限与沙箱
+                </a>
+                </div>
+              </details>
+            </section>
+            <section class="docs-nav-chapter" data-doc-chapter aria-labelledby="nav-extensions">
+              <h2 id="nav-extensions">扩展能力</h2>
+              <details data-doc-group data-doc-group-id="mcp" data-doc-chapter-label="扩展能力">
+                <summary>MCP</summary>
+                <div class="docs-nav-list">
+<a href="#mcp" data-doc-link data-keywords="mcp server resources prompts">
+                  MCP
+                </a>
+<a
+                  href="#mcp-recipes"
+                  data-doc-link
+                  data-keywords="mcp stdio http example 示例 配置"
+                >
+                  MCP 配置示例
+                </a>
+                </div>
+              </details>
+              <details data-doc-group data-doc-group-id="skills" data-doc-chapter-label="扩展能力">
+                <summary>Skills</summary>
+                <div class="docs-nav-list">
+<a href="#skills" data-doc-link data-keywords="skills skill 技能 学习 SKILL.md">使用与编写 Skill</a>
+                </div>
+              </details>
+              <details data-doc-group data-doc-group-id="lsp" data-doc-chapter-label="扩展能力">
+                <summary>LSP</summary>
+                <div class="docs-nav-list">
+<a href="#lsp" data-doc-link data-keywords="lsp code action format symbol rename">
+                  LSP
+                </a>
+                </div>
+              </details>
+            </section>
+            <section class="docs-nav-chapter" data-doc-chapter aria-labelledby="nav-advanced">
+              <h2 id="nav-advanced">进阶</h2>
+              <details data-doc-group data-doc-group-id="platforms" data-doc-chapter-label="进阶">
+                <summary>消息平台</summary>
+                <div class="docs-nav-list">
+<a
+                  href="#messaging-platforms"
+                  data-doc-link
+                  data-keywords="messaging platform 微信 QQ Email 消息平台 配置 配对"
+                >
+                  配置总览
+                </a>
+<a
+                  href="#messaging-wechat"
+                  data-doc-link
+                  data-keywords="wechat 微信 iLink 扫码 登录 二维码 配置"
+                >
+                  微信
+                </a>
+<a
+                  href="#messaging-qq"
+                  data-doc-link
+                  data-keywords="qq bot appid secret markdown 机器人 配置"
+                >
+                  QQ Bot
+                </a>
+<a
+                  href="#messaging-email"
+                  data-doc-link
+                  data-keywords="email imap smtp 邮箱 authserv 配对 配置"
+                >
+                  Email
+                </a>
+                </div>
+              </details>
+              <details data-doc-group data-doc-group-id="gateway" data-doc-chapter-label="进阶">
+                <summary>Gateway 与常驻服务</summary>
+                <div class="docs-nav-list">
+<a href="#gateway" data-doc-link data-keywords="gateway im webhook 消息 网关">Gateway 消息网关</a>
+<a href="#daemon" data-doc-link data-keywords="daemon 常驻 后台 接管 attach">常驻服务 Daemon</a>
+                </div>
+              </details>
+              <details data-doc-group data-doc-group-id="automation" data-doc-chapter-label="进阶">
+                <summary>自动化</summary>
+                <div class="docs-nav-list">
+<a href="#cron" data-doc-link data-keywords="cron schedule 定时任务">
+                  Cron
+                </a>
+<a href="#hooks" data-doc-link data-keywords="hook pretooluse posttooluse stop">
+                  Hooks
+                </a>
+                </div>
+              </details>
+              <details data-doc-group data-doc-group-id="collaboration" data-doc-chapter-label="进阶">
+                <summary>多 Agent 与工作流</summary>
+                <div class="docs-nav-list">
+<a href="#agents" data-doc-link data-keywords="agent definition subagent manifest">
+                  Agent 定义与子 Agent
+                </a>
+<a
+                  href="#agent-delegation"
+                  data-doc-link
+                  data-keywords="subagent delegation send message interrupt"
+                >
+                  子 Agent 协作
+                </a>
+<a href="#orchestration" data-doc-link data-keywords="goal plan task workflow dag">
+                  Goal、Task 与 Workflow
+                </a>
+<a href="#worktrees" data-doc-link data-keywords="worktree branch parallel">
+                  Worktree
+                </a>
+                </div>
+              </details>
+              <details data-doc-group data-doc-group-id="deployment" data-doc-chapter-label="进阶">
+                <summary>身份与部署</summary>
+                <div class="docs-nav-list">
+<a href="#profiles" data-doc-link data-keywords="profile identity isolation">
+                  Profiles
+                </a>
+<a href="#security" data-doc-link data-keywords="security deploy token tls">
+                  安全与部署
+                </a>
+<a href="#deployment" data-doc-link data-keywords="deploy reverse proxy tls systemd">
+                  部署配置
+                </a>
+                </div>
+              </details>
+            </section>
+            <section class="docs-nav-chapter" data-doc-chapter aria-labelledby="nav-develop">
+              <h2 id="nav-develop">开发参考</h2>
+              <details data-doc-group data-doc-group-id="architecture" data-doc-chapter-label="开发参考">
+                <summary>架构与协议</summary>
+                <div class="docs-nav-list">
+<a href="#architecture" data-doc-link data-keywords="architecture core 架构 生命周期">
+                  运行架构
+                </a>
+<a href="#sdk" data-doc-link data-keywords="sdk protocol http sse">
+                  SDK 与 HTTP
+                </a>
+                </div>
+              </details>
+              <details data-doc-group data-doc-group-id="plugins" data-doc-chapter-label="开发参考">
+                <summary>插件开发</summary>
+                <div class="docs-nav-list">
+<a href="#plugins" data-doc-link data-keywords="plugin 插件 api web tools">
+                  插件开发
+                </a>
+<a
+                  href="#plugin-tool"
+                  data-doc-link
+                  data-keywords="custom tool plugin 自定义工具"
+                >
+                  自定义工具插件
+                </a>
+<a
+                  href="#plugin-provider"
+                  data-doc-link
+                  data-keywords="provider plugin model 自定义模型"
+                >
+                  自定义 Provider
+                </a>
+<a
+                  href="#plugin-web"
+                  data-doc-link
+                  data-keywords="web plugin slot settings tool result"
+                >
+                  Web 插件
+                </a>
+<a
+                  href="#gateway-plugin"
+                  data-doc-link
+                  data-keywords="gateway plugin 消息平台插件 微信 QQ Email 自定义"
+                >
+                  自定义消息平台插件
+                </a>
+                </div>
+              </details>
+              <details data-doc-group data-doc-group-id="maintenance" data-doc-chapter-label="开发参考">
+                <summary>验证与排障</summary>
+                <div class="docs-nav-list">
+<a href="#testing" data-doc-link data-keywords="test eval package verify">
                   测试与发布
                 </a>
-                <a href="#release" data-doc-link data-keywords="release publish provenance">
+<a href="#release" data-doc-link data-keywords="release publish provenance">
                   发布流程
                 </a>
-                <a href="#cli-reference" data-doc-link data-keywords="cli reference command flags">
-                  CLI 参考
-                </a>
-                <a href="#config-reference" data-doc-link data-keywords="config file data home">
-                  配置与目录
-                </a>
-                <a href="#env-reference" data-doc-link data-keywords="environment variable env reference">
-                  环境变量
-                </a>
-                <a href="#troubleshooting" data-doc-link data-keywords="troubleshooting error faq">
+<a href="#troubleshooting" data-doc-link data-keywords="troubleshooting error faq">
                   排障
                 </a>
-              </div>
-            </details>
-          </nav>
+                </div>
+              </details>
+            </section>
+</nav>
         </div>
 
         <div class="docs-sidebar-foot">
@@ -389,16 +452,16 @@
           <div class="docs-breadcrumb">
             <a href="../">clawsmith</a>
             <span>/</span>
-            <span>Developer Docs</span>
+            <span data-docs-breadcrumb>入门 / 开始使用</span>
           </div>
 
           <header class="docs-hero-v2">
             <div class="docs-hero-copy">
-              <span class="docs-eyebrow">LOCAL-FIRST AGENT HARNESS</span>
+              <span class="docs-eyebrow">LOCAL-FIRST PERSONAL AGENT</span>
               <h1>clawsmith <span>开发者文档</span></h1>
               <p class="docs-lede">
-                用 CLI、Web 或 TypeScript SDK 运行一个可审计、可恢复的 coding agent；
-                通过 Provider、Tool、Skill、MCP、LSP 和 Plugin 扩展它，再把同一套能力部署到本机、远程或 IM Gateway。
+                clawsmith 是本地优先的 Personal Agent。用 CLI、Web 或已配对的消息平台处理个人任务，
+                通过记忆和定时任务延续工作；开发者可用 Provider、Tool、Skill、MCP、LSP 和 Plugin 扩展能力。
               </p>
               <ul class="docs-meta" aria-label="文档信息">
                 <li>Node.js 22.13+</li>
@@ -423,54 +486,33 @@
             </aside>
           </header>
 
-          <section class="docs-flow" aria-label="Agent 执行链路">
-            <div><span>01</span><strong>Prompt</strong><small>目标与约束</small></div>
-            <i></i>
-            <div><span>02</span><strong>Context</strong><small>项目、规则、附件</small></div>
-            <i></i>
-            <div><span>03</span><strong>Tools</strong><small>文件、命令、LSP</small></div>
-            <i></i>
-            <div><span>04</span><strong>Policy</strong><small>权限、沙箱、Hook</small></div>
-            <i></i>
-            <div><span>05</span><strong>Evidence</strong><small>测试、diff、artifact</small></div>
-            <i></i>
-            <div><span>06</span><strong>Delivery</strong><small>review、commit、PR</small></div>
-          </section>
-
-          <div class="docs-path-grid">
-            <a class="docs-path-card" href="#quickstart">
-              <span>RUN</span>
-              <h2>运行第一个任务</h2>
-              <p>安装、选择工作区、配置 Provider，并让 Agent 完成一个可验证变更。</p>
-              <b>进入 Quickstart →</b>
-            </a>
-            <a class="docs-path-card" href="#tools">
-              <span>USE</span>
-              <h2>理解 Agent 能力</h2>
-              <p>查看文件、命令、浏览器、LSP、多 Agent、附件和交付工具的完整能力面。</p>
-              <b>浏览工具矩阵 →</b>
-            </a>
-            <a class="docs-path-card" href="#plugins">
-              <span>EXTEND</span>
-              <h2>构建扩展</h2>
-              <p>用公开 Plugin API 贡献 Provider、Tool、Context、HTTP、Gateway 和执行世界。</p>
-              <b>开始扩展 →</b>
-            </a>
-          </div>
+          <!-- 阅读入口先对应用户任务；深入机制放在开发参考章节。 -->
+          <nav class="docs-path-grid" aria-label="选择阅读路径">
+            <a class="docs-path-card" href="#quickstart"><span>入门</span><h2>先运行起来</h2><p>安装、配置模型，用 CLI 或 Web 完成第一条任务。</p><b>快速开始 →</b></a>
+            <a class="docs-path-card" href="#memory"><span>核心功能</span><h2>让工作持续下去</h2><p>使用命令与消息，管理会话、长期记忆和项目上下文。</p><b>了解长期记忆 →</b></a>
+            <a class="docs-path-card" href="#mcp"><span>扩展与进阶</span><h2>连接更多能力</h2><p>接入 MCP 与 Skills，再按需配置消息平台、自动化或开发插件。</p><b>从 MCP 开始 →</b></a>
+          </nav>
 
           <details class="docs-mobile-toc">
-            <summary>本页内容</summary>
+            <summary>当前章节目录</summary>
             <ol data-mobile-toc></ol>
           </details>
 
+          <header class="docs-chapter" id="chapter-start">
+            <p>开发者文档 / 入门</p>
+            <h2>入门</h2>
+            <div>安装、配置模型并完成第一条任务。</div>
+          </header>
+
           <section class="docs-section" aria-labelledby="overview">
-            <span class="docs-kicker">01 / OVERVIEW</span>
+<span class="docs-kicker">入门 / 开始使用</span>
             <h2 class="docs-section-anchor" id="overview">clawsmith 是什么</h2>
             <p>
-              clawsmith 是本机运行的 Agent Harness。它把一次任务拆成
+              clawsmith 是本地优先的 Personal Agent。它以 Profile 隔离个人身份、记忆与凭据，
+              以工作区限制文件访问，并把一次任务拆成
               <strong>模型请求 → 工具调用 → 权限裁决 → 会话事件 → 验证证据 → 交付结果</strong>，
-              并将所有可见状态持久化。CLI、Web、HTTP API 和 SDK 消费同一套 Agent Core，
-              不会各自实现一套会话或审批状态机。
+              并将可见状态持久化。CLI、Web、Gateway、HTTP API 和 SDK 消费同一套 Agent Core，
+              不会各自实现一套会话或审批状态机。代码、文档、网页和周期任务都遵守相同边界。
             </p>
             <h3>一套核心，多种入口</h3>
             <div class="docs-table-wrap">
@@ -496,12 +538,54 @@
             </aside>
           </section>
 
+          <section class="docs-section" aria-labelledby="install-upgrade">
+<span class="docs-kicker">入门 / 开始使用</span>
+            <h2 class="docs-section-anchor" id="install-upgrade">安装、升级与版本排查</h2>
+            <h3>全局安装与临时运行</h3>
+            <div class="docs-code" data-language="terminal">
+              <pre><code># 长期使用
+npm install -g clawsmith
+
+# 不写入全局环境
+npx clawsmith@latest --version
+
+# pnpm 用户
+pnpm add -g clawsmith</code></pre>
+            </div>
+
+            <h3>升级时保留本地数据</h3>
+            <div class="docs-code" data-language="terminal">
+              <pre><code>npm install -g clawsmith@latest
+hash -r
+clawsmith --version
+
+# 暂时关闭更新检查
+CLAWSMITH_DISABLE_UPDATE_CHECK=1 clawsmith</code></pre>
+            </div>
+            <p>
+              升级不会删除 <code>CLAWSMITH_HOME</code> 下的会话、Provider 凭据、Memory、Skill、
+              artifact 和 Gateway 数据。旧目录 <code>~/.mx-claw</code> 只有在
+              <code>~/.clawsmith</code> 不存在时才会继续复用。
+            </p>
+
+            <h3>多个全局安装冲突</h3>
+            <div class="docs-code" data-language="terminal">
+              <pre><code>command -v clawsmith
+npm list -g clawsmith
+pnpm list -g clawsmith</code></pre>
+            </div>
+            <p>
+              始终使用实际命中 <code>command -v</code> 的包管理器升级；更新后执行
+              <code>hash -r</code>，避免 shell 继续使用旧路径。
+            </p>
+          </section>
+
           <section class="docs-section" aria-labelledby="quickstart">
-            <span class="docs-kicker">02 / QUICKSTART</span>
+<span class="docs-kicker">入门 / 开始使用</span>
             <h2 class="docs-section-anchor" id="quickstart">5 分钟运行第一条任务</h2>
             <ol class="docs-steps">
               <li><strong>安装</strong><span>使用 npm、pnpm 或 npx。Node.js 版本必须为 22.13 或更高。</span></li>
-              <li><strong>选择入口</strong><span>CLI 适合同步编码；Web 适合审批、轨迹和可视化 diff。</span></li>
+              <li><strong>选择入口</strong><span>CLI 适合连续任务；Web 适合审批和查看轨迹；消息平台需先配对。</span></li>
               <li><strong>配置 Provider</strong><span>Web 的“设置 → 模型”可添加任意 OpenAI-compatible Provider。</span></li>
               <li><strong>提交可验证任务</strong><span>给出目标、约束和验证命令，例如“修复失败测试并运行 pnpm test”。</span></li>
             </ol>
@@ -557,50 +641,8 @@ clawsmith --prompt "修复登录超时；先定位调用链，修改后运行 pn
             </aside>
           </section>
 
-          <section class="docs-section" aria-labelledby="install-upgrade">
-            <span class="docs-kicker">03 / INSTALL</span>
-            <h2 class="docs-section-anchor" id="install-upgrade">安装、升级与版本排查</h2>
-            <h3>全局安装与临时运行</h3>
-            <div class="docs-code" data-language="terminal">
-              <pre><code># 长期使用
-npm install -g clawsmith
-
-# 不写入全局环境
-npx clawsmith@latest --version
-
-# pnpm 用户
-pnpm add -g clawsmith</code></pre>
-            </div>
-
-            <h3>升级时保留本地数据</h3>
-            <div class="docs-code" data-language="terminal">
-              <pre><code>npm install -g clawsmith@latest
-hash -r
-clawsmith --version
-
-# 暂时关闭更新检查
-CLAWSMITH_DISABLE_UPDATE_CHECK=1 clawsmith</code></pre>
-            </div>
-            <p>
-              升级不会删除 <code>CLAWSMITH_HOME</code> 下的会话、Provider 凭据、Memory、Skill、
-              artifact 和 Gateway 数据。旧目录 <code>~/.mx-claw</code> 只有在
-              <code>~/.clawsmith</code> 不存在时才会继续复用。
-            </p>
-
-            <h3>多个全局安装冲突</h3>
-            <div class="docs-code" data-language="terminal">
-              <pre><code>command -v clawsmith
-npm list -g clawsmith
-pnpm list -g clawsmith</code></pre>
-            </div>
-            <p>
-              始终使用实际命中 <code>command -v</code> 的包管理器升级；更新后执行
-              <code>hash -r</code>，避免 shell 继续使用旧路径。
-            </p>
-          </section>
-
           <section class="docs-section" aria-labelledby="first-task">
-            <span class="docs-kicker">04 / FIRST TASK</span>
+<span class="docs-kicker">入门 / 开始使用</span>
             <h2 class="docs-section-anchor" id="first-task">写一个 Agent 能可靠完成的任务</h2>
             <h3>任务描述四要素</h3>
             <ol>
@@ -634,51 +676,190 @@ pnpm list -g clawsmith</code></pre>
             </p>
           </section>
 
-          <section class="docs-section" aria-labelledby="architecture">
-            <span class="docs-kicker">05 / ARCHITECTURE</span>
-            <h2 class="docs-section-anchor" id="architecture">Agent 如何执行</h2>
+          <section class="docs-section" aria-labelledby="providers">
+<span class="docs-kicker">入门 / 模型与配置</span>
+            <h2 class="docs-section-anchor" id="providers">Provider 与模型路由</h2>
             <p>
-              每次 turn 先获取 Session lease，再构造项目上下文和模型请求。模型只能看到当前
-              Capability composition 允许的工具；每个工具调用依次经过 schema 校验、Hook、
-              权限服务、沙箱/Execution World、超时和取消、结构化结果与 checkpoint。
+              Core 不按供应商名称硬编码。任何兼容 OpenAI <code>/chat/completions</code>
+              的服务都可以配置为 Provider；模型能力、窗口、价格、工具调用、图片与 reasoning
+              兼容性由能力元数据和 compatibility 字段描述。
             </p>
-            <h3>组合视图</h3>
-            <div class="docs-diagram">
-              <div class="docs-diagram-row">
-                <span>CLI</span><span>Web</span><span>HTTP</span><span>SDK</span><span>Gateway</span>
-              </div>
-              <b>同一 Session / Event / Approval 事实源</b>
-              <div class="docs-diagram-core">
-                <article><small>REQUEST</small><strong>Context Builder</strong><p>AGENTS.md · Skill · Memory · 附件</p></article>
-                <article><small>LOOP</small><strong>Agent Core</strong><p>Model → Tool → Result → Model</p></article>
-                <article><small>CONTROL</small><strong>Policy Plane</strong><p>权限 · Hook · Sandbox · Budget</p></article>
-              </div>
-              <div class="docs-diagram-row">
-                <span>SQLite</span><span>Artifact</span><span>Attachment</span><span>Event Journal</span><span>Checkpoint</span>
-              </div>
+            <h3>配置自定义模型服务</h3>
+            <div class="docs-code" data-language="terminal">
+              <pre><code>/providers
+/model list
+/model configure my-gateway
+/model default my-gateway/model-id
+/model switch</code></pre>
             </div>
-            <h3>关键不变量</h3>
-            <ul>
-              <li>模型请求 schema 在构造阶段冻结，运行时插件更新只在下一轮生效。</li>
-              <li>副作用工具不会因为断线或进程恢复而自动重放；结果未知时要求人工确认。</li>
-              <li>CLI、Web、Cron 和 Gateway 任务共享同一 Session、lease、审批和 artifact 规则。</li>
-              <li>
-                <code>Execution World</code> 可组合 local、Docker、SSH 或插件 Provider；
-                文件、命令、PTY、取消和 checkpoint 使用同一执行契约。
-              </li>
-            </ul>
-
-            <h3>持久事实源</h3>
+            <h3>声明兼容性，不按厂商名称分支</h3>
+            <div class="docs-code" data-language="json">
+              <pre><code>{
+  "name": "my-gateway",
+  "kind": "custom",
+  "baseURL": "https://gateway.example/v1",
+  "model": "model-id",
+  "models": ["model-id"],
+  "compatibility": { "echoReasoningContent": true }
+}</code></pre>
+            </div>
+            <h3>环境变量覆盖</h3>
+            <div class="docs-code" data-language="terminal">
+              <pre><code>CLAWSMITH_PROVIDER_BASE_URL="https://gateway.example/v1" \
+CLAWSMITH_PROVIDER_MODEL="model-id" \
+CLAWSMITH_PROVIDER_API_KEY="secret" \
+clawsmith web</code></pre>
+            </div>
             <p>
-              Session、event、message、tool result、approval、todo、goal、plan、queue、
-              checkpoint 和 artifact 都有持久事实源。刷新页面或切换客户端只重新读取事实，
-              不从浏览器状态推断 Agent 是否执行完成。
+              模型窗口、价格、工具、图片、reasoning 和 usage 能力优先读取 Provider 元数据；
+              未知值必须显示为 unknown，不能自动假定能力。
             </p>
           </section>
 
+          <section class="docs-section" aria-labelledby="config-reference">
+<span class="docs-kicker">入门 / 模型与配置</span>
+            <h2 class="docs-section-anchor" id="config-reference">配置与数据目录</h2>
+            <h3>默认 Home 目录</h3>
+            <div class="docs-code" data-language="text">
+              <pre><code>~/.clawsmith/
+├── config.json
+├── mcp.json
+├── lsp.json
+├── hooks.json
+├── agents/active/&lt;id&gt;/AGENT.md
+├── skills/
+├── memory/
+├── plugins/
+├── sessions/
+├── artifacts/
+├── attachments/
+├── commands/
+├── gateway/
+├── worktrees/
+├── profiles/
+└── security/</code></pre>
+            </div>
+            <h3>项目级文件</h3>
+            <p>
+              在项目根目录运行 <code>clawsmith init</code> 可创建项目规则模板和空策略文件；
+              重复运行只补齐缺失文件，不覆盖已有内容。请在规则中写入实际项目约定，并按需在
+              <code>project.json</code> 中设置 <code>verificationCommand</code>。
+            </p>
+            <p>
+              项目级补充配置位于 <code>.clawsmith/AGENTS.md</code> 和
+              <code>.clawsmith/project.json</code>。敏感凭据不会通过普通配置或诊断接口回显。
+              项目验证命令写在 <code>project.json</code> 的
+              <code>verificationCommand</code>，团队规则和目录约束写在 <code>AGENTS.md</code>。
+              旧的项目目录 <code>.mx-claw/</code> 不再读取；请将项目规则与策略文件移至
+              <code>.clawsmith/</code>。
+            </p>
+            <h3>凭据边界</h3>
+            <p>
+              API Key 优先来自外部只读 Secret Source，其次 macOS Keychain 或 Linux Secret
+              Service，最后才是 AES-256-GCM 加密文件。日志、事件、artifact、导出和诊断使用
+              统一脱敏边界；不要把密钥直接写进 <code>AGENTS.md</code>、prompt 或仓库文件。
+            </p>
+          </section>
+
+          <section class="docs-section" aria-labelledby="env-reference">
+<span class="docs-kicker">入门 / 模型与配置</span>
+            <h2 class="docs-section-anchor" id="env-reference">环境变量参考</h2>
+            <h3>运行位置与身份</h3>
+            <div class="docs-table-wrap">
+              <table class="docs-table">
+                <thead>
+                  <tr><th>变量</th><th>用途</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td><code>CLAWSMITH_HOME</code></td><td>覆盖配置、会话、凭据、插件和 artifact 的数据根目录。</td></tr>
+                  <tr><td><code>CLAWSMITH_PROFILE</code></td><td>为当前进程选择身份 Profile；不修改持久 active pointer。</td></tr>
+                  <tr><td><code>HOST</code> / <code>PORT</code></td><td>Web 与 HTTP 服务监听地址和端口，默认 loopback 与 3210。</td></tr>
+                  <tr><td><code>CLAWSMITH_ALLOW_REMOTE</code></td><td>必须设为 <code>1</code> 才允许非 loopback 监听。</td></tr>
+                  <tr><td><code>CLAWSMITH_API_TOKEN</code></td><td>远程访问的首次引导 token；非 loopback 时至少 32 字符。</td></tr>
+                  <tr><td><code>CLAWSMITH_DISABLE_UPDATE_CHECK</code></td><td>临时关闭版本更新检查。</td></tr>
+                  <tr><td><code>CLAWSMITH_MANAGED_POLICY_FILE</code></td><td>加载企业 managed policy，强制收紧权限、预算和更新策略。</td></tr>
+                </tbody>
+              </table>
+            </div>
+
+            <h3>模型与上下文</h3>
+            <div class="docs-table-wrap">
+              <table class="docs-table">
+                <thead>
+                  <tr><th>变量</th><th>用途</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td><code>CLAWSMITH_PROVIDER_BASE_URL</code></td><td>当前 Provider 的 OpenAI-compatible API 根地址。</td></tr>
+                  <tr><td><code>CLAWSMITH_PROVIDER_MODEL</code></td><td>默认模型 ID。</td></tr>
+                  <tr><td><code>CLAWSMITH_PROVIDER_API_KEY</code></td><td>临时 Provider 密钥；生产环境优先使用安全凭据存储。</td></tr>
+                  <tr><td><code>CLAWSMITH_PROVIDER_CONFIG_HOME</code></td><td>隔离或共享 Provider 配置文件根目录。</td></tr>
+                  <tr><td><code>CLAWSMITH_DEFAULT_MODEL</code></td><td>新会话默认模型；可配合自动路由策略。</td></tr>
+                  <tr><td><code>CLAWSMITH_ROUTING_POLICY_PATH</code></td><td>模型自动路由策略 JSON 路径。</td></tr>
+                  <tr><td><code>CLAWSMITH_MODEL_TEMPERATURE</code></td><td>覆盖采样温度；省略时使用 Provider 默认值。</td></tr>
+                  <tr><td><code>CLAWSMITH_MODEL_COST_BUDGET_USD</code></td><td>单次或会话预算上限，按项目实际策略执行。</td></tr>
+                  <tr><td><code>CLAWSMITH_MODEL_STREAM_IDLE_TIMEOUT_MS</code></td><td>中止长时间无新事件的模型流。</td></tr>
+                  <tr><td><code>CLAWSMITH_CONTEXT_WINDOW_TOKENS</code></td><td>显式覆盖未知模型上下文窗口，范围 500 到 2,000,000。</td></tr>
+                  <tr><td><code>CLAWSMITH_SEMANTIC_COMPACTION</code></td><td>设为 <code>0</code> 时关闭额外模型摘要压缩。</td></tr>
+                </tbody>
+              </table>
+            </div>
+
+            <h3>执行、插件与外部入口</h3>
+            <div class="docs-table-wrap">
+              <table class="docs-table">
+                <thead>
+                  <tr><th>变量</th><th>用途</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td><code>CLAWSMITH_SANDBOX_MODE</code></td><td><code>compatible</code>、<code>strict</code> 或 <code>isolated</code>；不满足能力时拒绝启动。</td></tr>
+                  <tr><td><code>CLAWSMITH_SANDBOX</code></td><td>显式选择 <code>docker</code> 等命令沙箱后端。</td></tr>
+                  <tr><td><code>CLAWSMITH_EXECUTION_WORLD</code></td><td>选择本地、Docker、SSH 或插件提供的 Execution World。</td></tr>
+                  <tr><td><code>CLAWSMITH_PLUGIN_RUNTIME</code></td><td>设为 1 启用公开插件 runtime 和动态模型路由适配。</td></tr>
+                  <tr><td><code>CLAWSMITH_PLUGIN_PROFILE</code></td><td>选择插件 Profile；与身份 <code>CLAWSMITH_PROFILE</code> 不同。</td></tr>
+                  <tr><td><code>CLAWSMITH_PLUGIN_PATCH</code></td><td>本次进程最高优先级的插件 overlay 文件。</td></tr>
+                  <tr><td><code>CLAWSMITH_WECHAT_ACCOUNT_ID</code> / <code>CLAWSMITH_WECHAT_TOKEN</code></td><td>从环境引导内置微信 iLink Bot；也可在 Web 消息平台设置中保存。</td></tr>
+                  <tr><td><code>CLAWSMITH_WECHAT_DM_POLICY</code> / <code>CLAWSMITH_WECHAT_GROUP_POLICY</code></td><td>微信平台级私聊和群聊策略，可覆盖全局 Gateway 默认值。</td></tr>
+                  <tr><td><code>CLAWSMITH_WECHAT_HOME_CONVERSATION</code></td><td>微信默认通知会话 ID。</td></tr>
+                  <tr><td><code>CLAWSMITH_WECHAT_TEXT_BATCH_DELAY_SECONDS</code> / <code>CLAWSMITH_WECHAT_TEXT_BATCH_SPLIT_DELAY_SECONDS</code></td><td>快速文本合并窗口和长消息续块等待窗口，单位为秒。</td></tr>
+                  <tr><td><code>CLAWSMITH_QQ_APP_ID</code> / <code>CLAWSMITH_QQ_CLIENT_SECRET</code></td><td>从环境引导 QQ 官方 Bot API v2。</td></tr>
+                  <tr><td><code>CLAWSMITH_QQ_DM_POLICY</code> / <code>CLAWSMITH_QQ_GROUP_POLICY</code></td><td>QQ 平台级访问策略和白名单入口。</td></tr>
+                  <tr><td><code>CLAWSMITH_QQ_HOME_CONVERSATION</code></td><td>QQ 默认通知目标，格式为 <code>c2c:</code>、<code>group:</code> 或 <code>guild:</code>。</td></tr>
+                  <tr><td><code>CLAWSMITH_QQ_MARKDOWN_SUPPORT</code></td><td>QQ C2C 和群聊是否使用原生 Markdown，默认开启；设为 <code>0</code> 时发送清理过格式的纯文本。</td></tr>
+                  <tr><td><code>CLAWSMITH_EMAIL_ADDRESS</code> / <code>CLAWSMITH_EMAIL_PASSWORD</code></td><td>Email 账号和应用专用密码。</td></tr>
+                  <tr><td><code>CLAWSMITH_EMAIL_IMAP_HOST</code> / <code>CLAWSMITH_EMAIL_SMTP_HOST</code></td><td>Email 收件 IMAP 和发件 SMTP 主机。</td></tr>
+                  <tr><td><code>CLAWSMITH_EMAIL_DM_POLICY</code> / <code>CLAWSMITH_EMAIL_ALLOWED_SENDERS</code></td><td>Email 入站策略与发件人白名单。</td></tr>
+                  <tr><td><code>CLAWSMITH_EMAIL_HOME_ADDRESS</code></td><td>Email 默认通知收件地址。</td></tr>
+                  <tr><td><code>CLAWSMITH_EMAIL_NETWORK_FAMILY</code> / <code>CLAWSMITH_EMAIL_POLL_INTERVAL_SECONDS</code></td><td>Email 网络地址族（auto / ipv4 / ipv6）和收件轮询间隔。</td></tr>
+                  <tr><td><code>CLAWSMITH_EMAIL_AUTHSERV_ID</code></td><td>可选 authserv-id pin；留空自动核对最顶层 Received 接收服务器，显式值支持逗号分隔和受控 <code>*</code> 通配。</td></tr>
+                  <tr><td><code>CLAWSMITH_BROWSER_ENABLED</code></td><td>控制浏览器与 web fetch/search 工具装配。</td></tr>
+                  <tr><td><code>CLAWSMITH_BROWSER_HEADLESS</code></td><td>浏览器工具是否使用 headless 模式。</td></tr>
+                </tbody>
+              </table>
+            </div>
+
+            <h3>配置优先级</h3>
+            <div class="docs-code" data-language="text">
+              <pre><code>managed hard policy
+  → explicit process environment
+  → Profile / project configuration
+  → saved user configuration
+  → built-in defaults</code></pre>
+            </div>
+            <p>
+              权限和预算的 managed hard policy 不能被环境变量或插件放宽。密钥应先通过 Secret
+              Source 或安全凭据存储注入，再启动服务；不要把明文值写进 shell 历史或仓库。
+            </p>
+          </section>
+
+          <header class="docs-chapter" id="chapter-core">
+            <p>开发者文档 / 核心功能</p>
+            <h2>核心功能</h2>
+            <div>围绕日常使用，理解命令、消息、会话、记忆和工具。</div>
+          </header>
+
           <section class="docs-section" aria-labelledby="cli">
-            <span class="docs-kicker">06 / CLI</span>
-            <h2 class="docs-section-anchor" id="cli">CLI 编程工作流</h2>
+<span class="docs-kicker">核心功能 / 命令</span>
+            <h2 class="docs-section-anchor" id="cli">CLI 与斜杠命令</h2>
             <p>
               交互式启动进入 REPL；<code>--prompt</code> 用于脚本和 CI。斜杠命令管理 Provider、
               会话、计划、后台命令、Worktree、Cron、记忆和导出。
@@ -715,8 +896,197 @@ PORT=3210 clawsmith web</code></pre>
             </p>
           </section>
 
+          <section class="docs-section" aria-labelledby="cli-reference">
+<span class="docs-kicker">核心功能 / 命令</span>
+            <h2 class="docs-section-anchor" id="cli-reference">CLI 命令参考</h2>
+            <h3>启动与管理</h3>
+            <div class="docs-table-wrap">
+              <table class="docs-table">
+                <thead><tr><th>命令</th><th>用途</th></tr></thead>
+                <tbody>
+                  <tr><td><code>clawsmith</code></td><td>交互式 REPL</td></tr>
+                  <tr><td><code>clawsmith init</code></td><td>在当前工作区创建 <code>.clawsmith/AGENTS.md</code> 和 <code>.clawsmith/project.json</code>；已有文件保留，无需先配置模型</td></tr>
+                  <tr><td><code>clawsmith --prompt "..."</code></td><td>非交互执行并退出</td></tr>
+                  <tr><td><code>clawsmith serve</code></td><td>只启动本地 HTTP API</td></tr>
+                  <tr><td><code>clawsmith web</code></td><td>启动 API 与 Web UI</td></tr>
+                  <tr><td><code>clawsmith restore &lt;file&gt;</code></td><td>恢复 SQLite 备份</td></tr>
+                  <tr><td><code>clawsmith plugin ...</code></td><td>校验、预览、安装、信任和更新插件</td></tr>
+                  <tr><td><code>clawsmith profile ...</code></td><td>创建、切换、归档和删除 Profile</td></tr>
+                  <tr><td><code>clawsmith cron ...</code></td><td>管理持久定时任务</td></tr>
+                  <tr><td><code>clawsmith gateway ...</code></td><td>配对、列出和撤销 Gateway 身份</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <h3>会话内高频命令</h3>
+            <div class="docs-code" data-language="text">
+              <pre><code>/permissions              切换当前会话权限
+/model provider/model     切换当前会话模型
+/resume-turn              从失败检查点继续
+/worktree create "..."    创建隔离工作区
+/export [path]            导出当前会话
+/diagnostics              生成脱敏诊断包
+/help                     查看当前上下文可用命令</code></pre>
+            </div>
+            <h3>命令发现原则</h3>
+            <p>
+              CLI 和 Web 的可用命令会随权限模式、Provider、插件和运行状态变化。自动化脚本应
+              优先使用非交互 <code>--prompt</code>、SDK 或能力协商接口，不应解析 REPL 的展示文本。
+            </p>
+          </section>
+
+          <section class="docs-section" aria-labelledby="execution-tools">
+<span class="docs-kicker">核心功能 / 命令</span>
+            <h2 class="docs-section-anchor" id="execution-tools">命令与执行工具</h2>
+            <h3>短命令使用 run_command</h3>
+            <div class="docs-code" data-language="text">
+              <pre><code>run_command(
+  command="pnpm test -- auth",
+  cwd="packages/api",
+  timeoutMs=120000
+)</code></pre>
+            </div>
+            <p>
+              <code>cwd</code> 必须是 workspace 内真实目录；不得通过路径参数绕过 workspace 边界的路径。
+              非零退出码仍作为工具成功返回，模型必须读取 stderr 和 exit code。
+            </p>
+
+            <h3>长任务使用 start_command</h3>
+            <div class="docs-code" data-language="text">
+              <pre><code>start_command(command="pnpm dev", cwd="apps/web")
+command_output(taskId="command-…", wait=true, waitTimeoutMs=300000)
+command_status(taskId="command-…")
+cancel_command(taskId="command-…")</code></pre>
+            </div>
+            <p>
+              等待不会取消任务；超时只停止本次等待。需要交互程序时启用 PTY，
+              再使用 <code>command_input</code> 和 <code>resize_command_pty</code>。
+            </p>
+
+            <h3>执行边界</h3>
+            <ul>
+              <li>命令经过平台沙箱、资源限制和危险命令硬拒绝。</li>
+              <li>后台任务不绑定单轮 turn，宿主退出后转为 orphaned，不会自动重放。</li>
+              <li>项目感知使用 <code>project_info</code>，不要反复猜测 Node、包管理器或脚本入口。</li>
+            </ul>
+          </section>
+
+          <section class="docs-section" aria-labelledby="long-tasks">
+<span class="docs-kicker">核心功能 / 命令</span>
+            <h2 class="docs-section-anchor" id="long-tasks">长任务、PTY 与后台 Agent</h2>
+            <p>
+              <code>start_command</code> 启动持久任务并返回 task ID；工具可等待终态、读取增量输出、
+              写 stdin、resize PTY、取消进程树。后台只读子 Agent 使用持久状态、heartbeat
+              和跨进程 lease。
+            </p>
+            <h3>开发服务器与交互终端</h3>
+            <div class="docs-code" data-language="terminal">
+              <pre><code>/commands
+/commands capabilities
+/commands status &lt;id&gt;
+/commands log &lt;id&gt;
+/commands input &lt;id&gt;
+/commands cancel &lt;id&gt;</code></pre>
+            </div>
+            <h3>后台只读 Agent</h3>
+            <p>
+              <code>delegate_background</code> 适合仓库调查、日志审查和独立资料整理。
+              子任务有自己的 Session、预算、heartbeat 和结果通知，父 Agent 不必持续等待。
+            </p>
+            <aside class="docs-callout">
+              <span class="docs-callout-mark">PROCESS EXIT</span>
+              <p>
+                宿主退出后，运行中的后台命令或 Agent 不会被伪装成仍可控；任务转为
+                <code>orphaned</code> 或 <code>unknown</code>，避免重复副作用。
+              </p>
+            </aside>
+          </section>
+
+          <section class="docs-section" aria-labelledby="messages">
+<span class="docs-kicker">核心功能 / 消息</span>
+<h2 class="docs-section-anchor" id="messages">消息：提交、追加与接收结果</h2>
+<p>消息是与 Agent 交互的输入与输出；<a href="#sessions">会话</a>承载消息历史、运行状态和审批。先掌握日常对话，再按需接入外部消息平台。</p>
+<h3>从 CLI 或 Web 发起任务</h3><p>在 CLI 输入任务，或在 Web 工作台选择工作区后发送消息。说明目标、可操作范围与验收方式；需要引用文件、图片或大结果时，参见<a href="#context">上下文与附件</a>。</p>
+<h3>运行中追加消息</h3><p>运行中的 turn 支持消息排队、暂停、编辑与重排；需要改变当前执行方向时使用 interrupt-and-redirect。多客户端共享会话事件，重新连接后先检查运行和审批状态，避免重复提交任务。</p>
+<h3>接入外部消息入口</h3><p>希望从微信、QQ 或 Email 提交任务时，先阅读进阶章节的<a href="#messaging-platforms">消息平台配置</a>，完成凭据配置、配对和访问策略。<a href="#gateway">Gateway</a> 负责平台消息接入、回复与主动发送；外部消息仍遵守身份、工作区和工具权限边界。</p>
+</section>
+
+          <section class="docs-section" aria-labelledby="context">
+<span class="docs-kicker">核心功能 / 消息</span>
+            <h2 class="docs-section-anchor" id="context">上下文、附件与 Artifact</h2>
+            <p>
+              项目规则、Skill metadata、Memory snapshot、附件派生内容、网页和 MCP 描述都被视为
+              有来源边界的输入。大工具结果按内容哈希写入 artifact，模型只收到预览和不透明引用。
+            </p>
+            <h3>输入来源与优先级</h3>
+            <div class="docs-table-wrap">
+              <table class="docs-table">
+                <thead><tr><th>对象</th><th>持久化</th><th>模型访问</th></tr></thead>
+                <tbody>
+                  <tr><td>附件</td><td>SHA-256 blob + session binding</td><td><code>attachment_*</code> / attachment_ref</td></tr>
+                  <tr><td>Artifact</td><td>会话级内容寻址存储</td><td><code>read_artifact</code> 分块读取</td></tr>
+                  <tr><td>PDF / Office</td><td>原文件 + 派生页/OCR 缓存</td><td><code>document_*</code> 页范围读取</td></tr>
+                  <tr><td>图片</td><td>原始与请求归一化版本</td><td><code>read_image</code> 或视觉消息 part</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <h3>附件上传与引用</h3>
+            <div class="docs-code" data-language="http">
+              <pre><code>POST /sessions/:id/attachments
+content-type: application/json
+
+{ "name": "design.pdf", "data": "&lt;base64&gt;" }
+→ { "attachment": { "id": "att-…" } }
+
+POST /sessions/:id/turns
+{ "input": "分析这份设计稿", "attachmentIds": ["att-…"] }</code></pre>
+            </div>
+            <p>
+              HTTP turn 不接受内嵌附件正文。附件先注册为稳定 ID，再由消息引用；
+              PDF 页面、OCR 文本、图片归一化版本和音视频元数据按需派生。
+            </p>
+            <h3>大结果读取策略</h3>
+            <div class="docs-code" data-language="text">
+              <pre><code>read_artifact(artifactId, startLine=1, endLine=200)
+read_artifact(artifactId, query="ERROR")
+read_artifact(artifactId, offset=64000, maxBytes=32000)</code></pre>
+            </div>
+          </section>
+
+          <section class="docs-section" aria-labelledby="sessions">
+<span class="docs-kicker">核心功能 / 会话管理</span>
+            <h2 class="docs-section-anchor" id="sessions">会话、队列与失败恢复</h2>
+            <p>
+              Session 是持久事实源。消息、事件、工具状态、审批、usage、计划、目标、
+              checkpoint、队列和 artifact 都从 SQLite/文件存储恢复，客户端内存不是事实源。
+            </p>
+            <h3>Lease 与多客户端</h3>
+            <ul>
+              <li>同一 Session 通过 lease 限制单写者；多客户端看到相同事件序列。</li>
+              <li>失败 turn 保留最后成功步骤和 pending tools；未知副作用禁止自动重放。</li>
+              <li>Web 可停止后继续新 turn；CLI 使用 <code>/resume-turn</code> 和显式确认恢复。</li>
+              <li>会话支持 JSON/JSONL 导出、workspace 集合导出、严格校验导入和生命周期清理。</li>
+            </ul>
+            <h3>运行中追加约束</h3>
+            <div class="docs-code" data-language="terminal">
+              <pre><code>/queue "补充：不要修改公开 API"
+/queue redirect "先停止当前方案，改为保留旧接口"</code></pre>
+            </div>
+            <p>
+              queue 在下一模型步骤执行；interrupt-and-redirect 只中止当前安全边界内的 turn，
+              新 turn 仍会重新经过权限、验证和预算检查。
+            </p>
+            <h3>诊断与恢复入口</h3>
+            <div class="docs-code" data-language="terminal">
+              <pre><code>/resume-turn
+/resume-turn confirm
+/requests
+/requests snapshot &lt;request-id&gt;
+/diagnostics</code></pre>
+            </div>
+          </section>
+
           <section class="docs-section" aria-labelledby="web">
-            <span class="docs-kicker">07 / WEB</span>
+<span class="docs-kicker">核心功能 / 会话管理</span>
             <h2 class="docs-section-anchor" id="web">Web 工作台与多客户端</h2>
             <p>
               Web 不是演示壳。它和执行层共享同一会话事件源，提供工具轨迹、diff、审批、
@@ -753,8 +1123,137 @@ HOST=0.0.0.0 CLAWSMITH_ALLOW_REMOTE=1 clawsmith web</code></pre>
             </div>
           </section>
 
+          <section class="docs-section" aria-labelledby="recovery">
+<span class="docs-kicker">核心功能 / 会话管理</span>
+            <h2 class="docs-section-anchor" id="recovery">失败恢复与未知副作用</h2>
+            <h3>失败分类</h3>
+            <p>
+              turn 会区分 model、tool、approval、lease lost、process exit、unknown side effect、
+              aborted、iteration limit、resource limit 和 verification 失败。分类写入事实源，
+              客户端不根据错误文本猜状态。
+            </p>
+            <h3>可安全继续的情况</h3>
+            <ul>
+              <li>没有执行副作用工具，或工具已经得到可信成功结果。</li>
+              <li>只是模型流断开、租约恢复或客户端重连。</li>
+              <li>checkpoint 已证明当前文件与预期状态一致。</li>
+            </ul>
+            <h3>必须人工确认的情况</h3>
+            <p>
+              命令、外部写入、MCP mutation 或消息发送在进程退出时没有结果，会标记为
+              <code>unknown</code>。先检查工作区、日志和外部服务，再使用
+              <code>/resume-turn confirm</code>；系统不会自动重放。
+            </p>
+          </section>
+
+          <section class="docs-section" aria-labelledby="data-lifecycle">
+<span class="docs-kicker">核心功能 / 会话管理</span>
+            <h2 class="docs-section-anchor" id="data-lifecycle">导出、备份与清理数据</h2>
+            <h3>导出单个会话</h3>
+            <div class="docs-code" data-language="terminal">
+              <pre><code>/export ./exports/session.json
+/export ./exports/session.jsonl --jsonl
+/export ./exports/session-with-files.zip --attachments</code></pre>
+            </div>
+            <p>
+              默认导出排除凭据、图片与附件正文、artifact 正文、Memory、Skill、待审批请求和
+              宿主绝对路径，并写入格式版本与 SHA-256。<code>--attachments</code> 会包含当前消息
+              实际引用的附件，文件可能含敏感内容，应单独加密和限制访问。
+            </p>
+
+            <h3>导入与迁移</h3>
+            <div class="docs-code" data-language="terminal">
+              <pre><code>/export-workspace ./exports/workspace.zip
+/import ./exports/session.json
+/import ./exports/workspace.zip</code></pre>
+            </div>
+            <p>
+              导入会重新校验格式版本、体积、消息/事件数量和摘要，并生成新 session ID，不会覆盖
+              已有会话；失败时删除半导入数据。JSONL 每行承载一条消息、事件或附件，适合流式传输。
+            </p>
+
+            <h3>预览后清理</h3>
+            <div class="docs-code" data-language="terminal">
+              <pre><code>/cleanup-preview 2026-01-01T00:00:00Z
+/cleanup 2026-01-01T00:00:00Z --workspace &lt;workspace-id&gt; --yes</code></pre>
+            </div>
+            <p>
+              预览会列出会话、更新时间、逻辑可释放字节、共享附件引用和不可清理原因。活动 turn、
+              跨进程 lease、SessionEnd Hook 失败或共享附件仍被引用时不会删除。artifact 默认
+              保留 7 天，并受会话级与全局容量淘汰约束。
+            </p>
+
+            <h3>数据库备份</h3>
+            <div class="docs-code" data-language="terminal">
+              <pre><code>/backup ./backups/clawsmith.sqlite
+clawsmith restore ./backups/clawsmith.sqlite</code></pre>
+            </div>
+            <p>
+              backup 使用 SQLite 一致性备份并做完整性检查。restore 会保留恢复前的安全副本；
+              它不是云备份，也不包含未纳入数据库的工作区文件、附件正文或远端系统状态。
+            </p>
+          </section>
+
+          <section class="docs-section" aria-labelledby="memory">
+<span class="docs-kicker">核心功能 / 记忆与上下文</span>
+<h2 class="docs-section-anchor" id="memory">记忆：保存与检索长期信息</h2>
+<!-- 保留旧版合并章节和子标题锚点，避免已有分享链接失效。 -->
+<span id="skills-memory"></span><span id="skills-memory-目录布局"></span><span id="skills-memory-memory-写入必须经过审核"></span>
+<p>Memory 保存个人偏好、项目事实和反馈。它与会话历史分开管理，检索结果始终低于当前用户指令和当前文件事实；可复用操作步骤应放进 <a href="#skills">Skills</a>。</p>
+<h3>选择记忆范围</h3><ul><li><code>user</code>：个人偏好与跨项目可复用信息。</li><li><code>project</code>：当前工作区的项目事实，读取时受工作区与用户身份约束。</li></ul>
+<p>当前 Profile 隔离身份、记忆与凭据。默认 Home 下的记忆保存在 <code>~/.clawsmith/memory/user/</code> 与 <code>~/.clawsmith/memory/workspaces/&lt;workspace-hash&gt;/</code>，自定义身份和目录见 <a href="#profiles">Profiles</a> 与 <a href="#config-reference">配置目录</a>。</p>
+<h3>写入、检索与遗忘</h3><div class="docs-code" data-language="terminal"><pre><code>/memory list
+/memory remember 回复偏好 :: 默认使用中文，保留英文标识符
+/memory project 验证命令 :: 提交前运行 pnpm check
+/memory search 验证命令
+/memory pending
+/memory approve &lt;candidate-id&gt;
+/memory reject &lt;candidate-id&gt;
+/memory forget &lt;id&gt;</code></pre></div>
+<h3>审核与事实边界</h3><p>自动学习的记忆候选与冲突处理默认先审核；使用 <code>/memory pending</code> 查看候选后再批准或拒绝。用户也可以通过命令显式写入或遗忘信息。<code>memory_search</code> 返回的历史信息不能替代重新读取当前文件。</p>
+</section>
+
+          <section class="docs-section" aria-labelledby="project-context">
+<span class="docs-kicker">核心功能 / 记忆与上下文</span>
+            <h2 class="docs-section-anchor" id="project-context">项目规则与持久上下文</h2>
+            <h3>AGENTS.md 的职责</h3>
+            <p>
+              clawsmith 从 workspace root 到文件目录逐层加载 <code>AGENTS.md</code>。
+              更深的文件规则覆盖上层，但任何项目规则都不能授予宿主权限。
+            </p>
+            <div class="docs-code" data-language="markdown">
+              <pre><code># packages/api/AGENTS.md
+
+- Use the repository error envelope for every endpoint.
+- Run `pnpm test -- api` after route changes.
+- Never edit generated files under `src/gen/`.
+- Preserve the public OpenAPI schema unless the task explicitly requests a breaking change.</code></pre>
+            </div>
+
+            <h3>项目验证命令</h3>
+            <div class="docs-code" data-language="json">
+              <pre><code>{
+  "verificationCommand": "pnpm check",
+  "contextRules": {
+    "include": ["packages/**"],
+    "exclude": ["packages/**/generated/**"]
+  }
+}</code></pre>
+            </div>
+            <p>
+              <code>.clawsmith/project.json</code> 用于固定验证命令和常用上下文。
+              规则内容有哈希和大小边界，同一版本不会在每个 turn 重复注入。
+            </p>
+
+            <h3>上下文不是永久真理</h3>
+            <p>
+              规则、Memory、Skill、网页和工具输出都带来源边界。Agent 必须先验证当前文件，
+              再应用历史事实；系统提示和用户当前指令的优先级高于派生上下文。
+            </p>
+          </section>
+
           <section class="docs-section" aria-labelledby="tools">
-            <span class="docs-kicker">08 / TOOLS</span>
+<span class="docs-kicker">核心功能 / 工具与权限</span>
             <h2 class="docs-section-anchor" id="tools">Agent 工具矩阵</h2>
             <p>
               工具遵循同一 <code>ToolDefinition</code>：Zod schema、risk、capability、
@@ -791,7 +1290,7 @@ prepare_delivery(commitMessage="fix: refresh auth token")</code></pre>
           </section>
 
           <section class="docs-section" aria-labelledby="code-tools">
-            <span class="docs-kicker">09 / CODE TOOLS</span>
+<span class="docs-kicker">核心功能 / 工具与权限</span>
             <h2 class="docs-section-anchor" id="code-tools">代码、文件与搜索工具</h2>
             <h3>读取大文件时使用行窗口</h3>
             <div class="docs-code" data-language="text">
@@ -856,44 +1355,8 @@ prepare_delivery(commitMessage="fix: refresh auth token")</code></pre>
             </ul>
           </section>
 
-          <section class="docs-section" aria-labelledby="execution-tools">
-            <span class="docs-kicker">10 / EXECUTION</span>
-            <h2 class="docs-section-anchor" id="execution-tools">命令与执行工具</h2>
-            <h3>短命令使用 run_command</h3>
-            <div class="docs-code" data-language="text">
-              <pre><code>run_command(
-  command="pnpm test -- auth",
-  cwd="packages/api",
-  timeoutMs=120000
-)</code></pre>
-            </div>
-            <p>
-              <code>cwd</code> 必须是 workspace 内真实目录；不得通过路径参数绕过 workspace 边界的路径。
-              非零退出码仍作为工具成功返回，模型必须读取 stderr 和 exit code。
-            </p>
-
-            <h3>长任务使用 start_command</h3>
-            <div class="docs-code" data-language="text">
-              <pre><code>start_command(command="pnpm dev", cwd="apps/web")
-command_output(taskId="command-…", wait=true, waitTimeoutMs=300000)
-command_status(taskId="command-…")
-cancel_command(taskId="command-…")</code></pre>
-            </div>
-            <p>
-              等待不会取消任务；超时只停止本次等待。需要交互程序时启用 PTY，
-              再使用 <code>command_input</code> 和 <code>resize_command_pty</code>。
-            </p>
-
-            <h3>执行边界</h3>
-            <ul>
-              <li>命令经过平台沙箱、资源限制和危险命令硬拒绝。</li>
-              <li>后台任务不绑定单轮 turn，宿主退出后转为 orphaned，不会自动重放。</li>
-              <li>项目感知使用 <code>project_info</code>，不要反复猜测 Node、包管理器或脚本入口。</li>
-            </ul>
-          </section>
-
           <section class="docs-section" aria-labelledby="browser-tools">
-            <span class="docs-kicker">11 / BROWSER</span>
+<span class="docs-kicker">核心功能 / 工具与权限</span>
             <h2 class="docs-section-anchor" id="browser-tools">浏览器与前端诊断</h2>
             <h3>页面操作闭环</h3>
             <div class="docs-code" data-language="text">
@@ -929,7 +1392,7 @@ browser_back()</code></pre>
           </section>
 
           <section class="docs-section" aria-labelledby="quality-tools">
-            <span class="docs-kicker">12 / DELIVERY</span>
+<span class="docs-kicker">核心功能 / 工具与权限</span>
             <h2 class="docs-section-anchor" id="quality-tools">验证、Review 与交付</h2>
             <h3>标准交付顺序</h3>
             <ol>
@@ -973,7 +1436,7 @@ browser_back()</code></pre>
           </section>
 
           <section class="docs-section" aria-labelledby="permissions">
-            <span class="docs-kicker">13 / POLICY</span>
+<span class="docs-kicker">核心功能 / 工具与权限</span>
             <h2 class="docs-section-anchor" id="permissions">权限、审批与沙箱</h2>
             <h3>选择权限模式</h3>
             <div class="docs-table-wrap">
@@ -1010,230 +1473,14 @@ browser_back()</code></pre>
             </ul>
           </section>
 
-          <section class="docs-section" aria-labelledby="hooks">
-            <span class="docs-kicker">14 / HOOKS</span>
-            <h2 class="docs-section-anchor" id="hooks">Hooks：把团队规则放进执行链</h2>
-            <h3>支持的生命周期</h3>
-            <div class="docs-table-wrap">
-              <table class="docs-table">
-                <thead><tr><th>事件</th><th>用途</th><th>拒绝效果</th></tr></thead>
-                <tbody>
-                  <tr><td><code>SessionStart</code></td><td>环境检查、策略初始化</td><td>撤销新会话</td></tr>
-                  <tr><td><code>UserPromptSubmit</code></td><td>阻止敏感 prompt 或注入补充规则</td><td>消息不落盘</td></tr>
-                  <tr><td><code>PreToolUse</code></td><td>allow / ask / deny 工具调用</td><td>工具不执行</td></tr>
-                  <tr><td><code>PostToolUse</code></td><td>日志、指标、附加审计</td><td>只观察</td></tr>
-                  <tr><td><code>Stop</code></td><td>完成前检查验证与交付条件</td><td>阻止 turn 完成</td></tr>
-                </tbody>
-              </table>
-            </div>
-
-            <h3>hooks.json 示例</h3>
-            <div class="docs-code" data-language="json">
-              <pre><code>{
-  "hooks": [
-    {
-      "id": "guard-destructive-commands",
-      "event": "PreToolUse",
-      "matcher": "run_command",
-      "command": "node ./.clawsmith/hooks/guard-command.mjs",
-      "enabled": true,
-      "trusted": true,
-      "timeoutMs": 5000,
-      "conditions": {
-        "risks": ["execute"],
-        "permissionModes": ["default", "accept-edits"],
-        "pathPrefixes": ["packages/", "infra/"]
-      }
-    }
-  ]
-}</code></pre>
-            </div>
-
-            <h3>Hook 输出契约</h3>
-            <div class="docs-code" data-language="json">
-              <pre><code>{
-  "decision": "deny",
-  "reason": "Do not deploy from a local interactive turn."
-}</code></pre>
-            </div>
-            <p>
-              Hook 通过 stdin 接收结构化 context。除 <code>PostToolUse</code> 和
-              <code>PostCompact</code> 外，失败、超时或非法 JSON 都按拒绝处理；
-              结果写入 <code>hook-audit.jsonl</code>。
-            </p>
-          </section>
-
-          <section class="docs-section" aria-labelledby="sessions">
-            <span class="docs-kicker">15 / SESSIONS</span>
-            <h2 class="docs-section-anchor" id="sessions">会话、队列与失败恢复</h2>
-            <p>
-              Session 是持久事实源。消息、事件、工具状态、审批、usage、计划、目标、
-              checkpoint、队列和 artifact 都从 SQLite/文件存储恢复，客户端内存不是事实源。
-            </p>
-            <h3>Lease 与多客户端</h3>
-            <ul>
-              <li>同一 Session 通过 lease 限制单写者；多客户端看到相同事件序列。</li>
-              <li>失败 turn 保留最后成功步骤和 pending tools；未知副作用禁止自动重放。</li>
-              <li>Web 可停止后继续新 turn；CLI 使用 <code>/resume-turn</code> 和显式确认恢复。</li>
-              <li>会话支持 JSON/JSONL 导出、workspace 集合导出、严格校验导入和生命周期清理。</li>
-            </ul>
-            <h3>运行中追加约束</h3>
-            <div class="docs-code" data-language="terminal">
-              <pre><code>/queue "补充：不要修改公开 API"
-/queue redirect "先停止当前方案，改为保留旧接口"</code></pre>
-            </div>
-            <p>
-              queue 在下一模型步骤执行；interrupt-and-redirect 只中止当前安全边界内的 turn，
-              新 turn 仍会重新经过权限、验证和预算检查。
-            </p>
-            <h3>诊断与恢复入口</h3>
-            <div class="docs-code" data-language="terminal">
-              <pre><code>/resume-turn
-/resume-turn confirm
-/requests
-/requests snapshot &lt;request-id&gt;
-/diagnostics</code></pre>
-            </div>
-          </section>
-
-          <section class="docs-section" aria-labelledby="recovery">
-            <span class="docs-kicker">16 / RECOVERY</span>
-            <h2 class="docs-section-anchor" id="recovery">失败恢复与未知副作用</h2>
-            <h3>失败分类</h3>
-            <p>
-              turn 会区分 model、tool、approval、lease lost、process exit、unknown side effect、
-              aborted、iteration limit、resource limit 和 verification 失败。分类写入事实源，
-              客户端不根据错误文本猜状态。
-            </p>
-            <h3>可安全继续的情况</h3>
-            <ul>
-              <li>没有执行副作用工具，或工具已经得到可信成功结果。</li>
-              <li>只是模型流断开、租约恢复或客户端重连。</li>
-              <li>checkpoint 已证明当前文件与预期状态一致。</li>
-            </ul>
-            <h3>必须人工确认的情况</h3>
-            <p>
-              命令、外部写入、MCP mutation 或消息发送在进程退出时没有结果，会标记为
-              <code>unknown</code>。先检查工作区、日志和外部服务，再使用
-              <code>/resume-turn confirm</code>；系统不会自动重放。
-            </p>
-          </section>
-
-          <section class="docs-section" aria-labelledby="context">
-            <span class="docs-kicker">17 / CONTEXT</span>
-            <h2 class="docs-section-anchor" id="context">上下文、附件与 Artifact</h2>
-            <p>
-              项目规则、Skill metadata、Memory snapshot、附件派生内容、网页和 MCP 描述都被视为
-              有来源边界的输入。大工具结果按内容哈希写入 artifact，模型只收到预览和不透明引用。
-            </p>
-            <h3>输入来源与优先级</h3>
-            <div class="docs-table-wrap">
-              <table class="docs-table">
-                <thead><tr><th>对象</th><th>持久化</th><th>模型访问</th></tr></thead>
-                <tbody>
-                  <tr><td>附件</td><td>SHA-256 blob + session binding</td><td><code>attachment_*</code> / attachment_ref</td></tr>
-                  <tr><td>Artifact</td><td>会话级内容寻址存储</td><td><code>read_artifact</code> 分块读取</td></tr>
-                  <tr><td>PDF / Office</td><td>原文件 + 派生页/OCR 缓存</td><td><code>document_*</code> 页范围读取</td></tr>
-                  <tr><td>图片</td><td>原始与请求归一化版本</td><td><code>read_image</code> 或视觉消息 part</td></tr>
-                </tbody>
-              </table>
-            </div>
-            <h3>附件上传与引用</h3>
-            <div class="docs-code" data-language="http">
-              <pre><code>POST /sessions/:id/attachments
-content-type: application/json
-
-{ "name": "design.pdf", "data": "&lt;base64&gt;" }
-→ { "attachment": { "id": "att-…" } }
-
-POST /sessions/:id/turns
-{ "input": "分析这份设计稿", "attachmentIds": ["att-…"] }</code></pre>
-            </div>
-            <p>
-              HTTP turn 不接受内嵌附件正文。附件先注册为稳定 ID，再由消息引用；
-              PDF 页面、OCR 文本、图片归一化版本和音视频元数据按需派生。
-            </p>
-            <h3>大结果读取策略</h3>
-            <div class="docs-code" data-language="text">
-              <pre><code>read_artifact(artifactId, startLine=1, endLine=200)
-read_artifact(artifactId, query="ERROR")
-read_artifact(artifactId, offset=64000, maxBytes=32000)</code></pre>
-            </div>
-          </section>
-
-          <section class="docs-section" aria-labelledby="long-tasks">
-            <span class="docs-kicker">18 / LONG RUNNING</span>
-            <h2 class="docs-section-anchor" id="long-tasks">长任务、PTY 与后台 Agent</h2>
-            <p>
-              <code>start_command</code> 启动持久任务并返回 task ID；工具可等待终态、读取增量输出、
-              写 stdin、resize PTY、取消进程树。后台只读子 Agent 使用持久状态、heartbeat
-              和跨进程 lease。
-            </p>
-            <h3>开发服务器与交互终端</h3>
-            <div class="docs-code" data-language="terminal">
-              <pre><code>/commands
-/commands capabilities
-/commands status &lt;id&gt;
-/commands log &lt;id&gt;
-/commands input &lt;id&gt;
-/commands cancel &lt;id&gt;</code></pre>
-            </div>
-            <h3>后台只读 Agent</h3>
-            <p>
-              <code>delegate_background</code> 适合仓库调查、日志审查和独立资料整理。
-              子任务有自己的 Session、预算、heartbeat 和结果通知，父 Agent 不必持续等待。
-            </p>
-            <aside class="docs-callout">
-              <span class="docs-callout-mark">PROCESS EXIT</span>
-              <p>
-                宿主退出后，运行中的后台命令或 Agent 不会被伪装成仍可控；任务转为
-                <code>orphaned</code> 或 <code>unknown</code>，避免重复副作用。
-              </p>
-            </aside>
-          </section>
-
-          <section class="docs-section" aria-labelledby="providers">
-            <span class="docs-kicker">19 / PROVIDERS</span>
-            <h2 class="docs-section-anchor" id="providers">Provider 与模型路由</h2>
-            <p>
-              Core 不按供应商名称硬编码。任何兼容 OpenAI <code>/chat/completions</code>
-              的服务都可以配置为 Provider；模型能力、窗口、价格、工具调用、图片与 reasoning
-              兼容性由能力元数据和 compatibility 字段描述。
-            </p>
-            <h3>配置自定义模型服务</h3>
-            <div class="docs-code" data-language="terminal">
-              <pre><code>/providers
-/model list
-/model configure my-gateway
-/model default my-gateway/model-id
-/model switch</code></pre>
-            </div>
-            <h3>声明兼容性，不按厂商名称分支</h3>
-            <div class="docs-code" data-language="json">
-              <pre><code>{
-  "name": "my-gateway",
-  "kind": "custom",
-  "baseURL": "https://gateway.example/v1",
-  "model": "model-id",
-  "models": ["model-id"],
-  "compatibility": { "echoReasoningContent": true }
-}</code></pre>
-            </div>
-            <h3>环境变量覆盖</h3>
-            <div class="docs-code" data-language="terminal">
-              <pre><code>CLAWSMITH_PROVIDER_BASE_URL="https://gateway.example/v1" \
-CLAWSMITH_PROVIDER_MODEL="model-id" \
-CLAWSMITH_PROVIDER_API_KEY="secret" \
-clawsmith web</code></pre>
-            </div>
-            <p>
-              模型窗口、价格、工具、图片、reasoning 和 usage 能力优先读取 Provider 元数据；
-              未知值必须显示为 unknown，不能自动假定能力。
-            </p>
-          </section>
+          <header class="docs-chapter" id="chapter-extensions">
+            <p>开发者文档 / 扩展能力</p>
+            <h2>扩展能力</h2>
+            <div>按需接入外部工具、技能和代码智能。</div>
+          </header>
 
           <section class="docs-section" aria-labelledby="mcp">
-            <span class="docs-kicker">20 / MCP</span>
+<span class="docs-kicker">扩展能力 / MCP</span>
             <h2 class="docs-section-anchor" id="mcp">MCP 工具与资源</h2>
             <p>
               支持 stdio、Streamable HTTP、legacy SSE 和 WebSocket。只有
@@ -1279,7 +1526,7 @@ clawsmith web</code></pre>
           </section>
 
           <section class="docs-section" aria-labelledby="mcp-recipes">
-            <span class="docs-kicker">21 / MCP RECIPES</span>
+<span class="docs-kicker">扩展能力 / MCP</span>
             <h2 class="docs-section-anchor" id="mcp-recipes">MCP 配置与调用示例</h2>
             <h3>本地 stdio server</h3>
             <div class="docs-code" data-language="json">
@@ -1327,8 +1574,30 @@ mcp__repo-tools__catalog_refresh()</code></pre>
             </p>
           </section>
 
+          <section class="docs-section" aria-labelledby="skills">
+<span class="docs-kicker">扩展能力 / Skills</span>
+<h2 class="docs-section-anchor" id="skills">Skills：复用工作方法</h2>
+<p>Skill 保存可复用的工作方法。系统提示只注入名称、描述等 metadata，模型命中后再通过 <code>skill_view</code> 按需加载正文。</p>
+<h3>创建与发现</h3><p>把技能保存为 <code>~/.clawsmith/skills/&lt;name&gt;/SKILL.md</code>。描述应说明何时使用，正文写清操作步骤、验证方式和输出要求。</p>
+<h3 id="skills-memory-编写一个-skill">编写一个 Skill</h3>
+            <div class="docs-code" data-language="markdown">
+              <pre><code>---
+name: migration-review
+description: Review database migrations for rollback and locking risk.
+version: 1
+---
+
+1. Read the migration and adjacent schema.
+2. Check backfill, lock duration, rollback and deploys.
+3. Run the repository migration tests.
+4. Return findings with file evidence.</code></pre>
+            </div>
+            <h3>审核与维护</h3><p>使用 <code>/skills</code> 查看技能与学习候选。Skill 学习默认先审核再采用；技能中的步骤仍受当前会话权限、审批和工具可用性约束。</p>
+<p>需要保存个人偏好或项目事实时，使用<a href="#memory">长期记忆</a>；需要固定项目规则时，使用<a href="#project-context">项目上下文</a>。</p>
+</section>
+
           <section class="docs-section" aria-labelledby="lsp">
-            <span class="docs-kicker">22 / LSP</span>
+<span class="docs-kicker">扩展能力 / LSP</span>
             <h2 class="docs-section-anchor" id="lsp">LSP 代码智能</h2>
             <p>
               配置 enabled/trusted 的 LSP 后，Agent 可按文件扩展名和 languageId 路由到语言服务器，
@@ -1369,507 +1638,14 @@ lsp_formatting(path="packages/auth/session.ts")</code></pre>
             </aside>
           </section>
 
-          <section class="docs-section" aria-labelledby="skills-memory">
-            <span class="docs-kicker">23 / SKILLS + MEMORY</span>
-            <h2 class="docs-section-anchor" id="skills-memory">Skill 与长期 Memory</h2>
-            <p>
-              Skill 保存可复用工作方法，系统提示只注入 metadata，模型命中时再通过
-              <code>skill_view</code> 加载正文。Memory 区分 user 与 project scope，检索结果
-              永远低于当前用户指令和当前文件事实。
-            </p>
-            <h3>目录布局</h3>
-            <div class="docs-code" data-language="text">
-              <pre><code>~/.clawsmith/
-├── skills/
-│   └── release-checklist/SKILL.md
-└── memory/
-    ├── user/
-    └── workspaces/&lt;workspace-hash&gt;/</code></pre>
-            </div>
-            <h3>编写一个 Skill</h3>
-            <div class="docs-code" data-language="markdown">
-              <pre><code>---
-name: migration-review
-description: Review database migrations for rollback and locking risk.
-version: 1
----
-
-1. Read the migration and adjacent schema.
-2. Check backfill, lock duration, rollback and deploys.
-3. Run the repository migration tests.
-4. Return findings with file evidence.</code></pre>
-            </div>
-            <h3>Memory 写入必须经过审核</h3>
-            <p>
-              Skill 学习、Memory 候选和冲突处理默认 review-first；模型不能静默写入长期状态。
-              <code>memory_search</code> 结果只是时间受限的上下文，不能替代重新读取当前文件。
-            </p>
-          </section>
-
-          <section class="docs-section" aria-labelledby="project-context">
-            <span class="docs-kicker">24 / PROJECT CONTEXT</span>
-            <h2 class="docs-section-anchor" id="project-context">项目规则与持久上下文</h2>
-            <h3>AGENTS.md 的职责</h3>
-            <p>
-              clawsmith 从 workspace root 到文件目录逐层加载 <code>AGENTS.md</code>。
-              更深的文件规则覆盖上层，但任何项目规则都不能授予宿主权限。
-            </p>
-            <div class="docs-code" data-language="markdown">
-              <pre><code># packages/api/AGENTS.md
-
-- Use the repository error envelope for every endpoint.
-- Run `pnpm test -- api` after route changes.
-- Never edit generated files under `src/gen/`.
-- Preserve the public OpenAPI schema unless the task explicitly requests a breaking change.</code></pre>
-            </div>
-
-            <h3>项目验证命令</h3>
-            <div class="docs-code" data-language="json">
-              <pre><code>{
-  "verificationCommand": "pnpm check",
-  "contextRules": {
-    "include": ["packages/**"],
-    "exclude": ["packages/**/generated/**"]
-  }
-}</code></pre>
-            </div>
-            <p>
-              <code>.clawsmith/project.json</code> 用于固定验证命令和常用上下文。
-              规则内容有哈希和大小边界，同一版本不会在每个 turn 重复注入。
-            </p>
-
-            <h3>上下文不是永久真理</h3>
-            <p>
-              规则、Memory、Skill、网页和工具输出都带来源边界。Agent 必须先验证当前文件，
-              再应用历史事实；系统提示和用户当前指令的优先级高于派生上下文。
-            </p>
-          </section>
-
-          <section class="docs-section" aria-labelledby="agents">
-            <span class="docs-kicker">25 / AGENTS</span>
-            <h2 class="docs-section-anchor" id="agents">Agent 定义与子 Agent</h2>
-            <p>
-              Agent manifest 只能缩小父级工具、Skill、Hook、路径、命令和权限。主 Agent 可用
-              <code>list_agent_definitions</code> 发现身份，再通过
-              <code>delegate_task</code>、<code>delegate_worktree</code> 或
-              <code>delegate_background</code> 委派。
-            </p>
-            <h3>定义受限角色</h3>
-            <div class="docs-code" data-language="markdown">
-              <pre><code>---
-id: reviewer
-name: Code Reviewer
-version: 1
-tools: [read_file, search_files, session_search]
-permissionMode: plan
----
-Review the current diff. Report blocking findings with file evidence.</code></pre>
-            </div>
-            <h3>能力只能收窄</h3>
-            <p>
-              manifest 的工具、Skill、Hook、写入路径、命令前缀、Memory scope、模型和权限模式
-              都必须位于父运行时上限内。子 Agent 不能通过 manifest 或委派参数扩大权限。
-            </p>
-          </section>
-
-          <section class="docs-section" aria-labelledby="agent-delegation">
-            <span class="docs-kicker">26 / DELEGATION</span>
-            <h2 class="docs-section-anchor" id="agent-delegation">子 Agent 协作模式</h2>
-            <h3>按隔离程度选择工具</h3>
-            <div class="docs-table-wrap">
-              <table class="docs-table">
-                <thead><tr><th>工具</th><th>隔离</th><th>适合任务</th></tr></thead>
-                <tbody>
-                  <tr><td><code>delegate_task</code></td><td>独立只读上下文</td><td>代码调查、日志分析、资料核对</td></tr>
-                  <tr><td><code>delegate_background</code></td><td>独立只读上下文 + 后台执行</td><td>长时间仓库调查、独立验证</td></tr>
-                  <tr><td><code>delegate_worktree</code></td><td>独立 Git worktree</td><td>写型改造、方案比较、不会污染主工作区</td></tr>
-                </tbody>
-              </table>
-            </div>
-
-            <h3>典型调用</h3>
-            <div class="docs-code" data-language="text">
-              <pre><code>list_agent_definitions()
-inspect_agent_definition(agentId="reviewer")
-
-delegate_task(
-  agentId="reviewer",
-  task="Review the auth diff",
-  context="Focus on refresh token races and missing tests"
-)</code></pre>
-            </div>
-
-            <h3>继续、查询与中断</h3>
-            <div class="docs-code" data-language="text">
-              <pre><code>list_agents()
-send_agent_message(agentId="child-session", message="Also inspect the retry path")
-interrupt_agent(agentId="child-session")</code></pre>
-            </div>
-            <p>
-              子 Agent 只回传摘要或 artifact 引用，不把中间 transcript 灌进父上下文。
-              父进程重启后，进程内续聊上下文不可用；需要持久隔离工作时应使用 Worktree 会话。
-            </p>
-          </section>
-
-          <section class="docs-section" aria-labelledby="orchestration">
-            <span class="docs-kicker">27 / ORCHESTRATION</span>
-            <h2 class="docs-section-anchor" id="orchestration">Goal、Task 与 Workflow</h2>
-            <h3>选择正确的规划层</h3>
-            <div class="docs-table-wrap">
-              <table class="docs-table">
-                <thead><tr><th>能力</th><th>适合的问题</th><th>持久状态</th></tr></thead>
-                <tbody>
-                  <tr><td>Todo</td><td>单会话执行清单</td><td>session_todos</td></tr>
-                  <tr><td>Goal + Plan</td><td>目标、验收条件、计划审批</td><td>goal revision、plan history、evidence</td></tr>
-                  <tr><td>Task Graph</td><td>依赖、write set、认领和 mailbox</td><td>TeamTask version</td></tr>
-                  <tr><td>Workflow</td><td>多步骤 DAG、并行 phase、返工</td><td>Workflow run + append-only journal</td></tr>
-                </tbody>
-              </table>
-            </div>
-            <h3>Goal 与 Plan</h3>
-            <div class="docs-code" data-language="terminal">
-              <pre><code>/plan
-/plan approve &lt;plan-id&gt;
-/plan complete 1:&lt;tool-call-id&gt;</code></pre>
-            </div>
-            <p>
-              Plan 审批只允许离开计划阶段，不会跳过后面的工具审批。Goal 完成还必须给每个
-              acceptance criterion 绑定当前 revision 之后的真实工具、文件或外部证据。
-            </p>
-
-            <h3>Scene 工作方法</h3>
-            <div class="docs-code" data-language="terminal">
-              <pre><code>/scene general
-/scene coding
-/scene blog
-/scene brainstorm
-/scene blog run "写一篇插件系统设计说明"</code></pre>
-            </div>
-            <p>
-              <code>coding</code> 强调实现、review 和验证；<code>blog</code> 按调研、写作、审稿
-              分工；<code>brainstorm</code> 使用发散、挑战、收敛阶段。Scene 只能收窄工具和权限。
-            </p>
-          </section>
-
-          <section class="docs-section" aria-labelledby="worktrees">
-            <span class="docs-kicker">28 / WORKTREES</span>
-            <h2 class="docs-section-anchor" id="worktrees">并行 Worktree</h2>
-            <p>
-              每个 Worktree 方案拥有独立分支、workspace、Session、artifact 和 checkpoint。
-              可以比较 diff 与验证证据，再把选定方案应用到干净的 base branch。
-            </p>
-            <h3>创建与比较方案</h3>
-            <div class="docs-code" data-language="terminal">
-              <pre><code>/worktree create "尝试新的解析器"
-/worktree list
-/worktree switch &lt;id&gt;
-/worktree compare &lt;id&gt;
-/worktree apply &lt;id&gt; --confirm
-/worktree discard &lt;id&gt; --confirm</code></pre>
-            </div>
-            <h3>应用规则</h3>
-            <p>
-              apply 要求主工作区当前分支与 Worktree base branch 一致且没有本地修改。
-              系统先执行 <code>git apply --check</code>，验证所有文件后再写入；冲突不会留下
-              半个 patch。Worktree apply 不会自动 commit、push 或创建 PR。
-            </p>
-          </section>
-
-          <section class="docs-section" aria-labelledby="plugins">
-            <span class="docs-kicker">29 / PLUGINS</span>
-            <h2 class="docs-section-anchor" id="plugins">插件与稳定扩展 API</h2>
-            <h3>六个稳定扩展 seam</h3>
-            <p>
-              公开 Plugin API v1 提供 models、tools、contexts、http、gateways 和 execution 六个
-              Service seam。插件注册通过 effect 生命周期管理，卸载时 Provider、Tool、路由和
-              Context 贡献必须幂等释放。
-            </p>
-            <h3>两种插件形态</h3>
-            <p>
-              <code>plugin.json</code> 声明式插件用于贡献 Skill、MCP、权限和受信 Web client；
-              Profile 代码插件用于向公开 Service seam 注册 Tool、Provider、Context、HTTP、
-              Gateway 或 Execution World。声明式安装默认不执行插件代码，代码插件也只加载本地
-              包、绝对路径或 <code>file:</code> 模块，拒绝远程 URL。
-            </p>
-            <div class="docs-code" data-language="typescript">
-              <pre><code>import { PLUGIN_API_VERSION, type PluginModule } from "clawsmith/plugin-api"
-
-const plugin: PluginModule = {
-  apiVersion: PLUGIN_API_VERSION,
-  apply(ctx, config) {
-    return ctx.http.register({
-      method: "GET",
-      path: "/plugin-api/example/status",
-      handler: () => ({
-        status: 200,
-        body: JSON.stringify({ ok: true, config }),
-      }),
-    })
-  },
-}
-
-export default plugin</code></pre>
-            </div>
-            <h3>权限与生命周期边界</h3>
-            <p>
-              插件不能替换权限裁决、Session lease、事件顺序、凭据代理或恢复语义。Tool 注册后
-              仍由 Core 依次执行 Zod 校验、Hook、权限、沙箱、超时、artifact 和事件落库；
-              Context Provider 只能为当前模型请求补充 system context，不能伪造会话消息。
-            </p>
-            <h3>安装、信任与启用</h3>
-            <div class="docs-code" data-language="terminal">
-              <pre><code>clawsmith plugin validate ./review-tools
-clawsmith plugin preview ./review-tools
-clawsmith plugin install ./review-tools
-clawsmith plugin trust review-tools
-clawsmith plugin enable review-tools</code></pre>
-            </div>
-            <p>
-              install 默认把插件保存为未信任、未启用；trust 与 enable 是两次显式用户决策。
-              更新时新增权限必须逐项接受，发布者变化默认拒绝；卸载进入 quarantine，便于恢复。
-            </p>
-          </section>
-
-          <section class="docs-section" aria-labelledby="plugin-tool">
-            <span class="docs-kicker">30 / CUSTOM TOOL</span>
-            <h2 class="docs-section-anchor" id="plugin-tool">编写自定义 Tool 插件</h2>
-            <h3>完整工具定义</h3>
-            <p>
-              工具必须有稳定名称、Zod v4 输入 schema、风险级别、能力声明、并发安全性和
-              摘要函数。执行函数只能实现业务动作；审批、超时、取消和结果持久化仍由 Core 管理。
-            </p>
-            <div class="docs-code" data-language="typescript">
-              <pre><code>import { PLUGIN_API_VERSION, type PluginModule } from "clawsmith/plugin-api"
-import { z } from "zod"
-
-const plugin: PluginModule = {
-  apiVersion: PLUGIN_API_VERSION,
-  apply(ctx) {
-    return ctx.tools.register({
-      name: "issue_lookup",
-      description: "Look up one issue in the team issue tracker",
-      inputSchema: z.object({
-        id: z.string().min(1),
-      }),
-      risk: "read",
-      capabilities: ["network", "session.read"],
-      concurrencySafe: true,
-      summarize: (input) => {
-        const { id } = input as { id: string }
-        return `Look up issue ${id}`
-      },
-      async execute(input, { signal }) {
-        const { id } = input as { id: string }
-        const response = await fetch(
-          `https://issues.example/api/issues/${encodeURIComponent(id)}`,
-          { signal },
-        )
-        if (!response.ok) throw new Error(`Issue lookup failed: ${response.status}`)
-        return response.json()
-      },
-    })
-  },
-}
-
-export default plugin</code></pre>
-            </div>
-
-            <h3>字段如何影响 Agent</h3>
-            <div class="docs-table-wrap">
-              <table class="docs-table">
-                <thead>
-                  <tr><th>字段</th><th>用途与约束</th></tr>
-                </thead>
-                <tbody>
-                  <tr><td><code>risk</code></td><td><code>read</code>、<code>workspace-write</code> 或 <code>execute</code>；决定权限最低风险等级。</td></tr>
-                  <tr><td><code>capabilities</code></td><td>声明网络、文件、凭据或外部副作用；只能用于收紧策略，不会自动授予权限。</td></tr>
-                  <tr><td><code>concurrencySafe</code></td><td>只有可并行调用时才设为 true；有共享写入或限流状态时应串行。</td></tr>
-                  <tr><td><code>summarize</code></td><td>生成审批和轨迹中的短摘要，不得包含密钥或大段外部正文。</td></tr>
-                  <tr><td><code>signal</code></td><td>用户取消或超时时必须中止 fetch、子进程和其他外部请求。</td></tr>
-                </tbody>
-              </table>
-            </div>
-
-            <h3>在 Profile 中加载</h3>
-            <div class="docs-code" data-language="yaml">
-              <pre><code># ~/.clawsmith/profiles/coding/clawsmith.patch.yml
-- insert:
-    - id: review-tools
-      name: "./plugins/review-tools/dist/index.js"
-      inject: [tools]
-      config:
-        trackerHost: "issues.example"</code></pre>
-            </div>
-            <div class="docs-code" data-language="terminal">
-              <pre><code>CLAWSMITH_PLUGIN_PROFILE=coding \
-CLAWSMITH_PLUGIN_RUNTIME=1 \
-clawsmith web</code></pre>
-            </div>
-            <p>
-              相对模块路径按 Profile 目录解析。插件加载失败会被隔离并写入 warning；
-              Tool 与内置 Tool 重名会在激活阶段直接失败，不能静默覆盖核心能力。
-            </p>
-
-            <h3>发布前检查</h3>
-            <div class="docs-code" data-language="terminal">
-              <pre><code>pnpm build
-CLAWSMITH_PLUGIN_PROFILE=coding \
-CLAWSMITH_PLUGIN_RUNTIME=1 \
-clawsmith --prompt "调用 issue_lookup 查询 ISSUE-42，并只报告标题和状态"</code></pre>
-            </div>
-          </section>
-
-          <section class="docs-section" aria-labelledby="plugin-provider">
-            <span class="docs-kicker">31 / CUSTOM PROVIDER</span>
-            <h2 class="docs-section-anchor" id="plugin-provider">编写自定义 Provider</h2>
-            <h3>实现统一流协议</h3>
-            <p>
-              Provider 按能力实现 <code>stream()</code>，把供应商 SSE 或本地推理输出转换成统一事件：
-              <code>text.delta</code>、<code>reasoning.delta</code>、
-              <code>tool_call.completed</code>、<code>usage</code> 和
-              <code>response.completed</code>。不要在 Provider 内执行工具。
-            </p>
-            <div class="docs-code" data-language="typescript">
-              <pre><code>import { PLUGIN_API_VERSION, type PluginModule } from "clawsmith/plugin-api"
-
-const plugin: PluginModule = {
-  apiVersion: PLUGIN_API_VERSION,
-  apply(ctx) {
-    return ctx.models.register({
-      id: "team-gateway",
-      models: ["team-reasoner"],
-      getModelCapabilities() {
-        return {
-          contextWindowTokens: 128_000,
-          contextWindowKnown: true,
-          maxOutputTokens: 16_384,
-          supportsTools: true,
-          supportsImages: false,
-          supportsStreaming: true,
-          supportsReasoning: true,
-          usageReporting: "supported",
-          source: "static",
-        }
-      },
-      async *stream(request) {
-        if (request.signal.aborted) return
-        yield { type: "text.delta", text: "adapter response" }
-        yield { type: "response.completed", finishReason: "stop" }
-      },
-    })
-  },
-}
-
-export default plugin</code></pre>
-            </div>
-
-            <h3>生产适配器必须处理什么</h3>
-            <ul>
-              <li>透传 <code>request.signal</code>，取消后立即停止读取网络流。</li>
-              <li>保留 tool call 参数直到完整，再发出一个结构化 tool call 事件。</li>
-              <li>只有上游提供 usage 时才发 usage；未知不能被当成 0 token 或免费。</li>
-              <li>reasoning、图片、原生文档和并行工具调用要通过能力元数据显式声明。</li>
-              <li>供应商错误转换为稳定错误类别，不把认证 header 或响应正文写入日志。</li>
-            </ul>
-
-            <h3>路由与 failover</h3>
-            <p>
-              模型 ID 必须由活动 Provider 声明。同一模型有多个 Provider 时，路由可按配置顺序
-              failover；只有在任何流事件输出前失败才能切换。一旦已输出文本或 tool call，
-              系统不会重放请求，避免重复 token 和重复副作用。
-            </p>
-            <div class="docs-code" data-language="text">
-              <pre><code>request
-  → capability / budget / health selection
-  → provider A
-      ├─ fails before first event → provider B
-      └─ emits first event → stream is pinned
-  → normalized events
-  → Agent Core tool loop</code></pre>
-            </div>
-          </section>
-
-          <section class="docs-section" aria-labelledby="plugin-web">
-            <span class="docs-kicker">32 / WEB PLUGIN</span>
-            <h2 class="docs-section-anchor" id="plugin-web">Web 插件与界面 Slot</h2>
-            <h3>受信客户端模块清单</h3>
-            <p>
-              Web 插件是浏览器内执行的受信代码，不是 iframe 安全沙箱。安装清单必须显式声明
-              <code>web-client</code> 权限和独立客户端入口。
-            </p>
-            <div class="docs-code" data-language="json">
-              <pre><code>{
-  "name": "issue-panel",
-  "version": "1.0.0",
-  "apiVersion": 1,
-  "license": "MIT",
-  "enabled": true,
-  "trusted": true,
-  "permissions": ["web-client"],
-  "client": {
-    "id": "issue-panel",
-    "apiVersion": 1,
-    "entry": "client/index.mjs"
-  }
-}</code></pre>
-            </div>
-            <div class="docs-code" data-language="text">
-              <pre><code>issue-panel/
-├── plugin.json
-└── client/
-    └── index.mjs</code></pre>
-            </div>
-
-            <h3>可用 Slot</h3>
-            <div class="docs-table-wrap">
-              <table class="docs-table">
-                <thead>
-                  <tr><th>Slot</th><th>可贡献内容</th><th>安全边界</th></tr>
-                </thead>
-                <tbody>
-                  <tr><td><code>settings.section</code></td><td>设置页标签和面板</td><td>只能使用窄 API、当前会话和状态通知</td></tr>
-                  <tr><td><code>toolResults</code></td><td>按工具名、显示类型和状态匹配结果渲染器</td><td>异常时回退默认纯文本视图</td></tr>
-                  <tr><td><code>composer.accessories</code></td><td>输入区状态或安全动作</td><td>不能读取消息正文、凭据或发送函数</td></tr>
-                  <tr><td><code>sidebar.accessories</code></td><td>会话侧栏低风险辅助动作</td><td>设置、新建、删除仍由宿主持有</td></tr>
-                  <tr><td><code>session.rows.chain</code></td><td>包装会话行的只读元数据</td><td>不能替换点击、删除和权限行为</td></tr>
-                </tbody>
-              </table>
-            </div>
-
-            <h3>仓库内置插件示例</h3>
-            <div class="docs-code" data-language="tsx">
-              <pre><code>import type { WebClientPlugin } from "../plugin-runtime"
-import { WEB_CLIENT_PLUGIN_API_VERSION } from "../client-plugin-contract"
-import { DefaultToolResultView } from "../tool-result-view"
-
-export const apiVersion = WEB_CLIENT_PLUGIN_API_VERSION
-
-export const plugin: WebClientPlugin = {
-  id: "issue-result",
-  apiVersion: WEB_CLIENT_PLUGIN_API_VERSION,
-  apply(ctx) {
-    ctx.toolResults.register({
-      id: "issue-card",
-      order: 20,
-      match: ({ toolName }) => toolName === "issue_lookup",
-      render: ({ display, fallbackText }) => (
-        &lt;article data-plugin-tool-result="issue"&gt;
-          &lt;DefaultToolResultView display={display} fallbackText={fallbackText} /&gt;
-        &lt;/article&gt;
-      ),
-    })
-  },
-}</code></pre>
-            </div>
-            <p>
-              Vite 构建会扫描内置插件入口并生成 <code>/plugins/client-manifest.json</code>；
-              每个 Slot 的注册都会返回幂等 disposer。激活失败时宿主回滚本次注册，单个插件失败
-              不会阻止其他插件，但运行中的 turn、审批和附件处理期间会延迟插件热更新。
-            </p>
-          </section>
+          <header class="docs-chapter" id="chapter-advanced">
+            <p>开发者文档 / 进阶</p>
+            <h2>进阶</h2>
+            <div>接入消息平台，配置自动化、协作与服务运行。</div>
+          </header>
 
           <section class="docs-section" aria-labelledby="messaging-platforms">
-            <span class="docs-kicker">33 / MESSAGING PLATFORMS</span>
+<span class="docs-kicker">进阶 / 消息平台</span>
             <h2 class="docs-section-anchor" id="messaging-platforms">消息平台配置总览</h2>
             <p>
               clawsmith 当前内置微信、QQ Bot 和 Email。三个平台共用同一套配对、访问控制、
@@ -2002,7 +1778,7 @@ export const plugin: WebClientPlugin = {
           </section>
 
           <section class="docs-section" aria-labelledby="messaging-wechat">
-            <span class="docs-kicker">34 / MESSAGING / WECHAT</span>
+<span class="docs-kicker">进阶 / 消息平台</span>
             <h2 class="docs-section-anchor" id="messaging-wechat">微信配置引导</h2>
 
             <h3>1. 使用扫码登录</h3>
@@ -2065,7 +1841,7 @@ export const plugin: WebClientPlugin = {
           </section>
 
           <section class="docs-section" aria-labelledby="messaging-qq">
-            <span class="docs-kicker">35 / MESSAGING / QQ</span>
+<span class="docs-kicker">进阶 / 消息平台</span>
             <h2 class="docs-section-anchor" id="messaging-qq">QQ Bot 配置引导</h2>
 
             <h3>1. 创建官方 QQ 机器人</h3>
@@ -2121,7 +1897,7 @@ export const plugin: WebClientPlugin = {
           </section>
 
           <section class="docs-section" aria-labelledby="messaging-email">
-            <span class="docs-kicker">36 / MESSAGING / EMAIL</span>
+<span class="docs-kicker">进阶 / 消息平台</span>
             <h2 class="docs-section-anchor" id="messaging-email">Email 配置引导</h2>
 
             <h3>1. 准备专用机器人邮箱</h3>
@@ -2246,7 +2022,7 @@ clawsmith web</code></pre>
           </section>
 
           <section class="docs-section" aria-labelledby="gateway">
-            <span class="docs-kicker">37 / GATEWAY</span>
+<span class="docs-kicker">进阶 / Gateway 与常驻服务</span>
             <h2 class="docs-section-anchor" id="gateway">Gateway 与 IM</h2>
             <h3>统一消息链路</h3>
             <p>
@@ -2464,8 +2240,893 @@ pnpm smoke:gateway</code></pre>
             </p>
           </section>
 
+          <section class="docs-section" aria-labelledby="daemon">
+<span class="docs-kicker">进阶 / Gateway 与常驻服务</span>
+<h2 class="docs-section-anchor" id="daemon">常驻服务与会话接管</h2>
+<p>需要关闭终端后继续执行任务，或从多个客户端接管审批时，使用 daemon 管理当前 Profile 的常驻服务。</p><h3 id="cli-常驻-personal-agent-与会话接管">启动与接管任务</h3>
+            <div class="docs-code" data-language="terminal">
+              <pre><code>clawsmith init
+clawsmith daemon start --port 3210
+clawsmith daemon submit "整理本周项目进展和待办"
+clawsmith attach &lt;sessionId&gt;
+clawsmith daemon attach &lt;sessionId&gt; --after 42
+clawsmith daemon events &lt;sessionId&gt; --after 42
+clawsmith daemon approve &lt;sessionId&gt; &lt;requestId&gt; allow
+clawsmith daemon cancel &lt;sessionId&gt; &lt;turnId&gt;
+clawsmith daemon status
+clawsmith daemon logs
+clawsmith daemon restart
+clawsmith daemon stop</code></pre>
+            </div>
+            <p>
+              先配置当前 Profile 的模型；<code>submit</code> 返回 sessionId 和持久队列项，
+              <code>--session</code> 可追加到已有会话，<code>--request-id</code> 可幂等重试提交。
+              attach 的 Ctrl+C 只断开观察，任务继续；取消回合使用 cancel。
+              多个客户端可从持久游标接管待审批任务，关闭终端或浏览器不会停止 daemon。
+            </p>
+            <p>
+              daemon 始终认证，首次自动生成并加密保存 token，本机命令自动读取；需要浏览器认证时，
+              可在首次启动前设置至少 32 字符的 <code>CLAWSMITH_API_TOKEN</code>。
+              打开 start 返回的 URL 可使用 Web 工作台。远程访问经可信隧道或部署入口，使用
+              <code>--url</code> 和 <code>--token-env</code> 显式指定凭据，沿用设备、工作区 ACL 和审批。
+              每个 Profile 最多一个 Worker；崩溃后恢复事实与 UI，未知副作用保持 unknown，不自动重跑工具。
+              daemon 自身退出后需重新 start；stop/restart 会中断当前执行。
+            </p>
+
+</section>
+
+          <section class="docs-section" aria-labelledby="cron">
+<span class="docs-kicker">进阶 / 自动化</span>
+            <h2 class="docs-section-anchor" id="cron">Cron 与持久调度</h2>
+            <h3>创建持久任务</h3>
+            <p>
+              Cron 使用五字段表达式和显式 IANA 时区。任务、运行历史、Session、turn、lease、
+              取消和 artifact IDs 都持久化；无人值守 turn 不能请求交互审批。
+            </p>
+            <div class="docs-code" data-language="terminal">
+              <pre><code>/cron add "0 9 * * 1-5" --timezone Asia/Shanghai \
+  --name "Daily audit" --prompt "检查失败测试并生成报告"
+/cron list
+/cron runs &lt;job-id&gt;
+/cron pause &lt;job-id&gt;
+/cron resume &lt;job-id&gt;
+/cron run-now &lt;job-id&gt;</code></pre>
+            </div>
+            <h3>无人值守规则</h3>
+            <p>
+              调度任务应使用只读或最小权限模式，并把验证命令写进 prompt。任何需要人工审批的
+              命令会使本次运行按拒绝结束；不要通过 allow-all 规避审批，优先缩小任务范围和
+              workspace 权限。
+            </p>
+            <h3>排查一次运行</h3>
+            <div class="docs-code" data-language="terminal">
+              <pre><code>/cron runs &lt;job-id&gt;
+/commands status &lt;command-id&gt;
+/commands log &lt;command-id&gt;
+/artifact &lt;artifact-id&gt;</code></pre>
+            </div>
+          </section>
+
+          <section class="docs-section" aria-labelledby="hooks">
+<span class="docs-kicker">进阶 / 自动化</span>
+            <h2 class="docs-section-anchor" id="hooks">Hooks：把团队规则放进执行链</h2>
+            <h3>支持的生命周期</h3>
+            <div class="docs-table-wrap">
+              <table class="docs-table">
+                <thead><tr><th>事件</th><th>用途</th><th>拒绝效果</th></tr></thead>
+                <tbody>
+                  <tr><td><code>SessionStart</code></td><td>环境检查、策略初始化</td><td>撤销新会话</td></tr>
+                  <tr><td><code>UserPromptSubmit</code></td><td>阻止敏感 prompt 或注入补充规则</td><td>消息不落盘</td></tr>
+                  <tr><td><code>PreToolUse</code></td><td>allow / ask / deny 工具调用</td><td>工具不执行</td></tr>
+                  <tr><td><code>PostToolUse</code></td><td>日志、指标、附加审计</td><td>只观察</td></tr>
+                  <tr><td><code>Stop</code></td><td>完成前检查验证与交付条件</td><td>阻止 turn 完成</td></tr>
+                </tbody>
+              </table>
+            </div>
+
+            <h3>hooks.json 示例</h3>
+            <div class="docs-code" data-language="json">
+              <pre><code>{
+  "hooks": [
+    {
+      "id": "guard-destructive-commands",
+      "event": "PreToolUse",
+      "matcher": "run_command",
+      "command": "node ./.clawsmith/hooks/guard-command.mjs",
+      "enabled": true,
+      "trusted": true,
+      "timeoutMs": 5000,
+      "conditions": {
+        "risks": ["execute"],
+        "permissionModes": ["default", "accept-edits"],
+        "pathPrefixes": ["packages/", "infra/"]
+      }
+    }
+  ]
+}</code></pre>
+            </div>
+
+            <h3>Hook 输出契约</h3>
+            <div class="docs-code" data-language="json">
+              <pre><code>{
+  "decision": "deny",
+  "reason": "Do not deploy from a local interactive turn."
+}</code></pre>
+            </div>
+            <p>
+              Hook 通过 stdin 接收结构化 context。除 <code>PostToolUse</code> 和
+              <code>PostCompact</code> 外，失败、超时或非法 JSON 都按拒绝处理；
+              结果写入 <code>hook-audit.jsonl</code>。
+            </p>
+          </section>
+
+          <section class="docs-section" aria-labelledby="agents">
+<span class="docs-kicker">进阶 / 多 Agent 与工作流</span>
+            <h2 class="docs-section-anchor" id="agents">Agent 定义与子 Agent</h2>
+            <p>
+              Agent manifest 只能缩小父级工具、Skill、Hook、路径、命令和权限。主 Agent 可用
+              <code>list_agent_definitions</code> 发现身份，再通过
+              <code>delegate_task</code>、<code>delegate_worktree</code> 或
+              <code>delegate_background</code> 委派。
+            </p>
+            <h3>定义受限角色</h3>
+            <div class="docs-code" data-language="markdown">
+              <pre><code>---
+id: reviewer
+name: Code Reviewer
+version: 1
+tools: [read_file, search_files, session_search]
+permissionMode: plan
+---
+Review the current diff. Report blocking findings with file evidence.</code></pre>
+            </div>
+            <h3>能力只能收窄</h3>
+            <p>
+              manifest 的工具、Skill、Hook、写入路径、命令前缀、Memory scope、模型和权限模式
+              都必须位于父运行时上限内。子 Agent 不能通过 manifest 或委派参数扩大权限。
+            </p>
+          </section>
+
+          <section class="docs-section" aria-labelledby="agent-delegation">
+<span class="docs-kicker">进阶 / 多 Agent 与工作流</span>
+            <h2 class="docs-section-anchor" id="agent-delegation">子 Agent 协作模式</h2>
+            <h3>按隔离程度选择工具</h3>
+            <div class="docs-table-wrap">
+              <table class="docs-table">
+                <thead><tr><th>工具</th><th>隔离</th><th>适合任务</th></tr></thead>
+                <tbody>
+                  <tr><td><code>delegate_task</code></td><td>独立只读上下文</td><td>代码调查、日志分析、资料核对</td></tr>
+                  <tr><td><code>delegate_background</code></td><td>独立只读上下文 + 后台执行</td><td>长时间仓库调查、独立验证</td></tr>
+                  <tr><td><code>delegate_worktree</code></td><td>独立 Git worktree</td><td>写型改造、方案比较、不会污染主工作区</td></tr>
+                </tbody>
+              </table>
+            </div>
+
+            <h3>典型调用</h3>
+            <div class="docs-code" data-language="text">
+              <pre><code>list_agent_definitions()
+inspect_agent_definition(agentId="reviewer")
+
+delegate_task(
+  agentId="reviewer",
+  task="Review the auth diff",
+  context="Focus on refresh token races and missing tests"
+)</code></pre>
+            </div>
+
+            <h3>选择子进程 Worker</h3>
+            <p>
+              调查默认使用 <code>in-process-readonly</code>，写任务默认使用
+              <code>in-process-worktree</code>。可通过 <code>provider</code> 选择
+              <code>subprocess-readonly</code> 或 <code>subprocess-worktree</code>。
+              子进程运行完整 AgentCore，模型请求经宿主转发，不继承凭据、插件 Context 或父会话历史。
+            </p>
+            <div class="docs-code" data-language="text">
+              <pre><code>delegate_task(
+  task="调查失败原因",
+  provider="subprocess-readonly",
+  outputSchema={"type":"object","properties":{"cause":{"type":"string"}},"required":["cause"]}
+)
+delegate_worktree(task="修复并测试", provider="subprocess-worktree")</code></pre>
+            </div>
+            <p>
+              进程外支持内置工具与前台命令，拒绝 PTY、后台命令及依赖宿主扩展的 Agent 定义。
+              输出必须通过 JSON Schema 校验。默认最多并行 4 个 turn、驻留 4 个子进程，
+              单 turn 最长 300 秒，委派深度为 1。写入和续聊继续受父会话权限限制。
+            </p>
+            <h3>继续、查询与中断</h3>
+            <div class="docs-code" data-language="text">
+              <pre><code>list_agents()
+send_agent_message(agentId="child-session", message="Also inspect the retry path")
+interrupt_agent(agentId="child-session")</code></pre>
+            </div>
+            <p>
+              子 Agent 只回传摘要或 artifact 引用，不把中间 transcript 灌进父上下文。
+              调查与 Worktree Worker 共用查询、续聊和中断协议；同一个写型 Worker 保留隔离 checkout。
+              父进程重启或 Worker 失联后标记为 unknown，不自动续跑或重放副作用。
+            </p>
+          </section>
+
+          <section class="docs-section" aria-labelledby="orchestration">
+<span class="docs-kicker">进阶 / 多 Agent 与工作流</span>
+            <h2 class="docs-section-anchor" id="orchestration">Goal、Task 与 Workflow</h2>
+            <h3>选择正确的规划层</h3>
+            <div class="docs-table-wrap">
+              <table class="docs-table">
+                <thead><tr><th>能力</th><th>适合的问题</th><th>持久状态</th></tr></thead>
+                <tbody>
+                  <tr><td>Todo</td><td>单会话执行清单</td><td>session_todos</td></tr>
+                  <tr><td>Goal + Plan</td><td>目标、验收条件、计划审批</td><td>goal revision、plan history、evidence</td></tr>
+                  <tr><td>Task Graph</td><td>依赖、write set、认领和 mailbox</td><td>TeamTask version</td></tr>
+                  <tr><td>Workflow</td><td>多步骤 DAG、并行 phase、返工</td><td>Workflow run + append-only journal</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <h3>Goal 与 Plan</h3>
+            <div class="docs-code" data-language="terminal">
+              <pre><code>/plan
+/plan approve &lt;plan-id&gt;
+/plan complete 1:&lt;tool-call-id&gt;</code></pre>
+            </div>
+            <p>
+              Plan 审批只允许离开计划阶段，不会跳过后面的工具审批。Goal 完成还必须给每个
+              acceptance criterion 绑定当前 revision 之后的真实工具、文件或外部证据。
+            </p>
+
+            <h3>Scene 工作方法</h3>
+            <div class="docs-code" data-language="terminal">
+              <pre><code>/scene general
+/scene coding
+/scene blog
+/scene brainstorm
+/scene blog run "写一篇插件系统设计说明"</code></pre>
+            </div>
+            <p>
+              <code>coding</code> 强调实现、review 和验证；<code>blog</code> 按调研、写作、审稿
+              分工；<code>brainstorm</code> 使用发散、挑战、收敛阶段。Scene 只能收窄工具和权限。
+            </p>
+          </section>
+
+          <section class="docs-section" aria-labelledby="worktrees">
+<span class="docs-kicker">进阶 / 多 Agent 与工作流</span>
+            <h2 class="docs-section-anchor" id="worktrees">并行 Worktree</h2>
+            <p>
+              每个 Worktree 方案拥有独立分支、workspace、Session、artifact 和 checkpoint。
+              可以比较 diff 与验证证据，再把选定方案应用到干净的 base branch。
+            </p>
+            <h3>创建与比较方案</h3>
+            <div class="docs-code" data-language="terminal">
+              <pre><code>/worktree create "尝试新的解析器"
+/worktree list
+/worktree switch &lt;id&gt;
+/worktree compare &lt;id&gt;
+/worktree apply &lt;id&gt; --confirm
+/worktree discard &lt;id&gt; --confirm</code></pre>
+            </div>
+            <h3>应用规则</h3>
+            <p>
+              apply 要求主工作区当前分支与 Worktree base branch 一致且没有本地修改。
+              系统先执行 <code>git apply --check</code>，验证所有文件后再写入；冲突不会留下
+              半个 patch。Worktree apply 不会自动 commit、push 或创建 PR。
+            </p>
+          </section>
+
+          <section class="docs-section" aria-labelledby="profiles">
+<span class="docs-kicker">进阶 / 身份与部署</span>
+            <h2 class="docs-section-anchor" id="profiles">Profile 身份隔离</h2>
+            <h3>隔离边界</h3>
+            <p>
+              Profile 是会话、Provider 凭据、记忆、Skill、后台任务和数据的硬隔离边界。
+              Profile 切换只影响新进程；运行中的服务不会热切换数据库或凭据。
+            </p>
+            <div class="docs-code" data-language="terminal">
+              <pre><code>clawsmith profile create work --name "Work identity"
+clawsmith profile use work
+clawsmith profile list
+clawsmith profile current
+CLAWSMITH_PROFILE=work clawsmith web</code></pre>
+            </div>
+            <h3>临时覆盖</h3>
+            <p>
+              <code>CLAWSMITH_PROFILE</code> 只覆盖当前进程，不修改持久 active pointer。
+              未知或已归档 Profile 会 fail closed。需要让 CLI、Web、Cron 和 Gateway 使用同一
+              身份时，为这些进程设置相同值并分别启动。
+            </p>
+            <h3>同一 Profile 只运行一个 Server</h3>
+            <p>
+              <code>serve</code> 和 <code>web</code> 会在打开 SQLite 与启动消息平台之前抢占
+              当前 Profile 的运行时租约。再次启动同一 Profile 不会创建第二个 Core，而是输出
+              已有实例的 URL 和 PID：
+            </p>
+            <div class="docs-code" data-language="terminal">
+              <pre><code>clawsmith web
+# Clawsmith is already running ... at http://127.0.0.1:3210/
+
+# 只有需要主动替换现有实例时才使用：
+clawsmith web --replace</code></pre>
+            </div>
+            <p>
+              常规启动不会终止现有进程。<code>--replace</code> 会先发送 SIGTERM，等待旧实例
+              释放 SQLite、Cron 和 Gateway；超时不会强制误杀。PID 已消失的僵尸租约会在下一次
+              启动时自动回收，仍存活的进程不会被普通启动抢走。
+            </p>
+            <h3>多个 Profile 并行</h3>
+            <p>
+              每个 Profile 使用独立状态根和运行时租约，因此可以同时运行多个长期 Server：
+            </p>
+            <div class="docs-code" data-language="terminal">
+              <pre><code>clawsmith web --env production
+CLAWSMITH_PROFILE=coder clawsmith web --env production
+CLAWSMITH_PROFILE=writer clawsmith web --env production</code></pre>
+            </div>
+            <p>
+              这些进程共享安装代码，但不共享 Session、Memory、Provider 凭据、Cron 或 Gateway
+              数据。当前推荐拓扑仍是一个 Profile 一个 Server 进程；单个进程 multiplex 全部
+              Profile 的执行合并属于后续能力。
+            </p>
+            <h3>单端口访问多个 Profile</h3>
+            <p>
+              使用 <code>--all-profiles</code> 启动共享 HTTP 入口。它会发现所有未归档 Profile，
+              默认路径指向启动该命令的 Profile，前缀路径路由到对应 Profile：
+            </p>
+            <div class="docs-code" data-language="terminal">
+              <pre><code>clawsmith web --all-profiles
+
+GET /health                  -> 当前启动 Profile
+GET /p/work/health           -> work Profile
+GET /p/work/sessions         -> work Profile 的会话 API
+GET /p/work/sessions/:id/stream?after=42</code></pre>
+            </div>
+            <p>
+              默认情况下，所有 Profile Host、Cron 和 Gateway 运行在同一个 OS 进程内，但每个
+              Profile 仍拥有独立 Core、认证、SQLite、Gateway 和插件 scope。系统只监听一个
+              公共端口，请求通过内存 handler 分派；Cron 也由一个共享 ticker 调用各 Profile。
+              需要故障隔离和自动重启时使用
+              <code>--all-profiles --isolated-profiles</code> 切换到每 Profile 独立子进程。
+              重复启动返回已有 URL，<code>--replace</code> 接管整个共享入口。
+            </p>
+            <p>
+              Web 顶部提供 Profile 选择器。切换后写入
+              <code>clawsmith_profile</code> 同站 Cookie 并刷新，未加前缀的 API 会跟随当前
+              选择；显式 <code>/p/&lt;profile&gt;/</code> 始终优先。选项同时显示启动、就绪、
+              重启中或失败状态以及重启尝试次数。
+            </p>
+            <p>
+              选择器可单独停止和重新启动非 Launch Profile，也可以重启当前 Profile。停止一个
+              Profile 不会影响其他 Profile；Launch Profile 停止会导致公共入口失去默认路由，
+              因此只能通过共享入口的 <code>--replace</code> 整体重启。
+            </p>
+            <aside class="docs-callout" data-tone="warning">
+              <span class="docs-callout-mark">LOOPBACK</span>
+              <p>
+                多 Profile 共享入口当前只监听本机地址。远程访问应在它前面部署认证反向代理，
+                或通过 SSH 端口转发；默认同进程模式没有内部 Profile listener 端口。
+              </p>
+            </aside>
+            <h3>消息平台凭据独占</h3>
+            <p>
+              不同 Profile 可以使用相同平台，但不能使用同一个 Bot 凭据同时轮询。微信按
+              account/token、QQ 按 App ID/Secret、Email 按邮箱/密码建立跨 Profile 独占租约；
+              Slack 插件加载后按 Bot Token 使用同一租约机制。
+            </p>
+            <div class="docs-code" data-language="text">
+              <pre><code>Profile coder  -> wechat / credential A  ✓
+Profile writer -> wechat / credential A  ✗ already in use by coder
+Profile writer -> wechat / credential B  ✓</code></pre>
+            </div>
+            <p>
+              凭据原文只参与本地 SHA-256，不会写入锁文件、日志、API 或错误消息。冲突只停止
+              对应 adapter，其他 Profile 和其他聊天平台继续运行。自定义轮询 adapter 应实现
+              <code>getCredentialIdentity()</code>，返回平台 scope 和凭据组合。
+            </p>
+            <h3>归档与删除</h3>
+            <p>
+              归档保留可恢复数据；删除属于独立高风险操作，要求显式确认。代码插件 Profile
+              （<code>CLAWSMITH_PLUGIN_PROFILE</code>）只负责组件组合，不等同于身份 Profile，
+              不能替代凭据和数据隔离。
+            </p>
+          </section>
+
+          <section class="docs-section" aria-labelledby="security">
+<span class="docs-kicker">进阶 / 身份与部署</span>
+            <h2 class="docs-section-anchor" id="security">安全与部署</h2>
+            <h3>默认安全边界</h3>
+            <ul>
+              <li>默认只监听 loopback；远程监听必须显式开启并提供强 token。</li>
+              <li>生产环境建议由反向代理终止 TLS，不要通过不可信网络明文发送 token。</li>
+              <li>owner/device token 分离，SQLite 只保存设备 token 哈希；viewer 设备只读。</li>
+              <li>命令子进程使用最小环境变量，不继承宿主 API Key。</li>
+              <li>日志、事件、工具结果、导出和 artifact 使用统一脱敏边界。</li>
+              <li>企业 managed policy 可强制 deny、收紧权限模式、预算和更新 channel。</li>
+            </ul>
+            <h3>远程访问与设备</h3>
+            <div class="docs-code" data-language="terminal">
+              <pre><code>export CLAWSMITH_API_TOKEN="$(openssl rand -hex 32)"
+PORT=3220 HOST=127.0.0.1 clawsmith web
+
+/security pair-device "Remote laptop"
+/security pair-device "Read only" viewer --workspace &lt;workspace-id&gt;
+/security revoke-device &lt;device-id&gt;</code></pre>
+            </div>
+            <p>
+              <code>CLAWSMITH_API_TOKEN</code> 只用于首次引导。SQLite 只保存设备 token 哈希；
+              owner 设备可操作审批和写入，viewer 设备只读，workspace ACL 会继续收窄可见范围。
+            </p>
+            <h3>命令与桌面隔离</h3>
+            <p>
+              命令子进程只继承最小环境变量，不继承宿主 Provider Key。macOS 使用
+              <code>sandbox-exec</code>，Linux 使用 <code>bwrap</code>，Windows 原生 ACL
+              只提供兼容级部分隔离；严格隔离应显式选择 Docker、VM 或远程 Execution World。
+            </p>
+          </section>
+
+          <section class="docs-section" aria-labelledby="deployment">
+<span class="docs-kicker">进阶 / 身份与部署</span>
+            <h2 class="docs-section-anchor" id="deployment">部署 clawsmith Web 服务</h2>
+            <h3>推荐拓扑</h3>
+            <div class="docs-code" data-language="text">
+              <pre><code>Browser / SDK
+  → HTTPS reverse proxy
+  → 127.0.0.1:3210 clawsmith web
+  → SQLite + workspace + artifacts
+  → configured model Provider</code></pre>
+            </div>
+            <p>
+              最稳妥的方式是让 clawsmith 只监听 loopback，由同机反向代理终止 TLS。这样不需要
+              暴露 Node 端口，也不会把 <code>HOST=0.0.0.0</code> 依赖当作安全措施。
+            </p>
+
+            <h3>Caddy 反向代理</h3>
+            <div class="docs-code" data-language="text">
+              <pre><code>clawsmith.example.com {
+  reverse_proxy 127.0.0.1:3210 {
+    flush_interval -1
+  }
+}</code></pre>
+            </div>
+            <p>
+              <code>flush_interval -1</code> 保证 SSE 事件及时到达浏览器。若改用 Nginx，
+              同样需要关闭响应缓冲并提高长连接的 read timeout。
+            </p>
+
+            <h3>systemd 示例</h3>
+            <div class="docs-code" data-language="ini">
+              <pre><code>[Unit]
+Description=clawsmith web
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=clawsmith
+WorkingDirectory=/srv/projects/team
+Environment=HOME=/srv/clawsmith
+Environment=HOST=127.0.0.1
+Environment=PORT=3210
+Environment=CLAWSMITH_HOME=/srv/clawsmith/.clawsmith
+EnvironmentFile=-/etc/clawsmith.env
+ExecStart=/usr/local/bin/clawsmith web
+Restart=on-failure
+RestartSec=3
+NoNewPrivileges=true
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target</code></pre>
+            </div>
+            <p>
+              <code>/etc/clawsmith.env</code> 至少应包含强
+              <code>CLAWSMITH_API_TOKEN</code> 和所需 Provider 配置，文件权限限制给运行用户。
+              首次启动后先检查 health，再配置反向代理和设备。
+            </p>
+            <div class="docs-code" data-language="terminal">
+              <pre><code>curl --fail --silent http://127.0.0.1:3210/health
+journalctl -u clawsmith -f</code></pre>
+            </div>
+
+            <h3>直接远程监听</h3>
+            <p>
+              仅在没有反向代理且网络边界可信时使用：
+              <code>HOST=0.0.0.0 CLAWSMITH_ALLOW_REMOTE=1 CLAWSMITH_API_TOKEN=...</code>。
+              token 少于 32 字符会拒绝启动。不要用防火墙代替认证，也不要把当前目录默认设为
+              整个用户主目录。
+            </p>
+          </section>
+
+          <header class="docs-chapter" id="chapter-develop">
+            <p>开发者文档 / 开发参考</p>
+            <h2>开发参考</h2>
+            <div>理解运行机制，编写插件、集成 API 并验证交付。</div>
+          </header>
+
+          <section class="docs-section" aria-labelledby="architecture">
+<span class="docs-kicker">开发参考 / 架构与协议</span>
+            <h2 class="docs-section-anchor" id="architecture">Agent 如何执行</h2>
+            <p>
+              每次 turn 先获取 Session lease，再构造项目上下文和模型请求。模型只能看到当前
+              Capability composition 允许的工具；每个工具调用依次经过 schema 校验、Hook、
+              权限服务、沙箱/Execution World、超时和取消、结构化结果与 checkpoint。
+            </p>
+            <h3>组合视图</h3>
+            <div class="docs-diagram">
+              <div class="docs-diagram-row">
+                <span>CLI</span><span>Web</span><span>HTTP</span><span>SDK</span><span>Gateway</span>
+              </div>
+              <b>同一 Session / Event / Approval 事实源</b>
+              <div class="docs-diagram-core">
+                <article><small>REQUEST</small><strong>Context Builder</strong><p>AGENTS.md · Skill · Memory · 附件</p></article>
+                <article><small>LOOP</small><strong>Agent Core</strong><p>Model → Tool → Result → Model</p></article>
+                <article><small>CONTROL</small><strong>Policy Plane</strong><p>权限 · Hook · Sandbox · Budget</p></article>
+              </div>
+              <div class="docs-diagram-row">
+                <span>SQLite</span><span>Artifact</span><span>Attachment</span><span>Event Journal</span><span>Checkpoint</span>
+              </div>
+            </div>
+            <h3>关键不变量</h3>
+            <ul>
+              <li>模型请求 schema 在构造阶段冻结，运行时插件更新只在下一轮生效。</li>
+              <li>副作用工具不会因为断线或进程恢复而自动重放；结果未知时要求人工确认。</li>
+              <li>CLI、Web、Cron 和 Gateway 任务共享同一 Session、lease、审批和 artifact 规则。</li>
+              <li>
+                <code>Execution World</code> 可组合 local、Docker、SSH 或插件 Provider；
+                文件、命令、PTY、取消和 checkpoint 使用同一执行契约。
+              </li>
+            </ul>
+
+            <h3>持久事实源</h3>
+            <p>
+              Session、event、message、tool result、approval、todo、goal、plan、queue、
+              checkpoint 和 artifact 都有持久事实源。刷新页面或切换客户端只重新读取事实，
+              不从浏览器状态推断 Agent 是否执行完成。
+            </p>
+          </section>
+
+          <section class="docs-section" aria-labelledby="sdk">
+<span class="docs-kicker">开发参考 / 架构与协议</span>
+            <h2 class="docs-section-anchor" id="sdk">TypeScript SDK、HTTP 与 SSE</h2>
+            <h3>创建会话并消费事件</h3>
+            <div class="docs-code" data-language="typescript">
+              <pre><code>import { ClawsmithClient } from "clawsmith/sdk"
+
+const client = new ClawsmithClient({ baseUrl: "http://127.0.0.1:3210" })
+const session = await client.createSession({ title: "SDK task" })
+
+for await (const event of client.submitTurn(
+  session.sessionId,
+  "检查并修复测试",
+)) {
+  console.log(event.type, event.sequence)
+}</code></pre>
+            </div>
+            <h3>断线续传</h3>
+            <p>
+              协议 v22 提供稳定 event schema、能力协商、SSE sequence 断点续传、审批响应、
+              artifact 读取、turn queue、goal evidence、review 和 delivery。客户端必须根据
+              <code>/capabilities</code> 判断能力，而不是猜测版本。
+            </p>
+            <div class="docs-code" data-language="typescript">
+              <pre><code>let lastSequence = 0
+for await (const event of client.submitTurn(session.sessionId, "修复测试")) {
+  lastSequence = event.sequence
+}
+
+for await (const event of client.events(session.sessionId, {
+  after: lastSequence,
+  live: true,
+})) {
+  // SDK 自动去重；网络恢复后从最后确认的 sequence 继续。
+}</code></pre>
+            </div>
+            <h3>主要 HTTP 端点</h3>
+            <div class="docs-code" data-language="http">
+              <pre><code>GET  /capabilities
+POST /sessions/:id/turns
+GET  /sessions/:id/stream?after=&lt;sequence&gt;
+POST /sessions/:id/permissions/:requestId
+POST /sessions/:id/questions/:requestId
+GET  /artifacts/:artifactId?sessionId=&lt;id&gt;</code></pre>
+            </div>
+            <p>
+              远程 API 使用 Bearer token；Web 首屏登录后改用 HttpOnly、SameSite Cookie。
+              多客户端必须通过 Session lease 协作，不要并发提交同一个 turn。
+            </p>
+          </section>
+
+          <section class="docs-section" aria-labelledby="plugins">
+<span class="docs-kicker">开发参考 / 插件开发</span>
+            <h2 class="docs-section-anchor" id="plugins">插件与稳定扩展 API</h2>
+            <h3>六个稳定扩展 seam</h3>
+            <p>
+              公开 Plugin API v1 提供 models、tools、contexts、http、gateways 和 execution 六个
+              Service seam。插件注册通过 effect 生命周期管理，卸载时 Provider、Tool、路由和
+              Context 贡献必须幂等释放。
+            </p>
+            <h3>两种插件形态</h3>
+            <p>
+              <code>plugin.json</code> 声明式插件用于贡献 Skill、MCP、权限和受信 Web client；
+              Profile 代码插件用于向公开 Service seam 注册 Tool、Provider、Context、HTTP、
+              Gateway 或 Execution World。声明式安装默认不执行插件代码，代码插件也只加载本地
+              包、绝对路径或 <code>file:</code> 模块，拒绝远程 URL。
+            </p>
+            <div class="docs-code" data-language="typescript">
+              <pre><code>import { PLUGIN_API_VERSION, type PluginModule } from "clawsmith/plugin-api"
+
+const plugin: PluginModule = {
+  apiVersion: PLUGIN_API_VERSION,
+  apply(ctx, config) {
+    return ctx.http.register({
+      method: "GET",
+      path: "/plugin-api/example/status",
+      handler: () => ({
+        status: 200,
+        body: JSON.stringify({ ok: true, config }),
+      }),
+    })
+  },
+}
+
+export default plugin</code></pre>
+            </div>
+            <h3>权限与生命周期边界</h3>
+            <p>
+              插件不能替换权限裁决、Session lease、事件顺序、凭据代理或恢复语义。Tool 注册后
+              仍由 Core 依次执行 Zod 校验、Hook、权限、沙箱、超时、artifact 和事件落库；
+              Context Provider 只能为当前模型请求补充 system context，不能伪造会话消息。
+            </p>
+            <h3>安装、信任与启用</h3>
+            <div class="docs-code" data-language="terminal">
+              <pre><code>clawsmith plugin validate ./review-tools
+clawsmith plugin preview ./review-tools
+clawsmith plugin install ./review-tools
+clawsmith plugin trust review-tools
+clawsmith plugin enable review-tools</code></pre>
+            </div>
+            <p>
+              install 默认把插件保存为未信任、未启用；trust 与 enable 是两次显式用户决策。
+              更新时新增权限必须逐项接受，发布者变化默认拒绝；卸载进入 quarantine，便于恢复。
+            </p>
+          </section>
+
+          <section class="docs-section" aria-labelledby="plugin-tool">
+<span class="docs-kicker">开发参考 / 插件开发</span>
+            <h2 class="docs-section-anchor" id="plugin-tool">编写自定义 Tool 插件</h2>
+            <h3>完整工具定义</h3>
+            <p>
+              工具必须有稳定名称、Zod v4 输入 schema、风险级别、能力声明、并发安全性和
+              摘要函数。执行函数只能实现业务动作；审批、超时、取消和结果持久化仍由 Core 管理。
+            </p>
+            <div class="docs-code" data-language="typescript">
+              <pre><code>import { PLUGIN_API_VERSION, type PluginModule } from "clawsmith/plugin-api"
+import { z } from "zod"
+
+const plugin: PluginModule = {
+  apiVersion: PLUGIN_API_VERSION,
+  apply(ctx) {
+    return ctx.tools.register({
+      name: "issue_lookup",
+      description: "Look up one issue in the team issue tracker",
+      inputSchema: z.object({
+        id: z.string().min(1),
+      }),
+      risk: "read",
+      capabilities: ["network", "session.read"],
+      concurrencySafe: true,
+      summarize: (input) => {
+        const { id } = input as { id: string }
+        return `Look up issue ${id}`
+      },
+      async execute(input, { signal }) {
+        const { id } = input as { id: string }
+        const response = await fetch(
+          `https://issues.example/api/issues/${encodeURIComponent(id)}`,
+          { signal },
+        )
+        if (!response.ok) throw new Error(`Issue lookup failed: ${response.status}`)
+        return response.json()
+      },
+    })
+  },
+}
+
+export default plugin</code></pre>
+            </div>
+
+            <h3>字段如何影响 Agent</h3>
+            <div class="docs-table-wrap">
+              <table class="docs-table">
+                <thead>
+                  <tr><th>字段</th><th>用途与约束</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td><code>risk</code></td><td><code>read</code>、<code>workspace-write</code> 或 <code>execute</code>；决定权限最低风险等级。</td></tr>
+                  <tr><td><code>capabilities</code></td><td>声明网络、文件、凭据或外部副作用；只能用于收紧策略，不会自动授予权限。</td></tr>
+                  <tr><td><code>concurrencySafe</code></td><td>只有可并行调用时才设为 true；有共享写入或限流状态时应串行。</td></tr>
+                  <tr><td><code>summarize</code></td><td>生成审批和轨迹中的短摘要，不得包含密钥或大段外部正文。</td></tr>
+                  <tr><td><code>signal</code></td><td>用户取消或超时时必须中止 fetch、子进程和其他外部请求。</td></tr>
+                </tbody>
+              </table>
+            </div>
+
+            <h3>在 Profile 中加载</h3>
+            <div class="docs-code" data-language="yaml">
+              <pre><code># ~/.clawsmith/profiles/coding/clawsmith.patch.yml
+- insert:
+    - id: review-tools
+      name: "./plugins/review-tools/dist/index.js"
+      inject: [tools]
+      config:
+        trackerHost: "issues.example"</code></pre>
+            </div>
+            <div class="docs-code" data-language="terminal">
+              <pre><code>CLAWSMITH_PLUGIN_PROFILE=coding \
+CLAWSMITH_PLUGIN_RUNTIME=1 \
+clawsmith web</code></pre>
+            </div>
+            <p>
+              相对模块路径按 Profile 目录解析。插件加载失败会被隔离并写入 warning；
+              Tool 与内置 Tool 重名会在激活阶段直接失败，不能静默覆盖核心能力。
+            </p>
+
+            <h3>发布前检查</h3>
+            <div class="docs-code" data-language="terminal">
+              <pre><code>pnpm build
+CLAWSMITH_PLUGIN_PROFILE=coding \
+CLAWSMITH_PLUGIN_RUNTIME=1 \
+clawsmith --prompt "调用 issue_lookup 查询 ISSUE-42，并只报告标题和状态"</code></pre>
+            </div>
+          </section>
+
+          <section class="docs-section" aria-labelledby="plugin-provider">
+<span class="docs-kicker">开发参考 / 插件开发</span>
+            <h2 class="docs-section-anchor" id="plugin-provider">编写自定义 Provider</h2>
+            <h3>实现统一流协议</h3>
+            <p>
+              Provider 按能力实现 <code>stream()</code>，把供应商 SSE 或本地推理输出转换成统一事件：
+              <code>text.delta</code>、<code>reasoning.delta</code>、
+              <code>tool_call.completed</code>、<code>usage</code> 和
+              <code>response.completed</code>。不要在 Provider 内执行工具。
+            </p>
+            <div class="docs-code" data-language="typescript">
+              <pre><code>import { PLUGIN_API_VERSION, type PluginModule } from "clawsmith/plugin-api"
+
+const plugin: PluginModule = {
+  apiVersion: PLUGIN_API_VERSION,
+  apply(ctx) {
+    return ctx.models.register({
+      id: "team-gateway",
+      models: ["team-reasoner"],
+      getModelCapabilities() {
+        return {
+          contextWindowTokens: 128_000,
+          contextWindowKnown: true,
+          maxOutputTokens: 16_384,
+          supportsTools: true,
+          supportsImages: false,
+          supportsStreaming: true,
+          supportsReasoning: true,
+          usageReporting: "supported",
+          source: "static",
+        }
+      },
+      async *stream(request) {
+        if (request.signal.aborted) return
+        yield { type: "text.delta", text: "adapter response" }
+        yield { type: "response.completed", finishReason: "stop" }
+      },
+    })
+  },
+}
+
+export default plugin</code></pre>
+            </div>
+
+            <h3>生产适配器必须处理什么</h3>
+            <ul>
+              <li>透传 <code>request.signal</code>，取消后立即停止读取网络流。</li>
+              <li>保留 tool call 参数直到完整，再发出一个结构化 tool call 事件。</li>
+              <li>只有上游提供 usage 时才发 usage；未知不能被当成 0 token 或免费。</li>
+              <li>reasoning、图片、原生文档和并行工具调用要通过能力元数据显式声明。</li>
+              <li>供应商错误转换为稳定错误类别，不把认证 header 或响应正文写入日志。</li>
+            </ul>
+
+            <h3>路由与 failover</h3>
+            <p>
+              模型 ID 必须由活动 Provider 声明。同一模型有多个 Provider 时，路由可按配置顺序
+              failover；只有在任何流事件输出前失败才能切换。一旦已输出文本或 tool call，
+              系统不会重放请求，避免重复 token 和重复副作用。
+            </p>
+            <div class="docs-code" data-language="text">
+              <pre><code>request
+  → capability / budget / health selection
+  → provider A
+      ├─ fails before first event → provider B
+      └─ emits first event → stream is pinned
+  → normalized events
+  → Agent Core tool loop</code></pre>
+            </div>
+          </section>
+
+          <section class="docs-section" aria-labelledby="plugin-web">
+<span class="docs-kicker">开发参考 / 插件开发</span>
+            <h2 class="docs-section-anchor" id="plugin-web">Web 插件与界面 Slot</h2>
+            <h3>受信客户端模块清单</h3>
+            <p>
+              Web 插件是浏览器内执行的受信代码，不是 iframe 安全沙箱。安装清单必须显式声明
+              <code>web-client</code> 权限和独立客户端入口。
+            </p>
+            <div class="docs-code" data-language="json">
+              <pre><code>{
+  "name": "issue-panel",
+  "version": "1.0.0",
+  "apiVersion": 1,
+  "license": "MIT",
+  "enabled": true,
+  "trusted": true,
+  "permissions": ["web-client"],
+  "client": {
+    "id": "issue-panel",
+    "apiVersion": 1,
+    "entry": "client/index.mjs"
+  }
+}</code></pre>
+            </div>
+            <div class="docs-code" data-language="text">
+              <pre><code>issue-panel/
+├── plugin.json
+└── client/
+    └── index.mjs</code></pre>
+            </div>
+
+            <h3>可用 Slot</h3>
+            <div class="docs-table-wrap">
+              <table class="docs-table">
+                <thead>
+                  <tr><th>Slot</th><th>可贡献内容</th><th>安全边界</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td><code>settings.section</code></td><td>设置页标签和面板</td><td>只能使用窄 API、当前会话和状态通知</td></tr>
+                  <tr><td><code>toolResults</code></td><td>按工具名、显示类型和状态匹配结果渲染器</td><td>异常时回退默认纯文本视图</td></tr>
+                  <tr><td><code>composer.accessories</code></td><td>输入区状态或安全动作</td><td>不能读取消息正文、凭据或发送函数</td></tr>
+                  <tr><td><code>sidebar.accessories</code></td><td>会话侧栏低风险辅助动作</td><td>设置、新建、删除仍由宿主持有</td></tr>
+                  <tr><td><code>session.rows.chain</code></td><td>包装会话行的只读元数据</td><td>不能替换点击、删除和权限行为</td></tr>
+                </tbody>
+              </table>
+            </div>
+
+            <h3>仓库内置插件示例</h3>
+            <div class="docs-code" data-language="tsx">
+              <pre><code>import type { WebClientPlugin } from "../plugin-runtime"
+import { WEB_CLIENT_PLUGIN_API_VERSION } from "../client-plugin-contract"
+import { DefaultToolResultView } from "../tool-result-view"
+
+export const apiVersion = WEB_CLIENT_PLUGIN_API_VERSION
+
+export const plugin: WebClientPlugin = {
+  id: "issue-result",
+  apiVersion: WEB_CLIENT_PLUGIN_API_VERSION,
+  apply(ctx) {
+    ctx.toolResults.register({
+      id: "issue-card",
+      order: 20,
+      match: ({ toolName }) => toolName === "issue_lookup",
+      render: ({ display, fallbackText }) => (
+        &lt;article data-plugin-tool-result="issue"&gt;
+          &lt;DefaultToolResultView display={display} fallbackText={fallbackText} /&gt;
+        &lt;/article&gt;
+      ),
+    })
+  },
+}</code></pre>
+            </div>
+            <p>
+              Vite 构建会扫描内置插件入口并生成 <code>/plugins/client-manifest.json</code>；
+              每个 Slot 的注册都会返回幂等 disposer。激活失败时宿主回滚本次注册，单个插件失败
+              不会阻止其他插件，但运行中的 turn、审批和附件处理期间会延迟插件热更新。
+            </p>
+          </section>
+
           <section class="docs-section" aria-labelledby="gateway-plugin">
-            <span class="docs-kicker">38 / GATEWAY PLUGIN</span>
+<span class="docs-kicker">开发参考 / 插件开发</span>
             <h2 class="docs-section-anchor" id="gateway-plugin">从零实现消息平台插件</h2>
             <h3>1. 创建插件包</h3>
             <div class="docs-code" data-language="text">
@@ -2709,361 +3370,8 @@ clawsmith web</code></pre>
             </div>
           </section>
 
-          <section class="docs-section" aria-labelledby="cron">
-            <span class="docs-kicker">39 / CRON</span>
-            <h2 class="docs-section-anchor" id="cron">Cron 与持久调度</h2>
-            <h3>创建持久任务</h3>
-            <p>
-              Cron 使用五字段表达式和显式 IANA 时区。任务、运行历史、Session、turn、lease、
-              取消和 artifact IDs 都持久化；无人值守 turn 不能请求交互审批。
-            </p>
-            <div class="docs-code" data-language="terminal">
-              <pre><code>/cron add "0 9 * * 1-5" --timezone Asia/Shanghai \
-  --name "Daily audit" --prompt "检查失败测试并生成报告"
-/cron list
-/cron runs &lt;job-id&gt;
-/cron pause &lt;job-id&gt;
-/cron resume &lt;job-id&gt;
-/cron run-now &lt;job-id&gt;</code></pre>
-            </div>
-            <h3>无人值守规则</h3>
-            <p>
-              调度任务应使用只读或最小权限模式，并把验证命令写进 prompt。任何需要人工审批的
-              命令会使本次运行按拒绝结束；不要通过 allow-all 规避审批，优先缩小任务范围和
-              workspace 权限。
-            </p>
-            <h3>排查一次运行</h3>
-            <div class="docs-code" data-language="terminal">
-              <pre><code>/cron runs &lt;job-id&gt;
-/commands status &lt;command-id&gt;
-/commands log &lt;command-id&gt;
-/artifact &lt;artifact-id&gt;</code></pre>
-            </div>
-          </section>
-
-          <section class="docs-section" aria-labelledby="profiles">
-            <span class="docs-kicker">40 / PROFILES</span>
-            <h2 class="docs-section-anchor" id="profiles">Profile 身份隔离</h2>
-            <h3>隔离边界</h3>
-            <p>
-              Profile 是会话、Provider 凭据、记忆、Skill、后台任务和数据的硬隔离边界。
-              Profile 切换只影响新进程；运行中的服务不会热切换数据库或凭据。
-            </p>
-            <div class="docs-code" data-language="terminal">
-              <pre><code>clawsmith profile create work --name "Work identity"
-clawsmith profile use work
-clawsmith profile list
-clawsmith profile current
-CLAWSMITH_PROFILE=work clawsmith web</code></pre>
-            </div>
-            <h3>临时覆盖</h3>
-            <p>
-              <code>CLAWSMITH_PROFILE</code> 只覆盖当前进程，不修改持久 active pointer。
-              未知或已归档 Profile 会 fail closed。需要让 CLI、Web、Cron 和 Gateway 使用同一
-              身份时，为这些进程设置相同值并分别启动。
-            </p>
-            <h3>同一 Profile 只运行一个 Server</h3>
-            <p>
-              <code>serve</code> 和 <code>web</code> 会在打开 SQLite 与启动消息平台之前抢占
-              当前 Profile 的运行时租约。再次启动同一 Profile 不会创建第二个 Core，而是输出
-              已有实例的 URL 和 PID：
-            </p>
-            <div class="docs-code" data-language="terminal">
-              <pre><code>clawsmith web
-# Clawsmith is already running ... at http://127.0.0.1:3210/
-
-# 只有需要主动替换现有实例时才使用：
-clawsmith web --replace</code></pre>
-            </div>
-            <p>
-              常规启动不会终止现有进程。<code>--replace</code> 会先发送 SIGTERM，等待旧实例
-              释放 SQLite、Cron 和 Gateway；超时不会强制误杀。PID 已消失的僵尸租约会在下一次
-              启动时自动回收，仍存活的进程不会被普通启动抢走。
-            </p>
-            <h3>多个 Profile 并行</h3>
-            <p>
-              每个 Profile 使用独立状态根和运行时租约，因此可以同时运行多个长期 Server：
-            </p>
-            <div class="docs-code" data-language="terminal">
-              <pre><code>clawsmith web --env production
-CLAWSMITH_PROFILE=coder clawsmith web --env production
-CLAWSMITH_PROFILE=writer clawsmith web --env production</code></pre>
-            </div>
-            <p>
-              这些进程共享安装代码，但不共享 Session、Memory、Provider 凭据、Cron 或 Gateway
-              数据。当前推荐拓扑仍是一个 Profile 一个 Server 进程；单个进程 multiplex 全部
-              Profile 的执行合并属于后续能力。
-            </p>
-            <h3>单端口访问多个 Profile</h3>
-            <p>
-              使用 <code>--all-profiles</code> 启动共享 HTTP 入口。它会发现所有未归档 Profile，
-              默认路径指向启动该命令的 Profile，前缀路径路由到对应 Profile：
-            </p>
-            <div class="docs-code" data-language="terminal">
-              <pre><code>clawsmith web --all-profiles
-
-GET /health                  -> 当前启动 Profile
-GET /p/work/health           -> work Profile
-GET /p/work/sessions         -> work Profile 的会话 API
-GET /p/work/sessions/:id/stream?after=42</code></pre>
-            </div>
-            <p>
-              默认情况下，所有 Profile Host、Cron 和 Gateway 运行在同一个 OS 进程内，但每个
-              Profile 仍拥有独立 Core、认证、SQLite、Gateway 和插件 scope。系统只监听一个
-              公共端口，请求通过内存 handler 分派；Cron 也由一个共享 ticker 调用各 Profile。
-              需要故障隔离和自动重启时使用
-              <code>--all-profiles --isolated-profiles</code> 切换到每 Profile 独立子进程。
-              重复启动返回已有 URL，<code>--replace</code> 接管整个共享入口。
-            </p>
-            <p>
-              Web 顶部提供 Profile 选择器。切换后写入
-              <code>clawsmith_profile</code> 同站 Cookie 并刷新，未加前缀的 API 会跟随当前
-              选择；显式 <code>/p/&lt;profile&gt;/</code> 始终优先。选项同时显示启动、就绪、
-              重启中或失败状态以及重启尝试次数。
-            </p>
-            <p>
-              选择器可单独停止和重新启动非 Launch Profile，也可以重启当前 Profile。停止一个
-              Profile 不会影响其他 Profile；Launch Profile 停止会导致公共入口失去默认路由，
-              因此只能通过共享入口的 <code>--replace</code> 整体重启。
-            </p>
-            <aside class="docs-callout" data-tone="warning">
-              <span class="docs-callout-mark">LOOPBACK</span>
-              <p>
-                多 Profile 共享入口当前只监听本机地址。远程访问应在它前面部署认证反向代理，
-                或通过 SSH 端口转发；默认同进程模式没有内部 Profile listener 端口。
-              </p>
-            </aside>
-            <h3>消息平台凭据独占</h3>
-            <p>
-              不同 Profile 可以使用相同平台，但不能使用同一个 Bot 凭据同时轮询。微信按
-              account/token、QQ 按 App ID/Secret、Email 按邮箱/密码建立跨 Profile 独占租约；
-              Slack 插件加载后按 Bot Token 使用同一租约机制。
-            </p>
-            <div class="docs-code" data-language="text">
-              <pre><code>Profile coder  -> wechat / credential A  ✓
-Profile writer -> wechat / credential A  ✗ already in use by coder
-Profile writer -> wechat / credential B  ✓</code></pre>
-            </div>
-            <p>
-              凭据原文只参与本地 SHA-256，不会写入锁文件、日志、API 或错误消息。冲突只停止
-              对应 adapter，其他 Profile 和其他聊天平台继续运行。自定义轮询 adapter 应实现
-              <code>getCredentialIdentity()</code>，返回平台 scope 和凭据组合。
-            </p>
-            <h3>归档与删除</h3>
-            <p>
-              归档保留可恢复数据；删除属于独立高风险操作，要求显式确认。代码插件 Profile
-              （<code>CLAWSMITH_PLUGIN_PROFILE</code>）只负责组件组合，不等同于身份 Profile，
-              不能替代凭据和数据隔离。
-            </p>
-          </section>
-
-          <section class="docs-section" aria-labelledby="sdk">
-            <span class="docs-kicker">41 / SDK + HTTP</span>
-            <h2 class="docs-section-anchor" id="sdk">TypeScript SDK、HTTP 与 SSE</h2>
-            <h3>创建会话并消费事件</h3>
-            <div class="docs-code" data-language="typescript">
-              <pre><code>import { ClawsmithClient } from "clawsmith/sdk"
-
-const client = new ClawsmithClient({ baseUrl: "http://127.0.0.1:3210" })
-const session = await client.createSession({ title: "SDK task" })
-
-for await (const event of client.submitTurn(
-  session.sessionId,
-  "检查并修复测试",
-)) {
-  console.log(event.type, event.sequence)
-}</code></pre>
-            </div>
-            <h3>断线续传</h3>
-            <p>
-              协议 v22 提供稳定 event schema、能力协商、SSE sequence 断点续传、审批响应、
-              artifact 读取、turn queue、goal evidence、review 和 delivery。客户端必须根据
-              <code>/capabilities</code> 判断能力，而不是猜测版本。
-            </p>
-            <div class="docs-code" data-language="typescript">
-              <pre><code>let lastSequence = 0
-for await (const event of client.submitTurn(session.sessionId, "修复测试")) {
-  lastSequence = event.sequence
-}
-
-for await (const event of client.events(session.sessionId, {
-  after: lastSequence,
-  live: true,
-})) {
-  // SDK 自动去重；网络恢复后从最后确认的 sequence 继续。
-}</code></pre>
-            </div>
-            <h3>主要 HTTP 端点</h3>
-            <div class="docs-code" data-language="http">
-              <pre><code>GET  /capabilities
-POST /sessions/:id/turns
-GET  /sessions/:id/stream?after=&lt;sequence&gt;
-POST /sessions/:id/permissions/:requestId
-POST /sessions/:id/questions/:requestId
-GET  /artifacts/:artifactId?sessionId=&lt;id&gt;</code></pre>
-            </div>
-            <p>
-              远程 API 使用 Bearer token；Web 首屏登录后改用 HttpOnly、SameSite Cookie。
-              多客户端必须通过 Session lease 协作，不要并发提交同一个 turn。
-            </p>
-          </section>
-
-          <section class="docs-section" aria-labelledby="security">
-            <span class="docs-kicker">42 / SECURITY</span>
-            <h2 class="docs-section-anchor" id="security">安全与部署</h2>
-            <h3>默认安全边界</h3>
-            <ul>
-              <li>默认只监听 loopback；远程监听必须显式开启并提供强 token。</li>
-              <li>生产环境建议由反向代理终止 TLS，不要通过不可信网络明文发送 token。</li>
-              <li>owner/device token 分离，SQLite 只保存设备 token 哈希；viewer 设备只读。</li>
-              <li>命令子进程使用最小环境变量，不继承宿主 API Key。</li>
-              <li>日志、事件、工具结果、导出和 artifact 使用统一脱敏边界。</li>
-              <li>企业 managed policy 可强制 deny、收紧权限模式、预算和更新 channel。</li>
-            </ul>
-            <h3>远程访问与设备</h3>
-            <div class="docs-code" data-language="terminal">
-              <pre><code>export CLAWSMITH_API_TOKEN="$(openssl rand -hex 32)"
-PORT=3220 HOST=127.0.0.1 clawsmith web
-
-/security pair-device "Remote laptop"
-/security pair-device "Read only" viewer --workspace &lt;workspace-id&gt;
-/security revoke-device &lt;device-id&gt;</code></pre>
-            </div>
-            <p>
-              <code>CLAWSMITH_API_TOKEN</code> 只用于首次引导。SQLite 只保存设备 token 哈希；
-              owner 设备可操作审批和写入，viewer 设备只读，workspace ACL 会继续收窄可见范围。
-            </p>
-            <h3>命令与桌面隔离</h3>
-            <p>
-              命令子进程只继承最小环境变量，不继承宿主 Provider Key。macOS 使用
-              <code>sandbox-exec</code>，Linux 使用 <code>bwrap</code>，Windows 原生 ACL
-              只提供兼容级部分隔离；严格隔离应显式选择 Docker、VM 或远程 Execution World。
-            </p>
-          </section>
-
-          <section class="docs-section" aria-labelledby="deployment">
-            <span class="docs-kicker">43 / DEPLOYMENT</span>
-            <h2 class="docs-section-anchor" id="deployment">部署 clawsmith Web 服务</h2>
-            <h3>推荐拓扑</h3>
-            <div class="docs-code" data-language="text">
-              <pre><code>Browser / SDK
-  → HTTPS reverse proxy
-  → 127.0.0.1:3210 clawsmith web
-  → SQLite + workspace + artifacts
-  → configured model Provider</code></pre>
-            </div>
-            <p>
-              最稳妥的方式是让 clawsmith 只监听 loopback，由同机反向代理终止 TLS。这样不需要
-              暴露 Node 端口，也不会把 <code>HOST=0.0.0.0</code> 依赖当作安全措施。
-            </p>
-
-            <h3>Caddy 反向代理</h3>
-            <div class="docs-code" data-language="text">
-              <pre><code>clawsmith.example.com {
-  reverse_proxy 127.0.0.1:3210 {
-    flush_interval -1
-  }
-}</code></pre>
-            </div>
-            <p>
-              <code>flush_interval -1</code> 保证 SSE 事件及时到达浏览器。若改用 Nginx，
-              同样需要关闭响应缓冲并提高长连接的 read timeout。
-            </p>
-
-            <h3>systemd 示例</h3>
-            <div class="docs-code" data-language="ini">
-              <pre><code>[Unit]
-Description=clawsmith web
-After=network-online.target
-Wants=network-online.target
-
-[Service]
-Type=simple
-User=clawsmith
-WorkingDirectory=/srv/projects/team
-Environment=HOME=/srv/clawsmith
-Environment=HOST=127.0.0.1
-Environment=PORT=3210
-Environment=CLAWSMITH_HOME=/srv/clawsmith/.clawsmith
-EnvironmentFile=-/etc/clawsmith.env
-ExecStart=/usr/local/bin/clawsmith web
-Restart=on-failure
-RestartSec=3
-NoNewPrivileges=true
-PrivateTmp=true
-
-[Install]
-WantedBy=multi-user.target</code></pre>
-            </div>
-            <p>
-              <code>/etc/clawsmith.env</code> 至少应包含强
-              <code>CLAWSMITH_API_TOKEN</code> 和所需 Provider 配置，文件权限限制给运行用户。
-              首次启动后先检查 health，再配置反向代理和设备。
-            </p>
-            <div class="docs-code" data-language="terminal">
-              <pre><code>curl --fail --silent http://127.0.0.1:3210/health
-journalctl -u clawsmith -f</code></pre>
-            </div>
-
-            <h3>直接远程监听</h3>
-            <p>
-              仅在没有反向代理且网络边界可信时使用：
-              <code>HOST=0.0.0.0 CLAWSMITH_ALLOW_REMOTE=1 CLAWSMITH_API_TOKEN=...</code>。
-              token 少于 32 字符会拒绝启动。不要用防火墙代替认证，也不要把当前目录默认设为
-              整个用户主目录。
-            </p>
-          </section>
-
-          <section class="docs-section" aria-labelledby="data-lifecycle">
-            <span class="docs-kicker">44 / DATA LIFECYCLE</span>
-            <h2 class="docs-section-anchor" id="data-lifecycle">导出、备份与清理数据</h2>
-            <h3>导出单个会话</h3>
-            <div class="docs-code" data-language="terminal">
-              <pre><code>/export ./exports/session.json
-/export ./exports/session.jsonl --jsonl
-/export ./exports/session-with-files.zip --attachments</code></pre>
-            </div>
-            <p>
-              默认导出排除凭据、图片与附件正文、artifact 正文、Memory、Skill、待审批请求和
-              宿主绝对路径，并写入格式版本与 SHA-256。<code>--attachments</code> 会包含当前消息
-              实际引用的附件，文件可能含敏感内容，应单独加密和限制访问。
-            </p>
-
-            <h3>导入与迁移</h3>
-            <div class="docs-code" data-language="terminal">
-              <pre><code>/export-workspace ./exports/workspace.zip
-/import ./exports/session.json
-/import ./exports/workspace.zip</code></pre>
-            </div>
-            <p>
-              导入会重新校验格式版本、体积、消息/事件数量和摘要，并生成新 session ID，不会覆盖
-              已有会话；失败时删除半导入数据。JSONL 每行承载一条消息、事件或附件，适合流式传输。
-            </p>
-
-            <h3>预览后清理</h3>
-            <div class="docs-code" data-language="terminal">
-              <pre><code>/cleanup-preview 2026-01-01T00:00:00Z
-/cleanup 2026-01-01T00:00:00Z --workspace &lt;workspace-id&gt; --yes</code></pre>
-            </div>
-            <p>
-              预览会列出会话、更新时间、逻辑可释放字节、共享附件引用和不可清理原因。活动 turn、
-              跨进程 lease、SessionEnd Hook 失败或共享附件仍被引用时不会删除。artifact 默认
-              保留 7 天，并受会话级与全局容量淘汰约束。
-            </p>
-
-            <h3>数据库备份</h3>
-            <div class="docs-code" data-language="terminal">
-              <pre><code>/backup ./backups/clawsmith.sqlite
-clawsmith restore ./backups/clawsmith.sqlite</code></pre>
-            </div>
-            <p>
-              backup 使用 SQLite 一致性备份并做完整性检查。restore 会保留恢复前的安全副本；
-              它不是云备份，也不包含未纳入数据库的工作区文件、附件正文或远端系统状态。
-            </p>
-          </section>
-
           <section class="docs-section" aria-labelledby="testing">
-            <span class="docs-kicker">45 / QUALITY</span>
+<span class="docs-kicker">开发参考 / 验证与排障</span>
             <h2 class="docs-section-anchor" id="testing">测试、评测与发布门禁</h2>
             <h3>提交前验证</h3>
             <div class="docs-code" data-language="terminal">
@@ -3072,12 +3380,13 @@ pnpm verify:package
 pnpm verify:package:publish
 pnpm test:e2e
 pnpm eval:smoke:verify
+pnpm eval:runtime
 pnpm bench:resources:verify</code></pre>
             </div>
             <p>
               <code>pnpm check</code> 覆盖 lint、类型检查、Vitest 和 local build；
               package 验证必须测试真实 tarball，而不是源码运行结果。评测记录 pass@K、
-              false-done、工具错误、恢复成功率、token、成本与首 token 延迟。
+              false-done、工具错误、恢复成功率、token、成本、cache hit 与首 token 延迟。
             </p>
             <h3>评测回归</h3>
             <div class="docs-code" data-language="terminal">
@@ -3089,12 +3398,15 @@ pnpm eval:compare baseline.json current.json \
             </div>
             <p>
               评测在隔离工作区内运行构建产物，并与基线比较通过率、pass@K、恢复率、成本、
-              false-done 和工具错误率。真实模型评测需要显式配置 Provider，默认 CI 使用 mock。
+              false-done 和工具错误率。19 个确定性任务覆盖小型应用、monorepo、文档站和混合工程；
+              18 个 Provider/model/cache 单元及长会话、MCP 增删、真实 SSE 断线、Worker 崩溃进入离线门禁。
+              真实模型 nightly 使用显式 CLAWSMITH_EVAL_MATRIX 与 Secret；未配置会记录未运行。
+              可用 EVAL_OTLP_FILE 导出本地请求的 OTLP/JSON，EVAL_TRACEPARENT 指定父上下文。
             </p>
           </section>
 
           <section class="docs-section" aria-labelledby="release">
-            <span class="docs-kicker">46 / RELEASE</span>
+<span class="docs-kicker">开发参考 / 验证与排障</span>
             <h2 class="docs-section-anchor" id="release">发布与供应链验证</h2>
             <h3>生成可验证发布证据</h3>
             <div class="docs-code" data-language="terminal">
@@ -3128,173 +3440,8 @@ pnpm release:prepare --output release-artifacts --tag v0.1.7</code></pre>
             </aside>
           </section>
 
-          <section class="docs-section" aria-labelledby="cli-reference">
-            <span class="docs-kicker">47 / REFERENCE</span>
-            <h2 class="docs-section-anchor" id="cli-reference">CLI 命令参考</h2>
-            <h3>启动与管理</h3>
-            <div class="docs-table-wrap">
-              <table class="docs-table">
-                <thead><tr><th>命令</th><th>用途</th></tr></thead>
-                <tbody>
-                  <tr><td><code>clawsmith</code></td><td>交互式 REPL</td></tr>
-                  <tr><td><code>clawsmith --prompt "..."</code></td><td>非交互执行并退出</td></tr>
-                  <tr><td><code>clawsmith serve</code></td><td>只启动本地 HTTP API</td></tr>
-                  <tr><td><code>clawsmith web</code></td><td>启动 API 与 Web UI</td></tr>
-                  <tr><td><code>clawsmith restore &lt;file&gt;</code></td><td>恢复 SQLite 备份</td></tr>
-                  <tr><td><code>clawsmith plugin ...</code></td><td>校验、预览、安装、信任和更新插件</td></tr>
-                  <tr><td><code>clawsmith profile ...</code></td><td>创建、切换、归档和删除 Profile</td></tr>
-                  <tr><td><code>clawsmith cron ...</code></td><td>管理持久定时任务</td></tr>
-                  <tr><td><code>clawsmith gateway ...</code></td><td>配对、列出和撤销 Gateway 身份</td></tr>
-                </tbody>
-              </table>
-            </div>
-            <h3>会话内高频命令</h3>
-            <div class="docs-code" data-language="text">
-              <pre><code>/permissions              切换当前会话权限
-/model provider/model     切换当前会话模型
-/resume-turn              从失败检查点继续
-/worktree create "..."    创建隔离工作区
-/export [path]            导出当前会话
-/diagnostics              生成脱敏诊断包
-/help                     查看当前上下文可用命令</code></pre>
-            </div>
-            <h3>命令发现原则</h3>
-            <p>
-              CLI 和 Web 的可用命令会随权限模式、Provider、插件和运行状态变化。自动化脚本应
-              优先使用非交互 <code>--prompt</code>、SDK 或能力协商接口，不应解析 REPL 的展示文本。
-            </p>
-          </section>
-
-          <section class="docs-section" aria-labelledby="config-reference">
-            <span class="docs-kicker">48 / FILES</span>
-            <h2 class="docs-section-anchor" id="config-reference">配置与数据目录</h2>
-            <h3>默认 Home 目录</h3>
-            <div class="docs-code" data-language="text">
-              <pre><code>~/.clawsmith/
-├── config.json
-├── mcp.json
-├── lsp.json
-├── hooks.json
-├── agents/active/&lt;id&gt;/AGENT.md
-├── skills/
-├── memory/
-├── plugins/
-├── sessions/
-├── artifacts/
-├── attachments/
-├── commands/
-├── gateway/
-├── worktrees/
-├── profiles/
-└── security/</code></pre>
-            </div>
-            <h3>项目级文件</h3>
-            <p>
-              项目级补充配置位于 <code>.clawsmith/AGENTS.md</code> 和
-              <code>.clawsmith/project.json</code>。敏感凭据不会通过普通配置或诊断接口回显。
-              项目验证命令写在 <code>project.json</code> 的
-              <code>verificationCommand</code>，团队规则和目录约束写在 <code>AGENTS.md</code>。
-            </p>
-            <h3>凭据边界</h3>
-            <p>
-              API Key 优先来自外部只读 Secret Source，其次 macOS Keychain 或 Linux Secret
-              Service，最后才是 AES-256-GCM 加密文件。日志、事件、artifact、导出和诊断使用
-              统一脱敏边界；不要把密钥直接写进 <code>AGENTS.md</code>、prompt 或仓库文件。
-            </p>
-          </section>
-
-          <section class="docs-section" aria-labelledby="env-reference">
-            <span class="docs-kicker">49 / ENVIRONMENT</span>
-            <h2 class="docs-section-anchor" id="env-reference">环境变量参考</h2>
-            <h3>运行位置与身份</h3>
-            <div class="docs-table-wrap">
-              <table class="docs-table">
-                <thead>
-                  <tr><th>变量</th><th>用途</th></tr>
-                </thead>
-                <tbody>
-                  <tr><td><code>CLAWSMITH_HOME</code></td><td>覆盖配置、会话、凭据、插件和 artifact 的数据根目录。</td></tr>
-                  <tr><td><code>CLAWSMITH_PROFILE</code></td><td>为当前进程选择身份 Profile；不修改持久 active pointer。</td></tr>
-                  <tr><td><code>HOST</code> / <code>PORT</code></td><td>Web 与 HTTP 服务监听地址和端口，默认 loopback 与 3210。</td></tr>
-                  <tr><td><code>CLAWSMITH_ALLOW_REMOTE</code></td><td>必须设为 <code>1</code> 才允许非 loopback 监听。</td></tr>
-                  <tr><td><code>CLAWSMITH_API_TOKEN</code></td><td>远程访问的首次引导 token；非 loopback 时至少 32 字符。</td></tr>
-                  <tr><td><code>CLAWSMITH_DISABLE_UPDATE_CHECK</code></td><td>临时关闭版本更新检查。</td></tr>
-                  <tr><td><code>CLAWSMITH_MANAGED_POLICY_FILE</code></td><td>加载企业 managed policy，强制收紧权限、预算和更新策略。</td></tr>
-                </tbody>
-              </table>
-            </div>
-
-            <h3>模型与上下文</h3>
-            <div class="docs-table-wrap">
-              <table class="docs-table">
-                <thead>
-                  <tr><th>变量</th><th>用途</th></tr>
-                </thead>
-                <tbody>
-                  <tr><td><code>CLAWSMITH_PROVIDER_BASE_URL</code></td><td>当前 Provider 的 OpenAI-compatible API 根地址。</td></tr>
-                  <tr><td><code>CLAWSMITH_PROVIDER_MODEL</code></td><td>默认模型 ID。</td></tr>
-                  <tr><td><code>CLAWSMITH_PROVIDER_API_KEY</code></td><td>临时 Provider 密钥；生产环境优先使用安全凭据存储。</td></tr>
-                  <tr><td><code>CLAWSMITH_PROVIDER_CONFIG_HOME</code></td><td>隔离或共享 Provider 配置文件根目录。</td></tr>
-                  <tr><td><code>CLAWSMITH_DEFAULT_MODEL</code></td><td>新会话默认模型；可配合自动路由策略。</td></tr>
-                  <tr><td><code>CLAWSMITH_ROUTING_POLICY_PATH</code></td><td>模型自动路由策略 JSON 路径。</td></tr>
-                  <tr><td><code>CLAWSMITH_MODEL_TEMPERATURE</code></td><td>覆盖采样温度；省略时使用 Provider 默认值。</td></tr>
-                  <tr><td><code>CLAWSMITH_MODEL_COST_BUDGET_USD</code></td><td>单次或会话预算上限，按项目实际策略执行。</td></tr>
-                  <tr><td><code>CLAWSMITH_MODEL_STREAM_IDLE_TIMEOUT_MS</code></td><td>中止长时间无新事件的模型流。</td></tr>
-                  <tr><td><code>CLAWSMITH_CONTEXT_WINDOW_TOKENS</code></td><td>显式覆盖未知模型上下文窗口，范围 500 到 2,000,000。</td></tr>
-                  <tr><td><code>CLAWSMITH_SEMANTIC_COMPACTION</code></td><td>设为 <code>0</code> 时关闭额外模型摘要压缩。</td></tr>
-                </tbody>
-              </table>
-            </div>
-
-            <h3>执行、插件与外部入口</h3>
-            <div class="docs-table-wrap">
-              <table class="docs-table">
-                <thead>
-                  <tr><th>变量</th><th>用途</th></tr>
-                </thead>
-                <tbody>
-                  <tr><td><code>CLAWSMITH_SANDBOX_MODE</code></td><td><code>compatible</code>、<code>strict</code> 或 <code>isolated</code>；不满足能力时拒绝启动。</td></tr>
-                  <tr><td><code>CLAWSMITH_SANDBOX</code></td><td>显式选择 <code>docker</code> 等命令沙箱后端。</td></tr>
-                  <tr><td><code>CLAWSMITH_EXECUTION_WORLD</code></td><td>选择本地、Docker、SSH 或插件提供的 Execution World。</td></tr>
-                  <tr><td><code>CLAWSMITH_PLUGIN_RUNTIME</code></td><td>设为 1 启用公开插件 runtime 和动态模型路由适配。</td></tr>
-                  <tr><td><code>CLAWSMITH_PLUGIN_PROFILE</code></td><td>选择插件 Profile；与身份 <code>CLAWSMITH_PROFILE</code> 不同。</td></tr>
-                  <tr><td><code>CLAWSMITH_PLUGIN_PATCH</code></td><td>本次进程最高优先级的插件 overlay 文件。</td></tr>
-                  <tr><td><code>CLAWSMITH_WECHAT_ACCOUNT_ID</code> / <code>CLAWSMITH_WECHAT_TOKEN</code></td><td>从环境引导内置微信 iLink Bot；也可在 Web 消息平台设置中保存。</td></tr>
-                  <tr><td><code>CLAWSMITH_WECHAT_DM_POLICY</code> / <code>CLAWSMITH_WECHAT_GROUP_POLICY</code></td><td>微信平台级私聊和群聊策略，可覆盖全局 Gateway 默认值。</td></tr>
-                  <tr><td><code>CLAWSMITH_WECHAT_HOME_CONVERSATION</code></td><td>微信默认通知会话 ID。</td></tr>
-                  <tr><td><code>CLAWSMITH_WECHAT_TEXT_BATCH_DELAY_SECONDS</code> / <code>CLAWSMITH_WECHAT_TEXT_BATCH_SPLIT_DELAY_SECONDS</code></td><td>快速文本合并窗口和长消息续块等待窗口，单位为秒。</td></tr>
-                  <tr><td><code>CLAWSMITH_QQ_APP_ID</code> / <code>CLAWSMITH_QQ_CLIENT_SECRET</code></td><td>从环境引导 QQ 官方 Bot API v2。</td></tr>
-                  <tr><td><code>CLAWSMITH_QQ_DM_POLICY</code> / <code>CLAWSMITH_QQ_GROUP_POLICY</code></td><td>QQ 平台级访问策略和白名单入口。</td></tr>
-                  <tr><td><code>CLAWSMITH_QQ_HOME_CONVERSATION</code></td><td>QQ 默认通知目标，格式为 <code>c2c:</code>、<code>group:</code> 或 <code>guild:</code>。</td></tr>
-                  <tr><td><code>CLAWSMITH_QQ_MARKDOWN_SUPPORT</code></td><td>QQ C2C 和群聊是否使用原生 Markdown，默认开启；设为 <code>0</code> 时发送清理过格式的纯文本。</td></tr>
-                  <tr><td><code>CLAWSMITH_EMAIL_ADDRESS</code> / <code>CLAWSMITH_EMAIL_PASSWORD</code></td><td>Email 账号和应用专用密码。</td></tr>
-                  <tr><td><code>CLAWSMITH_EMAIL_IMAP_HOST</code> / <code>CLAWSMITH_EMAIL_SMTP_HOST</code></td><td>Email 收件 IMAP 和发件 SMTP 主机。</td></tr>
-                  <tr><td><code>CLAWSMITH_EMAIL_DM_POLICY</code> / <code>CLAWSMITH_EMAIL_ALLOWED_SENDERS</code></td><td>Email 入站策略与发件人白名单。</td></tr>
-                  <tr><td><code>CLAWSMITH_EMAIL_HOME_ADDRESS</code></td><td>Email 默认通知收件地址。</td></tr>
-                  <tr><td><code>CLAWSMITH_EMAIL_NETWORK_FAMILY</code> / <code>CLAWSMITH_EMAIL_POLL_INTERVAL_SECONDS</code></td><td>Email 网络地址族（auto / ipv4 / ipv6）和收件轮询间隔。</td></tr>
-                  <tr><td><code>CLAWSMITH_EMAIL_AUTHSERV_ID</code></td><td>可选 authserv-id pin；留空自动核对最顶层 Received 接收服务器，显式值支持逗号分隔和受控 <code>*</code> 通配。</td></tr>
-                  <tr><td><code>CLAWSMITH_BROWSER_ENABLED</code></td><td>控制浏览器与 web fetch/search 工具装配。</td></tr>
-                  <tr><td><code>CLAWSMITH_BROWSER_HEADLESS</code></td><td>浏览器工具是否使用 headless 模式。</td></tr>
-                </tbody>
-              </table>
-            </div>
-
-            <h3>配置优先级</h3>
-            <div class="docs-code" data-language="text">
-              <pre><code>managed hard policy
-  → explicit process environment
-  → Profile / project configuration
-  → saved user configuration
-  → built-in defaults</code></pre>
-            </div>
-            <p>
-              权限和预算的 managed hard policy 不能被环境变量或插件放宽。密钥应先通过 Secret
-              Source 或安全凭据存储注入，再启动服务；不要把明文值写进 shell 历史或仓库。
-            </p>
-          </section>
-
           <section class="docs-section" aria-labelledby="troubleshooting">
-            <span class="docs-kicker">50 / TROUBLESHOOTING</span>
+<span class="docs-kicker">开发参考 / 验证与排障</span>
             <h2 class="docs-section-anchor" id="troubleshooting">常见问题</h2>
             <h3>Web 打不开或远程连接被拒绝</h3>
             <p>
@@ -3335,7 +3482,7 @@ git status --short</code></pre>
               <a href="https://github.com/sql668/clawsmith" target="_blank" rel="noreferrer">GitHub</a>
               <a href="https://www.npmjs.com/package/clawsmith" target="_blank" rel="noreferrer">npm</a>
             </div>
-            <p>clawsmith 开发者文档 · v0.1.7 · updated 2026-11-01</p>
+            <p>clawsmith 开发者文档 · v0.1.10 · updated 2026-11-14</p>
             <p>© <span data-current-year></span> clawsmith. Proprietary software.</p>
           </footer>
         </article>
@@ -3349,6 +3496,6 @@ git status --short</code></pre>
       </aside>
     </div>
 
-    <script src="./docs.js?v=20261030-4"></script>
+    <script src="./docs.js?v=20261114-1"></script>
   </body>
 </html>
