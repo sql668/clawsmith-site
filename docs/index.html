@@ -1,4 +1,5 @@
 <!doctype html>
+<!-- 开发者手册：维护安装、产品使用与公开插件契约，所有扩展安全边界由宿主持有。 -->
 <!-- clawsmith 开发者文档：按入门、核心功能、扩展能力、进阶与开发参考组织目录和正文。 -->
 <html lang="zh-CN">
   <head>
@@ -2744,7 +2745,7 @@ journalctl -u clawsmith -f</code></pre>
             <h2 class="docs-section-anchor" id="architecture">Agent 如何执行</h2>
             <p>
               每次 turn 先获取 Session lease，再构造项目上下文和模型请求。模型只能看到当前
-              Capability composition 允许的工具；每个工具调用依次经过 schema 校验、Hook、
+              具名产品贡献与 Agent manifest 允许的工具；每个工具调用依次经过 schema 校验、Hook、
               权限服务、沙箱/Execution World、超时和取消、结构化结果与 checkpoint。
             </p>
             <h3>组合视图</h3>
@@ -2835,11 +2836,13 @@ GET  /artifacts/:artifactId?sessionId=&lt;id&gt;</code></pre>
           <section class="docs-section" aria-labelledby="plugins">
 <span class="docs-kicker">开发参考 / 插件开发</span>
             <h2 class="docs-section-anchor" id="plugins">插件与稳定扩展 API</h2>
-            <h3>六个稳定扩展 seam</h3>
+            <h3>独立的稳定扩展 seam</h3>
             <p>
-              公开 Plugin API v1 提供 models、tools、contexts、http、gateways 和 execution 六个
-              Service seam。插件注册通过 effect 生命周期管理，卸载时 Provider、Tool、路由和
-              Context 贡献必须幂等释放。
+              公开 Plugin API v1 提供 models、tools、contexts、agents、compaction、memory、
+              skills、artifacts、http、gateways 和 execution 独立 Service seam。
+              插件注册通过 effect 生命周期管理，卸载时贡献及在途等待必须幂等释放。
+              记忆身份过滤、Skill 白名单、压缩预算、Artifact ACL 与配额均由宿主校验；
+              写入结果未知时停止自动循环，不切换实现重放。
             </p>
             <h3>两种插件形态</h3>
             <p>
